@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="suggestionbox">
+        <attr name="headerText" format="string"/>
+        <attr name="headertextColor" format="string"/>
+        <attr name="backgroundColor" format="string"/>
+    </declare-styleable>
+</resources>
