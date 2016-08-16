@@ -9,8 +9,11 @@ import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.QuestApi;
+import com.hanuor.sapphire.utils.Client;
 
 import java.util.ArrayList;
+
+//©Hanuor, Inc. All rights reserved.
 
 public class MainActivity extends AppCompatActivity {
     Button but;
@@ -21,11 +24,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
         Sapphire.initialize(MainActivity.this);
+
+        //for testing purpose
+
         ArrayList<String> m = new ArrayList<String>();
         m.add("botham");
         m.add("viv");
         m.add("amey");
-        Sapphire.with(MainActivity.this).registerTags(m);
+        m.add("Money");
+        m.add("Pearl");
+        //Sapphire.with(MainActivity.this).registerTags(m);
+        Client mC = new Client(MainActivity.this);
+
+        mC.makeJsonString(m);
         Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         but.setOnClickListener(new View.OnClickListener() {
