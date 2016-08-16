@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.QuestApi;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     Button but;
     DemoObject demoObject;
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
         Sapphire.initialize(MainActivity.this);
+        ArrayList<String> m = new ArrayList<String>();
+        m.add("botham");
+        m.add("viv");
+        m.add("amey");
+        Sapphire.with(MainActivity.this).registerTags(m);
         Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         but.setOnClickListener(new View.OnClickListener() {
