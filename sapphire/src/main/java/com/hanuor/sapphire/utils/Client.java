@@ -109,15 +109,10 @@ public class Client {
     }
 
     public  void makeJsonString(ArrayList<String> tags){
-
-        //Make a simple json string
-       // App42API.initialize(mInit.Appkey(),mInit.AppSecret());
-      //  StorageService sService = App42API.buildStorageService();
-
         ConverterUtils cutils = new ConverterUtils(tags);
         String jsonDoc =  cutils.getJsonString();
         //call the write Json script
-       writeJson(jsonDoc);
+        writeJson(jsonDoc);
     }
     public static void updateJson(final ArrayList<String> tags, String docID){
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Calendar;
+
 /**
  * Created by Shantanu Johri on 15-08-2016.
  */
@@ -35,5 +37,24 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+    public void openDBconnection(){
+
+
+        Calendar today = Calendar.getInstance();
+        int hour = today.get(Calendar.HOUR);
+        //Calendar expireDate = Calendar.getInstance();
+        //expireDate.set(2011, Calendar.AUGUST, 12);
+        //today.compareTo(expireDate) == 0 || today.compareTo(expireDate) == 1
+        //if ()
+
+        //{
+// expired - please purchase app
+
+        //}
+        //else
+       // {
+// do some stuff
+        //}
     }
 }
