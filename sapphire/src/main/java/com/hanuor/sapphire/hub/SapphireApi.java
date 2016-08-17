@@ -13,13 +13,15 @@ public class SapphireApi {
     private Context context = null;
     private SapphireApi connect = null;
     private ArrayList<String> tags = null;
-    ClientConnect mclient = new ClientConnect();
+    private ArrayList<String> updateTags = null;
+    ClientConnect mclient;
     public SapphireApi(Context context){
         if(context == null){
 
             ExceptionHandler.writeError("Context cannot be null");
         }else{
             this.context = context;
+            mclient = new ClientConnect(context);
         }
     }
     public void setInstance(SapphireApi connect){
@@ -30,7 +32,11 @@ public class SapphireApi {
         mclient.register(context, tags);
         return connect;
     }
-
+    public SapphireApi updateTags(ArrayList<String> tags){
+        connect.updateTags = tags;
+        mclient.update(context, tags);
+        return connect;
+    }
 
 }
 

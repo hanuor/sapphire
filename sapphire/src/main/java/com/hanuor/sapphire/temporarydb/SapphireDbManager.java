@@ -1,6 +1,8 @@
 package com.hanuor.sapphire.temporarydb;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -14,6 +16,8 @@ public class SapphireDbManager extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "SapphireInternal.db";
     private static final String TABLE_NAME = "clientManager";
+    private static final String TABLE_JSONDOC= "jsonDocManager";
+    private static final String ID_DOCS = "idoc";
     private static final int DB_VERSION = 1;
 
     public SapphireDbManager(Context context) {
@@ -27,15 +31,46 @@ public class SapphireDbManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String TABLE_JDOCS = "CREATE TABLE "+ TABLE_JSONDOC + "("+
+                ID_DOCS + " STRING" + ")";
+        sqLiteDatabase.execSQL(TABLE_JDOCS);
 
-        /*String TABLE_ID = "CREATE TABLE " + TABLE_NAME + "("+
-                ID_F + " STRING"
-                + ")";
-*/
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+
+    public void insertJDoc(String Doc){
+        clearJDocTable();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID_DOCS, Doc);
+        db.insert(TABLE_JSONDOC, null, contentValues);
+        db.close();
+    }
+    public void clearJDocTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_JSONDOC, 1 + "=" + 1, null);
+        db.close();
+    }
+    public String query(){
+        String returnString = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + ID_DOCS + " FROM " + TABLE_JSONDOC;
+        Cursor cSor = db.rawQuery(query_params, null);
+        if(cSor.moveToFirst()){
+            do{
+                returnString =  cSor.getString(cSor.getColumnIndex(SapphireDbManager.ID_DOCS));
+
+            }while(cSor.moveToNext());
+
+        }
+
+        db.close();
+        cSor.close();
+        return returnString;
 
     }
     public void openDBconnection(){

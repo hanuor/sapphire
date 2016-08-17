@@ -32,15 +32,13 @@ public class MainActivity extends AppCompatActivity {
         int min = today.get(Calendar.MINUTE);
         Log.d("Sapphire",""+hour+min);
         ArrayList<String> m = new ArrayList<String>();
-        m.add("botham");
-        m.add("viv");
-        m.add("amey");
-        m.add("Money");
-        m.add("Pearl");
+        //m.add("b00000");
+        m.add("sir");
+        m.add("dweney");
+        m.add("Inca");
+        m.add("Sapphire");
         //Sapphire.with(MainActivity.this).registerTags(m);
-        //Client mC = new Client(MainActivity.this);
-
-        // mC.makeJsonString(m);
+        Sapphire.with(MainActivity.this).updateTags(m);
         Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         but.setOnClickListener(new View.OnClickListener() {
