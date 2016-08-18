@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
-import com.hanuor.sapphire.hub.QuestApi;
 
 import java.util.ArrayList;
 import java.util.Calendar;

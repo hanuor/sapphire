@@ -1,6 +1,7 @@
 package com.hanuor.sapphire.hub;
 
 import android.content.Context;
+import android.view.View;
 
 import com.hanuor.sapphire.utils.ExceptionHandler;
 
@@ -14,6 +15,7 @@ public class SapphireApi {
     private SapphireApi connect = null;
     private ArrayList<String> tags = null;
     private ArrayList<String> updateTags = null;
+    private View mview = null;
     ClientConnect mclient;
     public SapphireApi(Context context){
         if(context == null){
@@ -35,6 +37,11 @@ public class SapphireApi {
     public SapphireApi updateTags(ArrayList<String> tags){
         connect.updateTags = tags;
         mclient.update(context, tags);
+        return connect;
+    }
+    public SapphireApi attachView(View view){
+        //attach a view to show suggestions
+        connect.mview = view;
         return connect;
     }
 
