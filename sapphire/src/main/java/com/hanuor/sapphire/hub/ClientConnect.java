@@ -12,8 +12,11 @@ import java.util.ArrayList;
  */
 public class ClientConnect {
     SapphireDbManager sapphireDbManager;
+    Internals internals;
+
     public ClientConnect(Context ctx){
         sapphireDbManager = new SapphireDbManager(ctx);
+        internals = new Internals(ctx);
     }
     public void register(Context ctx, ArrayList<String> tags){
         //the docId will be returned here thanks to the jar file
@@ -23,10 +26,12 @@ public class ClientConnect {
         mC.makeJsonString(tags);
     }
     public void update(Context ctx, ArrayList<String> tags){
-        Internals internals = new Internals(ctx);
         String docID = internals.readIdfromDevice();
         //save Jdoc in the database
         internals.updateJsonFollowUp(tags, docID);
 
+    }
+    public void tagUpdate(String _tag){
+    internals.hitTags(_tag);
     }
 }

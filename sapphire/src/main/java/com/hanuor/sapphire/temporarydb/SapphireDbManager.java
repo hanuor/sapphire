@@ -44,6 +44,7 @@ public class SapphireDbManager extends SQLiteOpenHelper {
 
     public void insertJDoc(String Doc){
         clearJDocTable();
+        
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID_DOCS, Doc);
@@ -67,9 +68,6 @@ public class SapphireDbManager extends SQLiteOpenHelper {
             }while(cSor.moveToNext());
 
         }
-
-        db.close();
-        cSor.close();
         return returnString;
 
     }

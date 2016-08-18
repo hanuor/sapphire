@@ -99,7 +99,7 @@ public class Internals {
                         JSONObject jObj = new JSONObject(jsonD);
 
                         String getDoc = Client.updateJsonDoc(Client.jsonDocAlgo(tags, jObj));
-                        sapphireDbManager.insertJDoc(getDoc);
+                        //sapphireDbManager.insertJDoc(getDoc);
                         Log.d("Sapphire",""+sapphireDbManager.query());
                     }
                 } catch (JSONException e) {
@@ -118,7 +118,19 @@ public class Internals {
         });
 
     }
+    public void hitTags(String _tag){
+        //fetch from database
+        String retrievedDoc = sapphireDbManager.query();
+        try {
+            String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
+            sapphireDbManager.insertJDoc(getDoc);
+            Log.d("Sapphire",""+sapphireDbManager.query());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+
+    }
 
 
 }

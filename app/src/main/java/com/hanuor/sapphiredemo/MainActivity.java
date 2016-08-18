@@ -1,6 +1,5 @@
 package com.hanuor.sapphiredemo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -43,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
+                Sapphire.with(MainActivity.this).gain("sir");
+                // Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
              //   QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
             }
         });
