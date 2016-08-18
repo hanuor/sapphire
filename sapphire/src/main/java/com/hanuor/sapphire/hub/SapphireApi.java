@@ -16,6 +16,7 @@ public class SapphireApi {
     private ArrayList<String> tags = null;
     private ArrayList<String> updateTags = null;
     private View mview = null;
+    private ArrayList<String> listofTags = null;
     ClientConnect mclient;
     public SapphireApi(Context context){
         if(context == null){
@@ -34,7 +35,7 @@ public class SapphireApi {
         mclient.register(context, tags);
         return connect;
     }
-    public SapphireApi updateTags(ArrayList<String> tags){
+    public SapphireApi addTags(ArrayList<String> tags){
         connect.updateTags = tags;
         mclient.update(context, tags);
         return connect;
@@ -44,6 +45,7 @@ public class SapphireApi {
         connect.mview = view;
         return connect;
     }
+
 
 }
 

@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         m.add("Inca");
         m.add("Sapphire");
         //Sapphire.with(MainActivity.this).registerTags(m);
-        Sapphire.with(MainActivity.this).updateTags(m);
+        Sapphire.with(MainActivity.this).addTags(m);
         Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
-                QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
+             //   QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
             }
         });
     }
