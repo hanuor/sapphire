@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="suggestionbox">
         <attr name="headerText" format="string"/>
+        <attr name="setheaderTextGravityCENTER" format="boolean"/>
         <attr name="headertextColor" format="string"/>
         <attr name="backgroundColor" format="string"/>
     </declare-styleable>

@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:text="0"
+        android:layout_margin="7dp"
+        android:enabled="false"
+        android:background="@null"
+        android:textColor="#000000"
+        android:id="@+id/valueTextView" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/minusButton"
+        android:layout_margin="7dp"
+        android:clickable="true"
+        android:layout_below="@+id/valueTextView"
+        android:src="@drawable/frost"
+        android:layout_alignRight="@+id/valueLabel" />
+
+    <TextView
+        android:id="@+id/valueLabel"
+        android:text="VALLLL"
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/minusButton"
+ />
+
+</merge>

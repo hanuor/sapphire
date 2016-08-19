@@ -13,6 +13,7 @@ package com.hanuor.sapphire.hub;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,6 +27,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,9 +36,6 @@ import android.widget.TextView;
 import com.hanuor.sapphire.R;
 
 
-/**
- * Created by Shantanu Johri on 30-07-2016.
- */
 public class SuggestionView extends RelativeLayout {
     private TextView textView;
     private String TEXT_COLOR = "#eeeeee";
@@ -44,10 +43,11 @@ public class SuggestionView extends RelativeLayout {
     private Context context;
     String TEXT = "Suggestionbox";
     ImageView imageView;
+    TextView valueTextView;
 
     private String ICON_COLOR = "#880E4F";
     TextView tv2;
-    //Java Inflation
+    View rootView;
     public SuggestionView(Context context) {
         super(context);
 
@@ -123,15 +123,25 @@ public class SuggestionView extends RelativeLayout {
     }
 
     private void setUPSuggestion(Context context) {
-        architecture();
-        addText();
+        rootView = inflate(context, R.layout.questbox, this);
+        valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
+        valueTextView.setText(TEXT);
+
+        valueTextView.setGravity(Gravity.CENTER);
+
+
+
+
+
+        //architecture();
+        //addText();
 
         //move the whole layout in the center of the screen
         //moveToCenter();
 
         //invalidate and redraw the views.
-        invalidate();
-        requestLayout();
+        //invalidate();
+        // requestLayout();
 
     }
 
