@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hanuor.sapphire.R;
 
@@ -44,6 +45,7 @@ public class SuggestionView extends RelativeLayout {
     String TEXT = "Suggestionbox";
     ImageView imageView;
     TextView valueTextView;
+    ImageView minusButton;
 
     private String ICON_COLOR = "#880E4F";
     TextView tv2;
@@ -122,12 +124,19 @@ public class SuggestionView extends RelativeLayout {
         setUPSuggestion(context);
     }
 
-    private void setUPSuggestion(Context context) {
+    private void setUPSuggestion(final Context context) {
         rootView = inflate(context, R.layout.questbox, this);
         valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
         valueTextView.setText(TEXT);
-
+        minusButton = (ImageView) rootView.findViewById(R.id.minusButton);
+        minusButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "LALALA", Toast.LENGTH_SHORT).show();
+            }
+        });
         valueTextView.setGravity(Gravity.CENTER);
+
 
 
 
