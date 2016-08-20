@@ -189,13 +189,6 @@ public class SuggestionView extends RelativeLayout {
                 Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
-
-
     }
 
 }

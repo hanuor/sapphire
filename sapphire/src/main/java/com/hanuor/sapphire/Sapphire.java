@@ -2,6 +2,7 @@ package com.hanuor.sapphire;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hanuor.client.Client;
 import com.hanuor.sapphire.hub.SapphireApi;
@@ -21,10 +22,13 @@ public class Sapphire {
     }
     volatile static SapphireApi mconnect =  null;
     public static SapphireApi with(Context context){
+
         mconnect = new SapphireApi(context);
         mconnect.setInstance(mconnect);
+
         return mconnect;
     }
+
     public static void initialize(Context ctx){
         Utility.throwExceptionIfNullOrBlank(ctx, "context");
         ctx = ctx;

@@ -22,5 +22,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile files('libs/hajar.jar')
     compile files('libs/App42_ANDROID_SDK_3.8.jar')
+    compile 'de.greenrobot:eventbus:2.4.0'
+
 
 }
