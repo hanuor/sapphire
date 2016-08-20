@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="#B71C1C"
-        app:headerText="BLBLBLB"
+        android:background="#ffffff"
+        app:headerText="Based on your recent activity"
+        app:headertextColor="#000000"
         android:layout_alignParentEnd="true"></com.hanuor.sapphire.hub.SuggestionView>
 </RelativeLayout>

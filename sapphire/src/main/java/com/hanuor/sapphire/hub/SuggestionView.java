@@ -39,9 +39,10 @@ import com.hanuor.sapphire.R;
 
 public class SuggestionView extends RelativeLayout {
     private TextView textView;
-    private String TEXT_COLOR = "#eeeeee";
+    private String defaultheaderTextColor = "#eeeeee";
     private String BACKGROUND_COLOR = "#880E4F";
     private Context context;
+    private int headerTextSize = 13;
     String TEXT = "Suggestionbox";
     ImageView imageView;
     TextView valueTextView;
@@ -73,13 +74,13 @@ public class SuggestionView extends RelativeLayout {
         try {
 
             String text = typedArray.getString(R.styleable.suggestionbox_headerText);
-            String text_color = typedArray.getString(R.styleable.suggestionbox_headertextColor);
+            String headerTextColor = typedArray.getString(R.styleable.suggestionbox_headertextColor);
             String background_color = typedArray.getString(R.styleable.suggestionbox_backgroundColor);
 
             if (text!=null)
                 TEXT = text;
-            if (text_color!=null)
-                TEXT_COLOR = text_color;
+            if (headerTextColor!=null)
+                defaultheaderTextColor = headerTextColor;
             if (background_color!=null)
                 ICON_COLOR = background_color;
 
@@ -104,16 +105,18 @@ public class SuggestionView extends RelativeLayout {
         try {
 
             String text = typedArray.getString(R.styleable.suggestionbox_headerText);
-            String text_color = typedArray.getString(R.styleable.suggestionbox_headertextColor);
+            String headerTextColor = typedArray.getString(R.styleable.suggestionbox_headertextColor);
             String background_color = typedArray.getString(R.styleable.suggestionbox_backgroundColor);
+            int headerTextFontSize = typedArray.getInt(R.styleable.suggestionbox_headerTextFontSize,13);
 
             if (text!=null)
                 TEXT = text;
-            if (text_color!=null)
-                TEXT_COLOR = text_color;
+            if (headerTextColor!=null)
+                defaultheaderTextColor = headerTextColor;
             if (background_color!=null)
                 ICON_COLOR = background_color;
-
+            if (headerTextFontSize!=0)
+                headerTextSize = headerTextFontSize;
             setUPSuggestion(context);
 
         } finally {
@@ -128,6 +131,8 @@ public class SuggestionView extends RelativeLayout {
         rootView = inflate(context, R.layout.questbox, this);
         valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
         valueTextView.setText(TEXT);
+        valueTextView.setTextSize(headerTextSize);
+        valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
         minusButton = (ImageView) rootView.findViewById(R.id.minusButton);
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -159,7 +164,7 @@ public class SuggestionView extends RelativeLayout {
         textView.setText(TEXT);
         textView.setPadding(130,30,11,3);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        textView.setTextColor(Color.parseColor(TEXT_COLOR));
+        textView.setTextColor(Color.parseColor(defaultheaderTextColor));
         //  int nw = LayoutParams.MATCH_PARENT-11;
         RelativeLayout.LayoutParams layoutParams = new
                 RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -176,7 +181,7 @@ public class SuggestionView extends RelativeLayout {
         tv2.setText("Blasphemy");
        // tv2.setPadding(120,7,11,7);
         tv2.setGravity(Gravity.RIGHT);
-        tv2.setTextColor(Color.parseColor(TEXT_COLOR));
+        tv2.setTextColor(Color.parseColor(defaultheaderTextColor));
         //int re = LayoutParams.MATCH_PARENT-11;
         RelativeLayout.LayoutParams layoutParams = new
                 RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);

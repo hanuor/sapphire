@@ -4,6 +4,7 @@
         <attr name="headerText" format="string"/>
         <attr name="setheaderTextGravityCENTER" format="boolean"/>
         <attr name="headertextColor" format="string"/>
+        <attr name="headerTextFontSize" format="integer"/>
         <attr name="backgroundColor" format="string"/>
     </declare-styleable>
 </resources>
