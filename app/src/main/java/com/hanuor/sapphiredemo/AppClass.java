@@ -16,11 +16,8 @@ package com.hanuor.sapphiredemo;/*
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
-
 public class AppClass extends Application {
     @Override public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
-    }
+       }
 }
