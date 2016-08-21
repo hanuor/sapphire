@@ -10,6 +10,15 @@ import java.util.ArrayList;
 /**
  * Created by Shantanu Johri on 15-08-2016.
  */
+
+
+/*
+There needs to be an imageview or some kind if we want to display it in the suggestion view box.
+To do this we must have to pass the list of view objects and their intents/actions.
+This is the main task that we need to do.
+
+*/
+
 public class SapphireApi {
     private Context context = null;
     private SapphireApi connect = null;
