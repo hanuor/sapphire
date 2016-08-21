@@ -1,6 +1,7 @@
 package com.hanuor.sapphire.hub;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.utils.Client;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class ClientConnect {
     SapphireDbManager sapphireDbManager;
     Internals internals;
-
+    ClientConnect mclient;
     public ClientConnect(Context ctx){
         sapphireDbManager = new SapphireDbManager(ctx);
         internals = new Internals(ctx);
@@ -26,9 +27,18 @@ public class ClientConnect {
         mC.makeJsonString(tags);
     }
     public void update(Context ctx, ArrayList<String> tags){
+        mclient = new ClientConnect(ctx);
         String docID = internals.readIdfromDevice();
+        if(docID==null){
+            mclient.register(ctx, tags);
+            docID = internals.readIdfromDevice();
+
+        }else{
+            internals.updateJsonFollowUp(tags, docID);
+        }
+        Log.d("Sapppdd",""+docID);
         //save Jdoc in the database
-        internals.updateJsonFollowUp(tags, docID);
+
 
     }
     public void tagUpdate(String _tag){

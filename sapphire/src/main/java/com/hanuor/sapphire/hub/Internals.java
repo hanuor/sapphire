@@ -105,7 +105,7 @@ public class Internals {
                         }else{
                             sapphireDbManager.insertJDoc(getDoc);
                         }
-                        
+
                         Log.d("Sapphire",""+sapphireDbManager.query());
                     }
                 } catch (JSONException e) {
