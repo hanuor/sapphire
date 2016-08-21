@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
@@ -19,6 +20,7 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
     Button but;
+    ImageView ee;
     DemoObject demoObject;
 
     private EventBus bus = EventBus.getDefault();
@@ -47,11 +49,11 @@ public class MainActivity extends AppCompatActivity {
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
-// Better check that an event was actually posted before
+        // Better check that an event was actually posted before
         if(stickyEvent != null) {
-// "Consume" the sticky event
+        // "Consume" the sticky event
             Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
-// Now do something with it
+        // Now do something with it
         }
         but.setOnClickListener(new View.OnClickListener() {
             @Override

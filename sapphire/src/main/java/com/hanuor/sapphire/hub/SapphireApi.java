@@ -51,6 +51,7 @@ public class SapphireApi {
     }
     public SapphireApi addTags(ArrayList<String> tags){
         connect.updateTags = tags;
+
         mclient.update(context, tags);
         return connect;
     }

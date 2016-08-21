@@ -99,7 +99,13 @@ public class Internals {
                         JSONObject jObj = new JSONObject(jsonD);
 
                         String getDoc = Client.updateJsonDoc(Client.jsonDocAlgo(tags, jObj));
-                        //sapphireDbManager.insertJDoc(getDoc);
+                        String queriedDoc = sapphireDbManager.query();
+                        if(getDoc.equals(queriedDoc)){
+
+                        }else{
+                            sapphireDbManager.insertJDoc(getDoc);
+                        }
+                        
                         Log.d("Sapphire",""+sapphireDbManager.query());
                     }
                 } catch (JSONException e) {
