@@ -33,8 +33,13 @@ public class ClientConnect {
             mclient.register(ctx, tags);
             docID = internals.readIdfromDevice();
 
+            Log.d("Sapppdd1",""+docID);
+
         }else{
             internals.updateJsonFollowUp(tags, docID);
+            docID = internals.readIdfromDevice();
+            Log.d("Sapppdd2",""+docID);
+
         }
         Log.d("Sapppdd",""+docID);
         //save Jdoc in the database
