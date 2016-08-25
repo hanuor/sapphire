@@ -52,22 +52,38 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
 
     }
     public void insertImage(String tag, byte []  image) throws SQLException {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues cv = new  ContentValues();
-        cv.put(ID_IMGKEY, tag);
-        cv.put(ID_IMG, image);
-        database.insert( TABLE_IMAGE, null, cv );
-        Log.d("dbsapp",""+database.toString());
-        // database.close();
+        if(getCount()>0) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(TABLE_IMAGE, 1 + "=" + 1, null);
+            db.close();
+            // database.close();
+        }else{
+            SQLiteDatabase database = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put(ID_IMGKEY, tag);
+            cv.put(ID_IMG, image);
+            database.insert(TABLE_IMAGE, null, cv);
+            Log.d("dbsapp", "" + database.toString());
+        }
+    }
+    private int getCount(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE;
+        Cursor cSor = db.rawQuery(query_params, null);
+        return cSor.getCount();
     }
     public String imgquery(){
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + ID_IMGKEY + " FROM " + TABLE_IMAGE;
+        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE;
         Cursor cSor = db.rawQuery(query_params, null);
+        Log.d("Sappmmmm",""+cSor.getCount());
         if(cSor.moveToFirst()){
             do{
-                returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
+                Log.d("SappTat - ",""+cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY)+"    "+cSor.getColumnIndex(SapphireImgDbHelper.ID_IMG));
+                byte[] m = cSor.getBlob(0);
+                Log.d("Sapptti",""+m.toString());
+               // returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
 
             }while(cSor.moveToNext());
 
