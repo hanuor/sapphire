@@ -3,6 +3,7 @@ package com.hanuor.sapphire.temporarydb;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -18,6 +19,10 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "clientManager";
     private static final String TABLE_JSONDOC= "jsonDocManager";
     private static final String ID_DOCS = "idoc";
+
+    private static final String TABLE_IMAGEDOC= "imageDocManager";
+    private static final String IMAGE_SOTRAGE = "imagestorage";
+    private static final String IMAGE_KEYTAG = "imagekeytag";
     private static final int DB_VERSION = 1;
 
     public SapphireDbManager(Context context) {
@@ -33,7 +38,11 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String TABLE_JDOCS = "CREATE TABLE "+ TABLE_JSONDOC + "("+
                 ID_DOCS + " STRING" + ")";
+        String TABLE_IMAGE = "CREATE TABLE " + TABLE_IMAGEDOC + "(" +
+                IMAGE_KEYTAG + " STRING," +
+                IMAGE_SOTRAGE + " BLOB" + ")";
         sqLiteDatabase.execSQL(TABLE_JDOCS);
+        sqLiteDatabase.execSQL(TABLE_IMAGE);
 
     }
 
@@ -41,10 +50,15 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-
+    public void insertImage(String tag, byte []  image) throws SQLException{
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new  ContentValues();
+        cv.put(IMAGE_KEYTAG,    tag);
+        cv.put(IMAGE_SOTRAGE,   image);
+        database.insert( TABLE_IMAGEDOC, null, cv );
+    }
     public void insertJDoc(String Doc){
         clearJDocTable();
-        
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID_DOCS, Doc);

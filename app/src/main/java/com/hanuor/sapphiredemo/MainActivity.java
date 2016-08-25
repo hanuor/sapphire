@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Sapphire.with(MainActivity.this).gain("sir");
-                 Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
+                Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(myintent);
              //   QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
             }

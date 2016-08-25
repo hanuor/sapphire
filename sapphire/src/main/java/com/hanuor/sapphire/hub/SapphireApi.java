@@ -77,6 +77,7 @@ public class SapphireApi {
     }
     public SapphireApi registerButtons(ArrayList<Button> buttons){
         return connect;
+
     }
 
 
