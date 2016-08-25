@@ -71,8 +71,8 @@ public class SapphireApi {
     public SapphireApi registerImageViews(ArrayList<ImageView> Views){
 
         connect.imageViews = Views;
-        ImageView mm = Views.get(0);
-        connect.imageViews = imageViews;
+        mclient.imageStore(Views);
+        //ImageView mm = Views.get(0);
         return connect;
     }
     public SapphireApi registerButtons(ArrayList<Button> buttons){

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -56,6 +57,9 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         cv.put(IMAGE_KEYTAG,    tag);
         cv.put(IMAGE_SOTRAGE,   image);
         database.insert( TABLE_IMAGEDOC, null, cv );
+        Log.d("dbsapp",""+database.toString());
+        database.close();
+
     }
     public void insertJDoc(String Doc){
         clearJDocTable();
@@ -70,6 +74,7 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         db.delete(TABLE_JSONDOC, 1 + "=" + 1, null);
         db.close();
     }
+
     public String query(){
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();

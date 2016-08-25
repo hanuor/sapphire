@@ -1,6 +1,7 @@
 package com.hanuor.sapphiredemo;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button but;
     ImageView ee;
     DemoObject demoObject;
+    ImageView img, img2;
 
     private EventBus bus = EventBus.getDefault();
 
@@ -38,12 +40,29 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Sapphire",""+hour+min);
         ArrayList<String> m = new ArrayList<String>();
         //m.add("b00000");
-        m.add("sir");
-        m.add("dweney");
-        m.add("Inca");
-        m.add("Sapphire");
+        m.add("frost");
+        m.add("girl");
         //Sapphire.with(MainActivity.this).registerTags(m);
         Sapphire.with(MainActivity.this).addTags(m);
+
+
+        img = (ImageView) findViewById(R.id.img);
+        img2 = (ImageView) findViewById(R.id.img2);
+        Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.frost);
+        Bitmap icon2  = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.j);
+        img.setImageBitmap(icon1);
+        img.setImageBitmap(icon2);
+        img.setTag("frost");
+        img2.setTag("girl");
+
+final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
+        imageViewArrayList.add(img);
+        imageViewArrayList.add(img2);
+
+
+
         Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));
@@ -59,8 +78,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Sapphire.with(MainActivity.this).gain("sir");
-                Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
-                startActivity(myintent);
+                Sapphire.with(MainActivity.this).registerImageViews(imageViewArrayList);
+
+
+//                Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
+  //              startActivity(myintent);
              //   QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
             }
         });

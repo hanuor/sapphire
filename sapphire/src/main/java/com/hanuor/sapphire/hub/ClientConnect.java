@@ -2,6 +2,7 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.utils.Client;
@@ -48,5 +49,8 @@ public class ClientConnect {
     }
     public void tagUpdate(String _tag){
     internals.hitTags(_tag);
+    }
+    public void imageStore(ArrayList<ImageView> imgviews){
+        internals.storImgs(imgviews);
     }
 }
