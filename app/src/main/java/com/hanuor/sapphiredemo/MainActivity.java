@@ -2,6 +2,7 @@ package com.hanuor.sapphiredemo;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -51,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
         Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.frost);
         Bitmap icon2  = BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.j);
+                R.drawable.email);
         img.setImageBitmap(icon1);
-        img.setImageBitmap(icon2);
+        img2.setImageBitmap(icon2);
         img.setTag("frost");
         img2.setTag("girl");
-
-final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
+        Bitmap bitmap = ((BitmapDrawable)img2.getDrawable()).getBitmap();
+        Log.d("Sappitttt",""+bitmap.toString());
+        final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
         imageViewArrayList.add(img);
         imageViewArrayList.add(img2);
 

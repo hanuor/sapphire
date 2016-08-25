@@ -11,6 +11,7 @@ import com.hanuor.client.Client;
 import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.BitmapUtility;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
@@ -34,13 +35,15 @@ import java.util.ArrayList;
 public class Internals {
     private Context ctx = null;
     SapphireDbManager sapphireDbManager;
+    SapphireImgDbHelper sapphireImgDbHelper;
     public static Initializer mInit = new Initializer();
     private static StorageService storageService;
-    private static BitmapUtility bitmapUtility = new BitmapUtility();
+    private  BitmapUtility bitmapUtility = new BitmapUtility();
 
     public Internals(Context ctx){
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
+        sapphireImgDbHelper = new SapphireImgDbHelper(ctx);
         App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
         storageService = App42API.buildStorageService();
     }
@@ -143,20 +146,22 @@ public class Internals {
     public void storImgs(ArrayList<ImageView> imgviews){
         for(int i = 0; i<imgviews.size(); i++){
             //add Tag check here, not adding for now as this is just for testing
-            String tag;// = null;
+            String tag = null;
             tag = (String) imgviews.get(i).getTag();
             Bitmap bmp = null;
             Log.d("Sappit",""+tag);
             try {
-                Bitmap bitmap = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
+                bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
+            //Log.d("Sappppppt",""+bitmap.toString());
             } catch (Exception e) {
                 Log.d("Sappitt",""+e.getMessage());
                 e.printStackTrace();
             }
 
             byte newBarray[] = null;
-            //newBarray = bitmapUtility.getBytes(bmp);
-            //sapphireDbManager.insertImage(tag, newBarray);
+            newBarray = bitmapUtility.getBytes(bmp);
+            sapphireImgDbHelper.insertImage(tag, newBarray);
+           Log.d("Sappama - ",""+ sapphireImgDbHelper.imgquery());
         }
     }
 

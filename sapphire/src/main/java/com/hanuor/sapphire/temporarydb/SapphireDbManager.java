@@ -38,10 +38,10 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String TABLE_JDOCS = "CREATE TABLE "+ TABLE_JSONDOC + "("+
-                ID_DOCS + " STRING" + ")";
+                ID_DOCS + " STRING" + ");";
         String TABLE_IMAGE = "CREATE TABLE " + TABLE_IMAGEDOC + "(" +
                 IMAGE_KEYTAG + " STRING," +
-                IMAGE_SOTRAGE + " BLOB" + ")";
+                IMAGE_SOTRAGE + " BLOB NOT NULL " + ");";
         sqLiteDatabase.execSQL(TABLE_JDOCS);
         sqLiteDatabase.execSQL(TABLE_IMAGE);
 
@@ -58,8 +58,22 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         cv.put(IMAGE_SOTRAGE,   image);
         database.insert( TABLE_IMAGEDOC, null, cv );
         Log.d("dbsapp",""+database.toString());
-        database.close();
+       // database.close();
 
+    }
+    public String retreiveImageFromDB() {
+        String returnString = null;
+        SQLiteDatabase mDb = this.getReadableDatabase();
+        String query_params = "SELECT " + IMAGE_KEYTAG + " FROM " + TABLE_IMAGEDOC;
+        Cursor cSor = mDb.rawQuery(query_params, null);
+        if(cSor.moveToFirst()){
+            do{
+                returnString =  cSor.getString(cSor.getColumnIndex(SapphireDbManager.IMAGE_KEYTAG));
+
+            }while(cSor.moveToNext());
+
+        }
+        return returnString;
     }
     public void insertJDoc(String Doc){
         clearJDocTable();
