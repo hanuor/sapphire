@@ -2,7 +2,6 @@ package com.hanuor.sapphire;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hanuor.client.Client;
 import com.hanuor.sapphire.hub.SapphireApi;
@@ -13,7 +12,7 @@ import com.hanuor.sapphire.utils.Utility;
  * Created by Shantanu Johri on 28-07-2016.
  */
 public class Sapphire {
-    Context ctx;
+
     static Differentiator differentiator = new Differentiator();
     private static String questappkey;
 

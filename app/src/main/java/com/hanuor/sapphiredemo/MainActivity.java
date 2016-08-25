@@ -16,7 +16,6 @@ import java.util.Calendar;
 
 import de.greenrobot.event.EventBus;
 
-//©Hanuor, Inc. All rights reserved.
 
 public class MainActivity extends AppCompatActivity {
     Button but;
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
         // Now do something with it
         }
+       // but.setTag();
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

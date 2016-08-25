@@ -2,6 +2,8 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.hanuor.sapphire.utils.ExceptionHandler;
 
@@ -27,6 +29,7 @@ public class SapphireApi {
     private View mview = null;
     private ArrayList<String> listofTags = null;
     private String mgainTag = null;
+    private ArrayList<ImageView> imageViews = null;
     ClientConnect mclient;
     public SapphireApi(Context context){
         if(context == null){
@@ -65,6 +68,17 @@ public class SapphireApi {
         mclient.tagUpdate(tag);
         return connect;
     }
+    public SapphireApi registerImageViews(ArrayList<ImageView> Views){
+
+        connect.imageViews = Views;
+        ImageView mm = Views.get(0);
+        connect.imageViews = imageViews;
+        return connect;
+    }
+    public SapphireApi registerButtons(ArrayList<Button> buttons){
+        return connect;
+    }
+
 
 }
 
