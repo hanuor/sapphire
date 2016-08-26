@@ -72,15 +72,14 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
-    public String imgquery(){
+    public String imgquery(String _key){
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE;
+        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE + " WHERE " + ID_IMGKEY + " = " + _key;
         Cursor cSor = db.rawQuery(query_params, null);
         Log.d("Sappmmmm",""+cSor.getCount());
         if(cSor.moveToFirst()){
             do{
-                Log.d("SappTat - ",""+cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY)+"    "+cSor.getColumnIndex(SapphireImgDbHelper.ID_IMG));
                 byte[] m = cSor.getBlob(0);
                 Log.d("Sapptti",""+m.toString());
                // returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
