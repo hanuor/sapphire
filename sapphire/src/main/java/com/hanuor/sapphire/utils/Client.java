@@ -163,6 +163,7 @@ public class Client {
 
     }
     protected static void updateJsonDoc(HashMap<String, String> hMap) {
+        //Imported from Eclipse
         // TODO Auto-generated method stub
         ConverterUtils cUtils = new ConverterUtils();
         try {
@@ -177,9 +178,6 @@ public class Client {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
-    }
-
+     }
 
 }

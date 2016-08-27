@@ -50,7 +50,7 @@ public class ClientConnect {
     public void tagUpdate(String _tag){
     internals.hitTags(_tag);
     }
-    public void imageStore(ArrayList<ImageView> imgviews){
-        internals.storImgs(imgviews);
+    public void imageStore(Context ctx, ArrayList<ImageView> imgviews){
+        internals.storImgs(ctx, imgviews);
     }
 }

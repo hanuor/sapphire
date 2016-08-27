@@ -68,10 +68,10 @@ public class SapphireApi {
         mclient.tagUpdate(tag);
         return connect;
     }
-    public SapphireApi registerImageViews(ArrayList<ImageView> Views){
+    public SapphireApi registerImageViews(Context context, ArrayList<ImageView>Views){
 
         connect.imageViews = Views;
-        mclient.imageStore(Views);
+        mclient.imageStore(context, Views);
         //ImageView mm = Views.get(0);
         return connect;
     }

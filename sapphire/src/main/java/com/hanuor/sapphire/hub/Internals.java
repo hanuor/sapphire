@@ -39,10 +39,12 @@ import java.util.ArrayList;
  */
 public class Internals {
     private Context ctx = null;
-    SapphireDbManager sapphireDbManager;
-    SapphireImgDbHelper sapphireImgDbHelper;
+    private static SapphireDbManager sapphireDbManager;
+    private static SapphireImgDbHelper sapphireImgDbHelper;
     public static Initializer mInit = new Initializer();
     private static StorageService storageService;
+
+    private static Client _client = new Client();
     private  BitmapUtility bitmapUtility = new BitmapUtility();
     private static UploadService uploadService;
 
@@ -151,41 +153,45 @@ public class Internals {
             e.printStackTrace();
         }
     }
-    public void storImgs(ArrayList<ImageView> imgviews){
+    public void storImgs(Context ctx, ArrayList<ImageView> imgviews){
+
+        String destination = getAppName(ctx) +"*"+ readIdfromDevice();
+
         for(int i = 0; i<imgviews.size(); i++){
             //add Tag check here, not adding for now as this is just for testing
             String tag = null;
             tag = (String) imgviews.get(i).getTag() + "*" + readIdfromDevice() + ".ext";
-            String desc = null;
-            desc = (String) imgviews.get(i).getTag() + readIdfromDevice();
-
             Bitmap bmp = null;
-            Log.d("Sappit",""+tag);
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
-            //Log.d("Sappppppt",""+bitmap.toString());
+                Backendless.Files.Android.upload(bmp, Bitmap.CompressFormat.PNG,
+                        100, tag, destination , new AsyncCallback<BackendlessFile>() {
+                            @Override
+                            public void handleResponse(BackendlessFile backendlessFile) {
+                               }
+
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
+
+                            }
+                        });
             } catch (Exception e) {
-                Log.d("Sappitt",""+e.getMessage());
                 e.printStackTrace();
             }
 
 
-            Backendless.Files.Android.upload(bmp, Bitmap.CompressFormat.PNG,
-                    100, tag, "ImgDB", new AsyncCallback<BackendlessFile>() {
-                        @Override
-                        public void handleResponse(BackendlessFile backendlessFile) {
-                                Log.d("SappBackk",""+backendlessFile.getFileURL());
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault) {
-                            Log.d("SappBack",""+backendlessFault.getMessage());
-
-                        }
-                    });
-
         }
     }
+    private static String getAppName(Context context) {
+        int stringId = context.getApplicationInfo().labelRes;
+        if(context.getString(stringId)!= null){
+            return context.getString(stringId);
+        }else{
+            return "null_app_name";
+        }
+
+    }
+
 
 
 }
