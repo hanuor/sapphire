@@ -160,7 +160,7 @@ public class Internals {
         for(int i = 0; i<imgviews.size(); i++){
             //add Tag check here, not adding for now as this is just for testing
             String tag = null;
-            tag = (String) imgviews.get(i).getTag() + "*" + readIdfromDevice() + ".ext";
+            tag = (String) imgviews.get(i).getTag() + "*" + readIdfromDevice()+ ".jpg";
             Bitmap bmp = null;
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
