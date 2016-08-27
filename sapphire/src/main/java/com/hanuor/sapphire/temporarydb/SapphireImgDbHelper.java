@@ -25,7 +25,6 @@ import android.util.Log;
 public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     private static final String DB_NAME = "SapphireInternalIMG.db";
     private static final String TABLE_IMAGE = "ImageHandler";
-    private static final String ID_IMG = "ImageStorage";
     private static final String ID_IMGKEY = "ImageKeyTag";
     private static final int DB_VERSION = 2;
 
@@ -42,8 +41,8 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String TABLE_IMG = "CREATE TABLE " + TABLE_IMAGE + "(" +
-                ID_IMGKEY+ " STRING," +
-                ID_IMG + " BLOB NOT NULL " + ")";
+                ID_IMGKEY+ " STRING" +
+                ")";
         sqLiteDatabase.execSQL(TABLE_IMG);
     }
 
@@ -61,7 +60,6 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(ID_IMGKEY, tag);
-            cv.put(ID_IMG, image);
             database.insert(TABLE_IMAGE, null, cv);
             Log.d("dbsapp", "" + database.toString());
         }
@@ -75,14 +73,11 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     public String imgquery(String _key){
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE + " WHERE " + ID_IMGKEY + " = " + _key;
+        String query_params = "SELECT " + ID_IMGKEY + " FROM " + TABLE_IMAGE + "WHERE";
         Cursor cSor = db.rawQuery(query_params, null);
-        Log.d("Sappmmmm",""+cSor.getCount());
         if(cSor.moveToFirst()){
             do{
-                byte[] m = cSor.getBlob(0);
-                Log.d("Sapptti",""+m.toString());
-               // returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
+                returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
 
             }while(cSor.moveToNext());
 

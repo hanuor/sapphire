@@ -26,10 +26,13 @@ public class BitmapUtility {
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
             return stream.toByteArray();
         }
-
         // convert from byte array to bitmap
         public  Bitmap getImage(byte[] image) {
             return BitmapFactory.decodeByteArray(image, 0, image.length);
+        }
+        public Bitmap createResizedBitmap(Bitmap bitmap){
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 50, 50, true);
+        return resized;
         }
 
 }

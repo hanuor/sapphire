@@ -123,8 +123,6 @@ public class Internals {
                         }else{
                             sapphireDbManager.insertJDoc(getDoc);
                         }
-
-                        Log.d("Sapphire",""+sapphireDbManager.query());
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -136,7 +134,6 @@ public class Internals {
             }
             public void onException(Exception ex)
             {
-                Log.d("Sapp",""+ex.getMessage());
                 System.out.println("Exception Message"+ex.getMessage());
             }
         });
@@ -164,15 +161,14 @@ public class Internals {
             Bitmap bmp = null;
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
-                Backendless.Files.Android.upload(bmp, Bitmap.CompressFormat.PNG,
+                Backendless.Files.Android.upload(bitmapUtility.createResizedBitmap(bmp), Bitmap.CompressFormat.PNG,
                         100, tag, destination , new AsyncCallback<BackendlessFile>() {
                             @Override
                             public void handleResponse(BackendlessFile backendlessFile) {
-                               }
+                            }
 
                             @Override
                             public void handleFault(BackendlessFault backendlessFault) {
-
                             }
                         });
             } catch (Exception e) {
