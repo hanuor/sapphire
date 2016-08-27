@@ -31,7 +31,7 @@ public class BitmapUtility {
             return BitmapFactory.decodeByteArray(image, 0, image.length);
         }
         public Bitmap createResizedBitmap(Bitmap bitmap){
-        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 50, 50, true);
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
         return resized;
         }
 

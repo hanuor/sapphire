@@ -25,8 +25,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.hanuor.sapphire.R;
+import com.squareup.picasso.Picasso;
 
 
 public class SuggestionView extends RelativeLayout {
@@ -166,10 +166,8 @@ public class SuggestionView extends RelativeLayout {
 
 
         minusButton = (ImageView) rootView.findViewById(R.id.minusButton);
-        Glide.with(context)
-                .load("https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1/files/SapphireDemo*57bb13d0e4b059faa311be24/girl*57bb13d0e4b059faa311be24.jpg")
+        Picasso.with(context).load("https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1/files/SapphireDemo*57bb13d0e4b059faa311be24/girl*57bb13d0e4b059faa311be24.jpg")
                 .into(minusButton);
-
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
