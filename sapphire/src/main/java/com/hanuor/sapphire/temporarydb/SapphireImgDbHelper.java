@@ -50,30 +50,27 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public void insertImage(String tag, byte []  image) throws SQLException {
-        if(getCount()>0) {
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(TABLE_IMAGE, 1 + "=" + 1, null);
-            db.close();
-            // database.close();
-        }else{
+    public void insertImage(String tag) throws SQLException {
+
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(ID_IMGKEY, tag);
             database.insert(TABLE_IMAGE, null, cv);
             Log.d("dbsapp", "" + database.toString());
-        }
+        
     }
-    private int getCount(){
+    public  int getCount(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE;
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
     public String imgquery(String _key){
+        String regenKey = "'"+_key + "'";
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + ID_IMGKEY + " FROM " + TABLE_IMAGE + "WHERE";
+
+        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE + " WHERE " + ID_IMGKEY + " = " + regenKey + ";";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{

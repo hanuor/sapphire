@@ -158,6 +158,7 @@ public class Internals {
             //add Tag check here, not adding for now as this is just for testing
             String tag = null;
             tag = (String) imgviews.get(i).getTag() + "*" + readIdfromDevice()+ ".jpg";
+            sapphireImgDbHelper.insertImage((String) imgviews.get(i).getTag());
             Bitmap bmp = null;
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
@@ -174,9 +175,8 @@ public class Internals {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
+        Log.d("Sapppoo",""+ sapphireImgDbHelper.imgquery("girl") + "   "+ sapphireImgDbHelper.getCount());
     }
     private static String getAppName(Context context) {
         int stringId = context.getApplicationInfo().labelRes;
