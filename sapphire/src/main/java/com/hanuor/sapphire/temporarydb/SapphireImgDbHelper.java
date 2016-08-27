@@ -57,7 +57,7 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
             cv.put(ID_IMGKEY, tag);
             database.insert(TABLE_IMAGE, null, cv);
             Log.d("dbsapp", "" + database.toString());
-        
+
     }
     public  int getCount(){
         SQLiteDatabase db = this.getReadableDatabase();

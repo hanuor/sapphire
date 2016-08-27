@@ -152,7 +152,7 @@ public class SuggestionView extends RelativeLayout {
     }
 
     private void setUPSuggestion(final Context context) {
-        rootView = inflate(context, R.layout.questbox, this);
+        rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
 
         footer = (TextView) rootView.findViewById(R.id.footer);
