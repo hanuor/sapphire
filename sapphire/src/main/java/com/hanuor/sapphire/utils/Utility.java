@@ -35,4 +35,7 @@ public class Utility {
             throw new SapphireException(name + " cannot be empty");
         }
     }
+    public static void throwRuntimeException(){
+        throw new SapphireException("Have you initialized Sapphire SDK with the keys properly?");
+    }
 }
