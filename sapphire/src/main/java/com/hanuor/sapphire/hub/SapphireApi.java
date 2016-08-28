@@ -42,8 +42,8 @@ public class SapphireApi {
     private String mgainTag = null;
     private ArrayList<ImageView> imageViews = null;
     private EventBus bus = EventBus.getDefault();
-    ClientConnect mclient;
-    InformationHandler stickyEvent;
+    private ClientConnect mclient;
+    private InformationHandler stickyEvent;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         if(context == null){

@@ -44,13 +44,6 @@ public class Sapphire {
 
         return mconnect;
     }
-
-    public static void initialize(Context ctx){
-        Utility.throwExceptionIfNullOrBlank(ctx, "context");
-        ctx = ctx;
-        differentiator.setManage(false);
-
-    }
     public static boolean initialize(Context context, String appKeyID, String keySecret, String validator){
         Utility.throwExceptionIfNullOrBlank(context, "context");
         Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
