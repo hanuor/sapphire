@@ -1,26 +1,38 @@
 package com.hanuor.sapphire.utils;
 
 import java.util.ArrayList;
-
-/**
- * Created by Shantanu Johri on 29-07-2016.
+/*
+ * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 public class Utility {
     public static void throwExceptionIfNullOrBlank(Object obj, String name) {
         if(obj == null) {
-            throw new QuestException(name + " parameter can not be null ");
+            throw new SapphireException(name + " parameter can not be null ");
         } else if(obj instanceof String && ((String)obj).trim().equals("")) {
-            throw new QuestException(name + " parameter can not be blank ");
+            throw new SapphireException(name + " parameter can not be blank ");
         } else if(obj instanceof ArrayList && ((ArrayList)obj).size() == 0) {
-            throw new QuestException(name + " cannot be empty");
+            throw new SapphireException(name + " cannot be empty");
         }
     }
 
     public static void throwExceptionIfNull(Object obj, String name) {
         if(obj == null) {
-            throw new QuestException(name + " parameter can not be null ");
+            throw new SapphireException(name + " parameter can not be null ");
         } else if(obj instanceof ArrayList && ((ArrayList)obj).size() == 0) {
-            throw new QuestException(name + " cannot be empty");
+            throw new SapphireException(name + " cannot be empty");
         }
     }
 }

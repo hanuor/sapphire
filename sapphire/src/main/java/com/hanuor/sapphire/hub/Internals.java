@@ -21,7 +21,6 @@ import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.storage.Storage;
 import com.shephertz.app42.paas.sdk.android.storage.StorageService;
-import com.shephertz.app42.paas.sdk.android.upload.UploadService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,10 +43,7 @@ public class Internals {
     public static Initializer mInit = new Initializer();
     private static StorageService storageService;
 
-    private static Client _client = new Client();
     private  BitmapUtility bitmapUtility = new BitmapUtility();
-    private static UploadService uploadService;
-
     public Internals(Context ctx){
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
@@ -55,7 +51,6 @@ public class Internals {
         App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
         Backendless.initApp( ctx, mInit.ImgHelperId(), mInit.ImgHelperSecret(),"v1");
         storageService = App42API.buildStorageService();
-        uploadService = App42API.buildUploadService();
     }
     public  void saveDocIdInternally(String docID){
         //Don't forget to add wrtie permission in android
@@ -176,7 +171,11 @@ public class Internals {
                 e.printStackTrace();
             }
         }
+
+
         Log.d("Sapppoo",""+ sapphireImgDbHelper.imgquery("girl") + "   "+ sapphireImgDbHelper.getCount());
+
+
     }
     private static String getAppName(Context context) {
         int stringId = context.getApplicationInfo().labelRes;

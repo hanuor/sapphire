@@ -1,4 +1,5 @@
-package com.hanuor.sapphire.utils;/*
+package com.hanuor.sapphire.utils;
+/*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
