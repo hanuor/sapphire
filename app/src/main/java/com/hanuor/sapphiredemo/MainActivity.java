@@ -1,5 +1,6 @@
 package com.hanuor.sapphiredemo;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,12 +40,11 @@ public class MainActivity extends AppCompatActivity {
         int hour = today.get(Calendar.HOUR);
         int min = today.get(Calendar.MINUTE);
         Log.d("Sapphire",""+hour+min);
-        ArrayList<String> m = new ArrayList<String>();
+        final ArrayList<String> m = new ArrayList<String>();
         //m.add("b00000");
         m.add("frost");
         m.add("girl");
         //Sapphire.with(MainActivity.this).registerTags(m);
-        Sapphire.with(MainActivity.this).addTags(m);
 
 
         img = (ImageView) findViewById(R.id.img);
@@ -65,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
         // Better check that an event was actually posted before
         if(stickyEvent != null) {
-        // "Consume" the sticky event
+        // "Consume" the sticky even
             Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
         // Now do something with it
         }
@@ -79,14 +79,15 @@ public class MainActivity extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Sapphire.with(MainActivity.this).gain("sir");
-                Sapphire.with(MainActivity.this).registerImageViews(MainActivity.this, imageViewArrayList);
 
+                Sapphire.initialize(MainActivity.this,"asas","bbb","true");
+                Sapphire.with(MainActivity.this).addTags(m);
 
-//                Intent myintent = new Intent(MainActivity.this, ReceiveActivity.class);
-  //              startActivity(myintent);
-             //   QuestApi.setforButton(MainActivity.this, "key", myintent, "parse", demoObject);
-            }
+                Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
+                startActivity(ms);
+               // Sapphire.with(MainActivity.this).gain("sir");
+                //Sapphire.with(MainActivity.this).registerImageViews(MainActivity.this, imageViewArrayList);
+      }
         });
     }
 

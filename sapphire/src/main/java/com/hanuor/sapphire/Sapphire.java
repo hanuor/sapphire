@@ -15,16 +15,23 @@ package com.hanuor.sapphire;
  * limitations under the License.
  */
 import android.content.Context;
-import android.util.Log;
+
 import com.hanuor.client.Client;
 import com.hanuor.sapphire.hub.SapphireApi;
 import com.hanuor.sapphire.temporarydb.Differentiator;
+import com.hanuor.sapphire.utils.InformationHandler;
+import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
+
+import de.greenrobot.event.EventBus;
 
 public class Sapphire {
 
-    static Differentiator differentiator = new Differentiator();
+    private static Differentiator differentiator = new Differentiator();
     private static String questappkey;
+    private static RuntimeHandler runtimeHandler;
+    private static EventBus bus = EventBus.getDefault();
+
 
     public Sapphire(){
 
@@ -44,21 +51,23 @@ public class Sapphire {
         differentiator.setManage(false);
 
     }
-    public static boolean initialize(Context ctx, String appKey){
-        Utility.throwExceptionIfNullOrBlank(ctx, "context");
-        Utility.throwExceptionIfNullOrBlank(appKey, "appKey");
-        double mm = Client.test();
-        Log.d("Sapphire",""+ mm);
-        ctx = ctx;
+    public static boolean initialize(Context context, String appKeyID, String keySecret, String validator){
+        Utility.throwExceptionIfNullOrBlank(context, "context");
+        Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
+        runtimeHandler = new RuntimeHandler();
+        runtimeHandler.setKey_ID(appKeyID);
+        runtimeHandler.setKey_secret(keySecret);
+        runtimeHandler.setaBoolean(validator);
+        bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
 
-        questappkey = appKey;
+        double mm = Client.test();
+        questappkey = appKeyID;
         //check if key matches to the key stored in Database
         //if else statement
         differentiator.setManage(true);
         if(questappkey.equalsIgnoreCase("hanuor")){
             return true;
-
-        }else{
+     }else{
             return false;
         }
     }

@@ -30,7 +30,7 @@ public class ReceiveActivity extends AppCompatActivity {
 // Better check that an event was actually posted before
         if(stickyEvent != null) {
 // "Consume" the sticky event
-            Toast.makeText(ReceiveActivity.this, "Yess", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
 // Now do something with it
         }
 

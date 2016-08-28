@@ -1,13 +1,17 @@
 package com.hanuor.sapphire.hub;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.utils.ExceptionHandler;
+import com.hanuor.sapphire.utils.InformationHandler;
 
 import java.util.ArrayList;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Shantanu Johri on 15-08-2016.
@@ -30,12 +34,23 @@ public class SapphireApi {
     private ArrayList<String> listofTags = null;
     private String mgainTag = null;
     private ArrayList<ImageView> imageViews = null;
+    private EventBus bus = EventBus.getDefault();
     ClientConnect mclient;
     public SapphireApi(Context context){
         if(context == null){
 
             ExceptionHandler.writeError("Context cannot be null");
         }else{
+
+            InformationHandler stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
+// Better check that an event was actually posted before
+            if(stickyEvent != null) {
+// "Consume" the sticky event
+                Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
+                //Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
+// Now do something with it
+            }
+
             this.context = context;
             mclient = new ClientConnect(context);
         }
