@@ -31,17 +31,13 @@ public class Sapphire {
     private static String questappkey;
     private static RuntimeHandler runtimeHandler;
     private static EventBus bus = EventBus.getDefault();
-
-
     public Sapphire(){
 
     }
     volatile static SapphireApi mconnect =  null;
     public static SapphireApi with(Context context){
-
         mconnect = new SapphireApi(context);
         mconnect.setInstance(mconnect);
-
         return mconnect;
     }
     public static boolean initialize(Context context, String appKeyID, String keySecret, String validator){

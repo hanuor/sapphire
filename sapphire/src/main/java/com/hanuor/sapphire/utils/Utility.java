@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 public class Utility {
     public static void throwExceptionIfNullOrBlank(Object obj, String name) {
         if(obj == null) {
@@ -27,7 +26,6 @@ public class Utility {
             throw new SapphireException(name + " cannot be empty");
         }
     }
-
     public static void throwExceptionIfNull(Object obj, String name) {
         if(obj == null) {
             throw new SapphireException(name + " parameter can not be null ");

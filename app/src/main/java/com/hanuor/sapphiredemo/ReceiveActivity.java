@@ -3,12 +3,8 @@ package com.hanuor.sapphiredemo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import de.greenrobot.event.EventBus;
 
@@ -27,21 +23,16 @@ public class ReceiveActivity extends AppCompatActivity {
         setContentView(R.layout.receive);
         name = (TextView) findViewById(R.id.name);
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
-// Better check that an event was actually posted before
+        // Better check that an event was actually posted before
         if(stickyEvent != null) {
-// "Consume" the sticky event
+            // "Consume" the sticky event
             Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
-// Now do something with it
+        // Now do something with it
         }
 
 
         }
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)    public void onEvent(HelloWorld event){
-        Log.d("Joker",""+event.getMessage());
-        Toast.makeText(ReceiveActivity.this, ""+event.getMessage(), Toast.LENGTH_SHORT).show();
-       }
-
-    @Override
+     @Override
     public void onStart() {
         super.onStart();
         bus.register(this); // registering the bus
