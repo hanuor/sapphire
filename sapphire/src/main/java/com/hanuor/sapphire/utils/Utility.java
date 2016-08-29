@@ -1,6 +1,4 @@
 package com.hanuor.sapphire.utils;
-
-import java.util.ArrayList;
 /*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
@@ -16,6 +14,7 @@ import java.util.ArrayList;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import java.util.ArrayList;
 public class Utility {
     public static void throwExceptionIfNullOrBlank(Object obj, String name) {
         if(obj == null) {
