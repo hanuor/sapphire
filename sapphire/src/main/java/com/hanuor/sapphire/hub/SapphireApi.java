@@ -63,6 +63,7 @@ public class SapphireApi {
         this.connect = connect;
     }
     public SapphireApi registerTags(ArrayList<String> tags){
+        //these are the security checks
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             connect.tags = tags;
@@ -85,8 +86,13 @@ public class SapphireApi {
             return null;
         }
     }
-    public SapphireApi setIndividualModelling(boolean value){
+    public SapphireApi enableIndividualModelling(boolean value){
         connect.individualmode = value;
+        if(connect.individualmode){
+            //Enable the private tree to true
+        }else{
+            //Only enable the public tree
+        }
         return connect;
     }
     public SapphireApi attachView(View view){

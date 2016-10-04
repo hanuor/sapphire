@@ -22,7 +22,6 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
     Button but;
-    ImageView ee;
     DemoObject demoObject;
     ImageView img, img2;
 
@@ -88,10 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 Sapphire.with(MainActivity.this).addTags(m);
 
+
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(ms);
-               // Sapphire.with(MainActivity.this).gain("sir");
-                //Sapphire.with(MainActivity.this).registerImageViews(MainActivity.this, imageViewArrayList);
       }
         });
     }
