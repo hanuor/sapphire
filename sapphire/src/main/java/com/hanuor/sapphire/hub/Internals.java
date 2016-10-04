@@ -145,6 +145,7 @@ public class Internals {
         }
     }
     public void storImgs(Context ctx, ArrayList<ImageView> imgviews){
+        Log.d("allweknow","here");
         String destination = getAppName(ctx) +"*"+ readIdfromDevice();
         for(int i = 0; i<imgviews.size(); i++){
             //add Tag check here, not adding for now as this is just for testing
@@ -158,9 +159,11 @@ public class Internals {
                         100, tag, destination , new AsyncCallback<BackendlessFile>() {
                             @Override
                             public void handleResponse(BackendlessFile backendlessFile) {
+                                Log.d("allweknowRes",""+backendlessFile.getFileURL());
                             }
                             @Override
                             public void handleFault(BackendlessFault backendlessFault) {
+                                Log.d("allweknowFault",""+backendlessFault.getMessage());
                             }
                         });
             } catch (Exception e) {

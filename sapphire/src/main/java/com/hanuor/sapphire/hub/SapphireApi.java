@@ -112,7 +112,7 @@ public class SapphireApi {
             return null;
         }
     }
-    public SapphireApi registerImageViews(Context context, ArrayList<ImageView>Views){
+    public SapphireApi registerImageViews(ArrayList<ImageView>Views){
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             connect.imageViews = Views;

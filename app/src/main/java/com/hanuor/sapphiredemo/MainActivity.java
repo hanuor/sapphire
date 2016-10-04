@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         int min = today.get(Calendar.MINUTE);
         Log.d("Sapphire",""+hour+min);
         final ArrayList<String> m = new ArrayList<String>();
+        final ArrayList<ImageView> arrayOfImgViews = new ArrayList<ImageView>();
         //m.add("b00000");
         m.add("frost");
         m.add("girl");
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         img2.setImageBitmap(icon2);
         img.setTag("frost");
         img2.setTag("girl");
+        arrayOfImgViews.add(img);
+        arrayOfImgViews.add(img2);
         Bitmap bitmap = ((BitmapDrawable)img2.getDrawable()).getBitmap();
         Log.d("Sappitttt",""+bitmap.toString());
         final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Sapphire.initialize(MainActivity.this,"asas","bbb");
+
+                Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 Sapphire.with(MainActivity.this).addTags(m);
 
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);

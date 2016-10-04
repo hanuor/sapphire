@@ -33,13 +33,13 @@ public class ReceiveActivity extends AppCompatActivity {
      @Override
     public void onStart() {
         super.onStart();
-        bus.register(this); // registering the bus
+
 
     }
 
     @Override
     public void onStop() {
-        bus.unregister(this); // un-registering the bus
+
         super.onStop();
     }
 }
