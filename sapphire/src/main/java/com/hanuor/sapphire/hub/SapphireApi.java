@@ -44,6 +44,7 @@ public class SapphireApi {
     private EventBus bus = EventBus.getDefault();
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
+    private boolean individualmode = false;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         if(context == null){
@@ -83,6 +84,10 @@ public class SapphireApi {
             Utility.throwRuntimeException();
             return null;
         }
+    }
+    public SapphireApi setIndividualModelling(boolean value){
+        connect.individualmode = value;
+        return connect;
     }
     public SapphireApi attachView(View view){
         //attach a view to show suggestions

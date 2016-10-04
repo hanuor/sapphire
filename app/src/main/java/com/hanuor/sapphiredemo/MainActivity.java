@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
-        Sapphire.initialize(MainActivity.this);
+       // Sapphire.initialize(MainActivity.this, "ID", "secret");
 
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Sapphire.initialize(MainActivity.this,"asas","bbb","true");
+                Sapphire.initialize(MainActivity.this,"asas","bbb");
                 Sapphire.with(MainActivity.this).addTags(m);
 
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);

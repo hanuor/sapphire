@@ -35,7 +35,6 @@ public class SuggestionView extends RelativeLayout {
     private String defaultfooterTextColor = "#eeeeee";
 
     private float footerTextSize = 13f;
-    private String BACKGROUND_COLOR = "#880E4F";
     private Context context;
     private float headerTextSize = 13f;
     String TEXT = "Suggestionbox";

@@ -40,13 +40,13 @@ public class Sapphire {
         mconnect.setInstance(mconnect);
         return mconnect;
     }
-    public static boolean initialize(Context context, String appKeyID, String keySecret, String validator){
+    public static boolean initialize(Context context, String appKeyID, String keySecret){
         Utility.throwExceptionIfNullOrBlank(context, "context");
         Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
         runtimeHandler = new RuntimeHandler();
         runtimeHandler.setKey_ID(appKeyID);
         runtimeHandler.setKey_secret(keySecret);
-        runtimeHandler.setaBoolean(validator);
+        runtimeHandler.setaBoolean("true");
         bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
 
         double mm = Client.test();

@@ -29,9 +29,7 @@ public class ReceiveActivity extends AppCompatActivity {
             Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
         // Now do something with it
         }
-
-
-        }
+    }
      @Override
     public void onStart() {
         super.onStart();
