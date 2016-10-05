@@ -19,6 +19,7 @@ import android.content.Context;
 import com.hanuor.client.Client;
 import com.hanuor.sapphire.hub.SapphireApi;
 import com.hanuor.sapphire.temporarydb.Differentiator;
+import com.hanuor.sapphire.temporarydb.PrivateDatabaseHelper;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -41,6 +42,10 @@ public class Sapphire {
         return mconnect;
     }
     public static boolean initialize(Context context, String appKeyID, String keySecret){
+
+        PrivateDatabaseHelper privateDatabaseHelper = new PrivateDatabaseHelper(context);
+        privateDatabaseHelper.retrieveNodeColumnValue(1);
+
         Utility.throwExceptionIfNullOrBlank(context, "context");
         Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
         runtimeHandler = new RuntimeHandler();

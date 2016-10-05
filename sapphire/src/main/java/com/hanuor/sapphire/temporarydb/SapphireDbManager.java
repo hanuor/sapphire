@@ -16,7 +16,7 @@ import java.util.Calendar;
 public class SapphireDbManager extends SQLiteOpenHelper {
 
 
-    public static final String DB_NAME = "SapphireInternal.db";
+    private static final String DB_NAME = "SapphireInternal.db";
     private static final String TABLE_NAME = "clientManager";
     private static final String TABLE_JSONDOC= "jsonDocManager";
     private static final String ID_DOCS = "idoc";
