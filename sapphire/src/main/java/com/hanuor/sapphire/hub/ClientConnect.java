@@ -17,6 +17,7 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
@@ -82,6 +83,17 @@ public class ClientConnect {
             internals.storImgs(ctx, imgviews);
         }else{
             Utility.throwRuntimeException();
+        }
+    }
+    public void startLearning(ArrayList<ImageView> imgs, ArrayList<Button> buts){
+
+        if(imgs!=null && buts== null) {
+
+
+        }else if(imgs == null && buts != null){
+
+        }else if(imgs!=null && buts != null){
+
         }
     }
 }

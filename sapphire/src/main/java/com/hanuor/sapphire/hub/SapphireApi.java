@@ -45,6 +45,7 @@ public class SapphireApi {
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
     private boolean individualmode = false;
+    private ArrayList<Button> buttonArrayList = null;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         if(context == null){
@@ -88,10 +89,17 @@ public class SapphireApi {
     }
     public SapphireApi enableIndividualModelling(boolean value){
         connect.individualmode = value;
-        if(connect.individualmode){
+        if(connect.individualmode) {
             //Enable the private tree to true
+            if (connect.imageViews != null || connect.buttonArrayList != null) {
+                //Call the client heirarchy
+                mclient.startLearning(connect.imageViews, connect.buttonArrayList);
+            } else {
+                Utility.throwRuntimeException(" Have you registered the views yet? ");
+            }
         }else{
             //Only enable the public tree
+
         }
         return connect;
     }
@@ -118,7 +126,7 @@ public class SapphireApi {
             return null;
         }
     }
-    public SapphireApi registerImageViews(ArrayList<ImageView>Views){
+    public SapphireApi registerImageViews(ArrayList<ImageView> Views){
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             connect.imageViews = Views;
@@ -132,6 +140,7 @@ public class SapphireApi {
     public SapphireApi registerButtons(ArrayList<Button> buttons){
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
+            connect.buttonArrayList = buttons;
             return connect;
         }else{
             Utility.throwRuntimeException();

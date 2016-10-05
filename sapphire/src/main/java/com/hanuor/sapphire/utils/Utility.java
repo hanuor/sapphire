@@ -35,4 +35,9 @@ public class Utility {
     public static void throwRuntimeException(){
         throw new SapphireException("Have you initialized Sapphire SDK with the keys properly?");
     }
+    public static void throwRuntimeException(String message){
+        if(message!=null){
+            throw new SapphireException(message);
+        }
+    }
 }
