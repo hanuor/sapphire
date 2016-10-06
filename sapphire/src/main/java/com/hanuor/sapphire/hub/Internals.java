@@ -139,7 +139,7 @@ public class Internals {
     public void hitTags(String _tag){
         //fetch from database
         String retrievedDoc = sapphireDbManager.query();
-        Log.d("SapphireDoc", retrievedDoc + " BBB");
+
         try {
             String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
             sapphireDbManager.insertJDoc(getDoc);
@@ -147,7 +147,10 @@ public class Internals {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
+
+
     public void storImgs(Context ctx, ArrayList<ImageView> imgviews){
         Log.d("allweknow","here");
         String destination = getAppName(ctx) +"*"+ readIdfromDevice();

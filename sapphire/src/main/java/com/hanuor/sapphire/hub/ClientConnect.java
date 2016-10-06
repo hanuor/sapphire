@@ -17,7 +17,6 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.utils.Client;
@@ -82,12 +81,5 @@ public class ClientConnect {
             Utility.throwRuntimeException();
         }
     }
-    public void startLearning(ArrayList<ImageView> imgs, ArrayList<Button> buts){
-        if(stickyEvent != null) {
-            Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
-            internals.privateLearningIni(imgs, buts);
-        }else{
-            Utility.throwRuntimeException();
-        }
-    }
+
 }

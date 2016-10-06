@@ -93,14 +93,13 @@ public class SapphireApi {
             //Enable the private tree to true
             if (connect.imageViews != null || connect.buttonArrayList != null) {
                 //Call the client heirarchy
-                mclient.startLearning(connect.imageViews, connect.buttonArrayList);
+                //mclient.startLearning(connect.imageViews, connect.buttonArrayList);
             } else {
                 Utility.throwRuntimeException(" Have you registered the views yet? ");
             }
         }else{
             //Only enable the public tree
-
-        }
+       }
         return connect;
     }
    /* public SapphireApi attachView(View view){
@@ -122,6 +121,7 @@ public class SapphireApi {
             Log.d("Sapphire]",""+tag.toString().length());
             connect.mgainTag = (String) tag;
             mclient.tagUpdate((String) tag);
+
             return connect;
         }else{
             Utility.throwRuntimeException();
