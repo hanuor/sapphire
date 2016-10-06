@@ -59,6 +59,7 @@ public class PrivateDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
     public double retrieveNodeColumnValue(int columnSET){
+        //Coumn set is the passed day here.
         String GETCOLUMNNAME = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -99,7 +100,7 @@ public class PrivateDatabaseHelper extends SQLiteOpenHelper {
             }while(cSor.moveToNext());
 
         }else{
-            Log.d("GetColumnreturnValue"," " + 0.0 + " DAY   " + getDayUtil.);
+            Log.d("GetColumnreturnValue"," " + 0.0 + " DAY   " + getDayUtil.getDay());
             return 0.0;
         }
     }

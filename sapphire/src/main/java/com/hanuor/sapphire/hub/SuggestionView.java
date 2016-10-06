@@ -165,7 +165,8 @@ public class SuggestionView extends RelativeLayout {
 
 
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
-        Picasso.with(context).load("https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1/files/SapphireDemo*57bb13d0e4b059faa311be24/girl*57bb13d0e4b059faa311be24.jpg")
+        String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+        Picasso.with(context).load(urlpic)
                 .into(minusButton);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
