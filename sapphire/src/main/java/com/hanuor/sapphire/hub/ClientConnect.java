@@ -20,7 +20,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.utils.Client;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -29,14 +28,12 @@ import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 public class ClientConnect {
-    private SapphireDbManager sapphireDbManager;
     private Internals internals;
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
 
     public ClientConnect(Context ctx){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
-        sapphireDbManager = new SapphireDbManager(ctx);
         internals = new Internals(ctx);
     }
     public void register(Context ctx, ArrayList<String> tags){

@@ -103,7 +103,7 @@ public class SapphireApi {
         }
         return connect;
     }
-    public SapphireApi attachView(View view){
+   /* public SapphireApi attachView(View view){
         //attach a view to show suggestions
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
@@ -114,12 +114,14 @@ public class SapphireApi {
             return null;
         }
 
-        }
-    public SapphireApi gain(String tag){
+        }*/
+    public SapphireApi gain(Object tag){
+
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
-            connect.mgainTag = tag;
-            mclient.tagUpdate(tag);
+            Log.d("Sapphire]",""+tag.toString().length());
+            connect.mgainTag = (String) tag;
+            mclient.tagUpdate((String) tag);
             return connect;
         }else{
             Utility.throwRuntimeException();

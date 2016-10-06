@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
-       // Sapphire.initialize(MainActivity.this, "ID", "secret");
-
+        Sapphire.initialize(MainActivity.this,"asas","bbb");
         //for testing purpose
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         //m.add("b00000");
         m.add("frost");
         m.add("girl");
+        m.add("Bumblebee");
         //Sapphire.with(MainActivity.this).registerTags(m);
 
 
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         img2.setImageBitmap(icon2);
         img.setTag("frost");
         img2.setTag("girl");
+
+
         arrayOfImgViews.add(img);
         arrayOfImgViews.add(img2);
         Bitmap bitmap = ((BitmapDrawable)img2.getDrawable()).getBitmap();
@@ -65,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
         imageViewArrayList.add(img);
         imageViewArrayList.add(img2);
 
+        Sapphire.with(MainActivity.this).registerTags(m);
 
-
-       // Toast.makeText(MainActivity.this,"Message "+Sapphire.initialize(MainActivity.this,"hanuor"),Toast.LENGTH_SHORT).show();
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
@@ -77,21 +78,23 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
         // Now do something with it
         }
-       // but.setTag();
-        but.setOnClickListener(new View.OnClickListener() {
+
+        img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sapphire.with(MainActivity.this).gain(img2.getTag());
+            }
+        });
+       but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Sapphire.initialize(MainActivity.this,"asas","bbb");
-
                 Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 Sapphire.with(MainActivity.this).addTags(m);
-
-
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
                 startActivity(ms);
-      }
-        });
+            }
+                      });
     }
 
 

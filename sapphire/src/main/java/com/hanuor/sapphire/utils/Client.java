@@ -16,6 +16,7 @@ package com.hanuor.sapphire.utils;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hanuor.client.NodeMonitor;
 import com.hanuor.container.Initializer;
@@ -47,14 +48,20 @@ public class Client {
     public static double test(){
         return mNodeMonitor.nodeIncrementor(0.1);
     }
-    public  void writeJson(final String jsonDocument){
+
+    public void writeJson(final String jsonDocument){
 		/*
 		Write json document to the database. This method is directly accessed from the android library.
 
 		*/
+
+        //use a internet check here
+        //use a separate DB here for handling the JSON  data
+
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override
             public void onSuccess(Object o) {
+                Log.d("SapphireUploadSuccess","true");
                 Internals internals = new Internals(ctx);
                 Storage storage  = (Storage )o;
                 ArrayList<Storage.JSONDocument> jsonDocList = storage.getJsonDocList();
@@ -66,6 +73,7 @@ public class Client {
 
             @Override
             public void onException(Exception e) {
+                Log.d("SapphireUploadSuccess","false");
                 e.printStackTrace();
             }
         });
@@ -101,6 +109,7 @@ public class Client {
     public  void makeJsonString(ArrayList<String> tags){
         ConverterUtils cutils = new ConverterUtils(tags);
         String jsonDoc =  cutils.getJsonString();
+        Log.d("SapphireD",""+jsonDoc);
         //call the write Json script
         writeJson(jsonDoc);
     }

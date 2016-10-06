@@ -32,6 +32,7 @@ import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.BitmapUtility;
+import com.hanuor.utils.GetDayUtil;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.storage.Storage;
@@ -54,6 +55,7 @@ public class Internals {
     private static Initializer mInit = new Initializer();
     private static StorageService storageService;
     private  BitmapUtility bitmapUtility = new BitmapUtility();
+    private GetDayUtil getDayUtil = new GetDayUtil();
     public Internals(Context ctx){
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
@@ -137,6 +139,7 @@ public class Internals {
     public void hitTags(String _tag){
         //fetch from database
         String retrievedDoc = sapphireDbManager.query();
+        Log.d("SapphireDoc", retrievedDoc + " BBB");
         try {
             String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
             sapphireDbManager.insertJDoc(getDoc);
@@ -183,7 +186,7 @@ public class Internals {
     }
 
     public void privateLearningIni(ArrayList<ImageView> imgs, ArrayList<Button> buts){
-
+        int getDay = getDayUtil.getDay();
         if(imgs!=null && buts== null) {
 
         }else if(imgs == null && buts != null){
