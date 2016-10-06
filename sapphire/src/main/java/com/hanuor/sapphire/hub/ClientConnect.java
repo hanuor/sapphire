@@ -86,14 +86,11 @@ public class ClientConnect {
         }
     }
     public void startLearning(ArrayList<ImageView> imgs, ArrayList<Button> buts){
-
-        if(imgs!=null && buts== null) {
-
-
-        }else if(imgs == null && buts != null){
-
-        }else if(imgs!=null && buts != null){
-
+        if(stickyEvent != null) {
+            Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
+            internals.privateLearningIni(imgs, buts);
+        }else{
+            Utility.throwRuntimeException();
         }
     }
 }

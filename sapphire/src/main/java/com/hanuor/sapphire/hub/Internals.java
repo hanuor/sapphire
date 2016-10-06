@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.backendless.Backendless;
@@ -179,5 +180,17 @@ public class Internals {
         }else{
             return "null_app_name";
         }
+    }
+
+    public void privateLearningIni(ArrayList<ImageView> imgs, ArrayList<Button> buts){
+
+        if(imgs!=null && buts== null) {
+
+        }else if(imgs == null && buts != null){
+
+        }else if(imgs!=null && buts != null){
+
+        }
+
     }
 }

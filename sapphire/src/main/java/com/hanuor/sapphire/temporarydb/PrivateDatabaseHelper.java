@@ -106,6 +106,10 @@ public class PrivateDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void enterColumn0Node(double value){
+        //the below couple of lines should be done in JAR file
+        double prevValue = retrieveNodeColumnValue(0);
+        double newValue = prevValue + prevValue;
         SQLiteDatabase db = this.getWritableDatabase();
+
     }
 }
