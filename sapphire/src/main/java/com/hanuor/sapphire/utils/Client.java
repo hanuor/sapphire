@@ -69,8 +69,6 @@ public class Client {
                 internals.saveDocIdInternally(docId);
 
             }
-
-
             @Override
             public void onException(Exception e) {
                 Log.d("SapphireUploadSuccess","false");

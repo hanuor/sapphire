@@ -14,16 +14,22 @@ package com.hanuor.sapphire.hub;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.sapphire.utils.ExceptionHandler;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.Utility;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -102,18 +108,6 @@ public class SapphireApi {
        }
         return connect;
     }
-   /* public SapphireApi attachView(View view){
-        //attach a view to show suggestions
-        if(stickyEvent != null) {
-            Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
-            connect.mview = view;
-            return connect;
-        }else{
-            Utility.throwRuntimeException();
-            return null;
-        }
-
-        }*/
     public SapphireApi gain(Object tag){
 
         if(stickyEvent != null) {
@@ -149,5 +143,22 @@ public class SapphireApi {
             return null;
         }
     }
+
+    //Delete this method. This is just for testing
+
+    public void check(ImageView img, ImageView img2){
+        SapphirePrivateDB sapphirePrivateDB = new SapphirePrivateDB(context);
+        Bitmap bitmap = ((BitmapDrawable)img.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        sapphirePrivateDB.storeIMG(byteArray);
+        Log.d("SapphireDBcheck",""+sapphirePrivateDB.retrievePImage().toString());
+        Bitmap bitma = BitmapFactory.decodeByteArray(sapphirePrivateDB.retrievePImage(),
+                0, sapphirePrivateDB.retrievePImage().length);
+        img2.setImageBitmap(bitma);
+    }
+
 }
+
 

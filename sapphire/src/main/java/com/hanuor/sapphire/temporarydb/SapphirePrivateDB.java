@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SapphirePrivateDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "SapphireInternalPrivitized.db";
@@ -48,11 +49,24 @@ public class SapphirePrivateDB extends SQLiteOpenHelper {
     }
 
     public void storeIMG(byte[] imgArray){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cvalues = new ContentValues();
-        cvalues.put(COLUMN_IMG, imgArray);
-        db.insert(TABLE_PTREE, null, cvalues);
-        db.close();
+        byte retrieveBArray[] = retrievePImage();
+        if(retrieveBArray==null){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cvalues = new ContentValues();
+            cvalues.put(COLUMN_IMG, imgArray);
+            db.insert(TABLE_PTREE, null, cvalues);
+            db.close();
+        }else{
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(TABLE_PTREE, 1 + "=" + 1, null);
+            db.close();
+            SQLiteDatabase dbnew = this.getWritableDatabase();
+            ContentValues cvalues = new ContentValues();
+            cvalues.put(COLUMN_IMG, imgArray);
+            dbnew.insert(TABLE_PTREE, null, cvalues);
+            dbnew.close();
+        }
+
     }
 
     public byte[] retrievePImage(){
@@ -61,7 +75,9 @@ public class SapphirePrivateDB extends SQLiteOpenHelper {
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
+                Log.d("Sappyy","Yes");
                 return cSor.getBlob(cSor.getColumnIndexOrThrow(COLUMN_IMG));
+
             }while(cSor.moveToNext());
         }else{
             return null;

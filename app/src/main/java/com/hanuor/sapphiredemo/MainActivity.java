@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.img);
         img2 = (ImageView) findViewById(R.id.img2);
         Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.frost);
+                R.drawable.lp);
         Bitmap icon2  = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.email);
         img.setImageBitmap(icon1);
@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Sapphire.with(MainActivity.this).gain(img2.getTag());
-            }
+              //  Sapphire.with(MainActivity.this).gain(img2.getTag());
+                }
         });
        but.setOnClickListener(new View.OnClickListener() {
             @Override
