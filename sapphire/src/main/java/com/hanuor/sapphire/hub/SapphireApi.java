@@ -16,20 +16,17 @@ package com.hanuor.sapphire.hub;
  */
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.ExceptionHandler;
+import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.Utility;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -51,6 +48,7 @@ public class SapphireApi {
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
     private boolean individualmode = false;
+    private ArrayList<String> tagslist;
     private ArrayList<Button> buttonArrayList = null;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
@@ -114,8 +112,8 @@ public class SapphireApi {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             Log.d("Sapphire]",""+tag.toString().length());
             connect.mgainTag = (String) tag;
-            mclient.tagUpdate((String) tag);
-
+           // mclient.tagUpdate((String) tag);
+            mclient.setRecentPrivate((String) tag, connect.tagslist);
             return connect;
         }else{
             Utility.throwRuntimeException();
@@ -125,8 +123,15 @@ public class SapphireApi {
     public SapphireApi registerImageViews(ArrayList<ImageView> Views){
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
+            ArrayList<String> tags = new ArrayList<String>();
+            for(int i = 0; i < Views.size(); i++){
+                tags.add((String)Views.get(i).getTag());
+            }
+            connect.tagslist = tags;
             connect.imageViews = Views;
+
             mclient.imageStore(context, Views);
+
             return connect;
         }else{
             Utility.throwRuntimeException();
@@ -146,17 +151,12 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void check(ImageView img, ImageView img2){
-        SapphirePrivateDB sapphirePrivateDB = new SapphirePrivateDB(context);
-        Bitmap bitmap = ((BitmapDrawable)img.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        sapphirePrivateDB.storeIMG(byteArray);
-        Log.d("SapphireDBcheck",""+sapphirePrivateDB.retrievePImage().toString());
-        Bitmap bitma = BitmapFactory.decodeByteArray(sapphirePrivateDB.retrievePImage(),
-                0, sapphirePrivateDB.retrievePImage().length);
-        img2.setImageBitmap(bitma);
+    public void check(ImageView img){
+        SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
+        ImagesUtil imagesUtil = new ImagesUtil();
+
+        img.setImageDrawable(imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")));
+
     }
 
 }

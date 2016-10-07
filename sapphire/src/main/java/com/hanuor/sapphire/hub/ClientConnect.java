@@ -81,5 +81,8 @@ public class ClientConnect {
             Utility.throwRuntimeException();
         }
     }
+    public void setRecentPrivate(String _tag, ArrayList<String> imageViewArrayList){
+        internals.recentTagViewHelper(_tag, imageViewArrayList);
+    }
 
 }

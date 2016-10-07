@@ -23,7 +23,7 @@ import android.graphics.drawable.Drawable;
 import java.io.ByteArrayOutputStream;
 
 public class ImagesUtil {
-    public static byte[] drawableToByteArray(Drawable d) {
+    public  byte[] drawableToByteArray(Drawable d) {
 
         if (d != null) {
             Bitmap imageBitmap = ((BitmapDrawable) d).getBitmap();
@@ -38,7 +38,7 @@ public class ImagesUtil {
     }
 
 
-    public static Drawable byteToDrawable(byte[] data) {
+    public  Drawable byteToDrawable(byte[] data) {
 
         if (data == null)
             return null;

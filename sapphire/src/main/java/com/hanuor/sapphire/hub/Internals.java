@@ -32,6 +32,7 @@ import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.BitmapUtility;
+import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.utils.GetDayUtil;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
@@ -50,6 +51,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 public class Internals {
     private Context ctx = null;
+    private ImagesUtil imagesUtil = new ImagesUtil();
     private static SapphireDbManager sapphireDbManager;
     private static SapphireImgDbHelper sapphireImgDbHelper;
     private static Initializer mInit = new Initializer();
@@ -157,8 +159,10 @@ public class Internals {
         for(int i = 0; i<imgviews.size(); i++){
             //add Tag check here, not adding for now as this is just for testing
             String tag = null;
-            tag = (String) imgviews.get(i).getTag() + "*" + readIdfromDevice()+ ".jpg";
-            sapphireImgDbHelper.insertImage((String) imgviews.get(i).getTag());
+            tag = (String) imgviews.get(i).getTag();
+            sapphireImgDbHelper.insertImage(tag, imagesUtil.drawableToByteArray(imgviews.get(i).getDrawable()));
+            Log.d("SapphireBelly",""+sapphireImgDbHelper.getCount());
+
             Bitmap bmp = null;
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
@@ -197,6 +201,10 @@ public class Internals {
         }else if(imgs!=null && buts != null){
 
         }
+    }
+    public void recentTagViewHelper(String _tag, ArrayList<String> imageViewArrayList){
+        ArrayList<String> tagslist = new ArrayList<String>();
+        Log.d("SapphireList", ""+imageViewArrayList.size());
 
     }
 }

@@ -16,6 +16,7 @@ package com.hanuor.sapphire.hub;/*
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -44,14 +45,14 @@ public class SuggestionView extends RelativeLayout {
     ImageView minusButton;
     TextView tv2;
     View rootView;
-    public SuggestionView(Context context) {
+    public SuggestionView(Context context, Bitmap bmp) {
         super(context);
 
         this.context = context;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context);
+        setUPSuggestion(context, bmp);
 
     }
 
@@ -92,7 +93,7 @@ public class SuggestionView extends RelativeLayout {
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context);
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
@@ -140,17 +141,17 @@ public class SuggestionView extends RelativeLayout {
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context);
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context);
+        setUPSuggestion(context, null);
     }
 
-    private void setUPSuggestion(final Context context) {
+    private void setUPSuggestion(final Context context, Bitmap bitmp) {
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
 
@@ -165,9 +166,17 @@ public class SuggestionView extends RelativeLayout {
 
 
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
-        String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
-        Picasso.with(context).load(urlpic)
-                .into(minusButton);
+        if(bitmp!= null){
+            minusButton.setImageBitmap(bitmp);
+
+        }else{
+            String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
+                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+
+            Picasso.with(context).load(urlpic)
+                    .into(minusButton);
+
+        }
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());

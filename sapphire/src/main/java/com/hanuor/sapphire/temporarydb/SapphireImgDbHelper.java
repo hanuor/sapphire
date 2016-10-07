@@ -22,14 +22,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.hanuor.sapphire.hub.Internals;
+
 public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     private static final String DB_NAME = "SapphireInternalIMG.db";
     private static final String TABLE_IMAGE = "ImageHandler";
     private static final String ID_IMGKEY = "ImageKeyTag";
+    private static final String IMG_COLUMN = "ImageColumn";
     private static final int DB_VERSION = 2;
+    private Internals internals ;
 
-    public SapphireImgDbHelper(Context context) {
+    public SapphireImgDbHelper(Context context)
+    {
         super(context, DB_NAME, null, DB_VERSION);
+
     }
 
 
@@ -41,8 +47,8 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String TABLE_IMG = "CREATE TABLE " + TABLE_IMAGE + "(" +
-                ID_IMGKEY+ " STRING" +
-                ")";
+                ID_IMGKEY+ " STRING," + IMG_COLUMN + " TEXT"
+                + ")";
         sqLiteDatabase.execSQL(TABLE_IMG);
     }
 
@@ -50,11 +56,12 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public void insertImage(String tag) throws SQLException {
+    public void insertImage(String tag, byte[] arrayImg) throws SQLException {
 
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(ID_IMGKEY, tag);
+            cv.put(IMG_COLUMN, arrayImg);
             database.insert(TABLE_IMAGE, null, cv);
             Log.d("dbsapp", "" + database.toString());
 
@@ -65,21 +72,26 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
-    public String imgquery(String _key){
-        String regenKey = "'"+_key + "'";
+
+
+    public byte[] imgquery(String _key){
+        String regenKey = _key ;
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query_params = "SELECT " + "*" + " FROM " + TABLE_IMAGE + " WHERE " + ID_IMGKEY + " = " + regenKey + ";";
+        String query_params = "SELECT " + IMG_COLUMN +", " + ID_IMGKEY
+                + " FROM " + TABLE_IMAGE + " WHERE " + ID_IMGKEY + " = " +"'" +regenKey +"'"+ ";";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
-                returnString =  cSor.getString(cSor.getColumnIndex(SapphireImgDbHelper.ID_IMGKEY));
+                return  cSor.getBlob(cSor.getColumnIndex(SapphireImgDbHelper.IMG_COLUMN));
 
             }while(cSor.moveToNext());
 
+        }else{
+            return null;
         }
-        return returnString;
+
 
     }
 

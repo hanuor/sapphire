@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         arrayOfImgViews.add(img);
         arrayOfImgViews.add(img2);
+        Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
+
         Bitmap bitmap = ((BitmapDrawable)img2.getDrawable()).getBitmap();
         Log.d("Sappitttt",""+bitmap.toString());
         final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Sapphire.with(MainActivity.this).gain(img2.getTag());
+                Sapphire.with(MainActivity.this).check(img);
                 }
         });
        but.setOnClickListener(new View.OnClickListener() {
