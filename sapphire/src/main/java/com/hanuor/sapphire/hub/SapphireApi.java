@@ -106,14 +106,15 @@ public class SapphireApi {
        }
         return connect;
     }
-    public SapphireApi gain(Object tag){
+    public SapphireApi gain(Object tag, SuggestionView suggestionView){
 
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             Log.d("Sapphire]",""+tag.toString().length());
             connect.mgainTag = (String) tag;
            // mclient.tagUpdate((String) tag);
-            mclient.setRecentPrivate((String) tag, connect.tagslist);
+            check(suggestionView);
+            //mclient.setRecentPrivate((String) tag, connect.tagslist);
             return connect;
         }else{
             Utility.throwRuntimeException();
@@ -151,11 +152,12 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void check(ImageView img){
+    public void check(SuggestionView suggestionView){
+
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
+        suggestionView.setUPSuggestion(context, imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")));
 
-        img.setImageDrawable(imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")));
 
     }
 

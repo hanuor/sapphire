@@ -16,9 +16,10 @@ package com.hanuor.sapphire.hub;/*
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,7 +46,7 @@ public class SuggestionView extends RelativeLayout {
     ImageView minusButton;
     TextView tv2;
     View rootView;
-    public SuggestionView(Context context, Bitmap bmp) {
+    public SuggestionView(Context context, Drawable bmp) {
         super(context);
 
         this.context = context;
@@ -151,7 +152,7 @@ public class SuggestionView extends RelativeLayout {
         setUPSuggestion(context, null);
     }
 
-    private void setUPSuggestion(final Context context, Bitmap bitmp) {
+    public void setUPSuggestion(final Context context, Drawable bitmp) {
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
 
@@ -167,7 +168,8 @@ public class SuggestionView extends RelativeLayout {
 
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
         if(bitmp!= null){
-            minusButton.setImageBitmap(bitmp);
+            Log.d("SappgireBut", "Here");
+            minusButton.setImageDrawable(bitmp);
 
         }else{
             String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +

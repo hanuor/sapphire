@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.hub.SuggestionView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button but;
     DemoObject demoObject;
     ImageView img, img2;
-
+    SuggestionView suggestionView;
     private EventBus bus = EventBus.getDefault();
 
     @Override
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
+        suggestionView = (SuggestionView) findViewById(R.id.suggest);
+       // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -85,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Sapphire.with(MainActivity.this).gain(img2.getTag());
-                Sapphire.with(MainActivity.this).check(img);
+                //Sapphire.with(MainActivity.this).check(img);
+                Sapphire.with(MainActivity.this).gain(img2.getTag(), suggestionView);
                 }
         });
        but.setOnClickListener(new View.OnClickListener() {
