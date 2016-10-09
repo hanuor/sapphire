@@ -24,6 +24,7 @@ import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.hub.Internals;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.ConverterUtils;
+import com.hanuor.utils.GetDayUtil;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.storage.Storage;
@@ -41,10 +42,11 @@ public class Client {
     public static NodeMonitor mNodeMonitor = new NodeMonitor();
     private static StorageService storageService = App42API.buildStorageService();
     private static SapphirePrivateDB sapphirePrivateDB;
-
+    private static GetDayUtil getDayUtil;
     public Client(Context ctx){
       App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
        this.ctx = ctx;
+        getDayUtil = new GetDayUtil();
         sapphirePrivateDB = new SapphirePrivateDB(ctx);
     }
     public static double test(){
@@ -60,7 +62,11 @@ public class Client {
         //use a internet check here
         //use a separate DB here for handling the JSON  data
 
+        //This is for private tree learning
         sapphirePrivateDB.storeTags(jsonDocument);
+        Log.d("Saaap","here");
+        sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), jsonDocument);
+        //end of pvt tree learning
 
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override

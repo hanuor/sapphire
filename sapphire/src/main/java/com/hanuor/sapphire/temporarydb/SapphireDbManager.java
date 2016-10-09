@@ -100,9 +100,7 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         if(cSor.moveToFirst()){
             do{
                 returnString =  cSor.getString(cSor.getColumnIndex(SapphireDbManager.ID_DOCS));
-
             }while(cSor.moveToNext());
-
         }
         return returnString;
 

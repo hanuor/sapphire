@@ -193,11 +193,23 @@ public class Internals {
 
    public void privateHitTag(String hitTag){
        String jsonD = sapphirePrivateDB.fetchprivategetJsonStringfromDB();
+       String nodePRdaydoc = sapphirePrivateDB.queryPRnodefor(getDayUtil.getDay());
+       Log.d("SapGET",""+nodePRdaydoc);
+
        try {
            if(jsonD!=null){
                JSONObject jObj = new JSONObject(jsonD);
                String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(jsonD, hitTag));
                sapphirePrivateDB.storeTags(getDoc);
+
+               //update to cloud as well
+           }
+           if(nodePRdaydoc!=null){
+               //Update for days wise as well
+               Log.d("Sapppp",nodePRdaydoc);
+               JSONObject jObj = new JSONObject(nodePRdaydoc);
+               String getPRNODEData = Client.updateJsonDoc(Client.SapphireHitTag(nodePRdaydoc, hitTag));
+               sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), getPRNODEData);
            }
        } catch (JSONException e) {
            // TODO Auto-generated catch block
