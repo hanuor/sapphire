@@ -113,7 +113,8 @@ public class SapphireApi {
             Log.d("Sapphire]",""+tag.toString().length());
             connect.mgainTag = (String) tag;
            // mclient.tagUpdate((String) tag);
-            check(suggestionView);
+            mclient.invokeprivateLearning((String) tag);
+            //check(suggestionView);
             //mclient.setRecentPrivate((String) tag, connect.tagslist);
             return connect;
         }else{

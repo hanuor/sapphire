@@ -69,8 +69,6 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         db.close();
 
     }
-    public void insertPDoc(String list){
-    }
     public void insertJDoc(String Doc){
         clearJDocTable(0);
         SQLiteDatabase db = this.getWritableDatabase();

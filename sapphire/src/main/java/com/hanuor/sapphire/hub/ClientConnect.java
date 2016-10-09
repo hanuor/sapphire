@@ -81,6 +81,9 @@ public class ClientConnect {
             Utility.throwRuntimeException();
         }
     }
+    public void invokeprivateLearning(String _tag){
+        internals.privateHitTag(_tag);
+    }
     public void setRecentPrivate(String _tag, ArrayList<String> imageViewArrayList){
         internals.recentTagViewHelper(_tag, imageViewArrayList);
     }

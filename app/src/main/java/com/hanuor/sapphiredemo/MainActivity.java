@@ -83,7 +83,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
         // Now do something with it
         }
-
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView);
+            }
+        });
         img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
