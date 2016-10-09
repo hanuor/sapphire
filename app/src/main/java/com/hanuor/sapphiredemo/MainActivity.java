@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.SuggestionView;
@@ -47,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         m.add("frost");
         m.add("girl");
         m.add("Bumblebee");
-        //Sapphire.with(MainActivity.this).registerTags(m);
-
-
         img = (ImageView) findViewById(R.id.img);
         img2 = (ImageView) findViewById(R.id.img2);
         Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
@@ -80,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         // Better check that an event was actually posted before
         if(stickyEvent != null) {
         // "Consume" the sticky even
-            Toast.makeText(MainActivity.this, "Yess", Toast.LENGTH_SHORT).show();
-        // Now do something with it
         }
         img.setOnClickListener(new View.OnClickListener() {
             @Override
