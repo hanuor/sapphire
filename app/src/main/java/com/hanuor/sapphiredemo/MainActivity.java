@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
        but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 Sapphire.with(MainActivity.this).addTags(m);
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);

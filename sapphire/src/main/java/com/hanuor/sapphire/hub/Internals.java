@@ -86,8 +86,6 @@ public class Internals {
             e.printStackTrace();
             return null;
         }
-
-
     }
     private class FilePrinterAsyncTaskSapphire extends AsyncTask<String, Void, Void> {
         @Override
@@ -205,6 +203,6 @@ public class Internals {
     public void recentTagViewHelper(String _tag, ArrayList<String> imageViewArrayList){
         ArrayList<String> tagslist = new ArrayList<String>();
         Log.d("SapphireList", ""+imageViewArrayList.size());
-
     }
+
 }

@@ -57,7 +57,6 @@ public class Client {
 
         //use a internet check here
         //use a separate DB here for handling the JSON  data
-
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override
             public void onSuccess(Object o) {

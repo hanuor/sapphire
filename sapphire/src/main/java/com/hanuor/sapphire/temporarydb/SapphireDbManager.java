@@ -23,6 +23,9 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     private static final String TAGS_SOTRAGE = "Tagsstorage";
     private static final String IMAGE_KEYTAG = "imagekeytag";
 
+    private static final String TABLE_PR = "privatemoduletwo";
+    private static final String COL_LISTTAGS =  "privateListTags";
+
     private static String LIST_SEPARATOR = "__,__";
     private static final int DB_VERSION = 1;
 
@@ -41,13 +44,15 @@ public class SapphireDbManager extends SQLiteOpenHelper {
                 ID_DOCS + " STRING" + ");";
         String TABLE_OFTAGS = "CREATE TABLE " + TABLE_TAGSDOC + "(" +
                 TAGS_SOTRAGE + " STRING);";
+        String TABLE_PRIVATETAGS = "CREATE TABLE " + TABLE_PR + "(" +
+                COL_LISTTAGS + " STRING" + ");";
+        sqLiteDatabase.execSQL(TABLE_PRIVATETAGS);
         sqLiteDatabase.execSQL(TABLE_OFTAGS);
         sqLiteDatabase.execSQL(TABLE_JDOCS);
 }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
     public void storeTags(ArrayList<String> tagsList){
         StringBuffer stringBuffer = new StringBuffer();
@@ -63,6 +68,8 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         db.insert(TABLE_TAGSDOC, null, contentValues);
         db.close();
 
+    }
+    public void insertPDoc(String list){
     }
     public void insertJDoc(String Doc){
         clearJDocTable(0);
@@ -85,7 +92,6 @@ public class SapphireDbManager extends SQLiteOpenHelper {
                 dbnew.close();
                 break;
         }
-
     }
 
     public String query(){
