@@ -17,8 +17,10 @@ package com.hanuor.sapphire.temporarydb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SapphirePrivateDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "SapphireInternalPrivitized.db";
@@ -55,10 +57,23 @@ public class SapphirePrivateDB extends SQLiteOpenHelper {
         contentValues.put(COL_LISTTAGS, jDocument);
         db.insert(TABLE_PR, null, contentValues);
         db.close();
+        Log.d("SapphireBlof",""+privategetJsonStringfromDB());
     }
     private void deleteAll(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PR, 1 + "=" + 1, null);
         db.close();
+    }
+    public String privategetJsonStringfromDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "*" + " FROM " + TABLE_PR;
+        Cursor cSor = db.rawQuery(query_params, null);
+        if(cSor.moveToFirst()){
+            do{
+                return cSor.getString(cSor.getColumnIndexOrThrow(SapphirePrivateDB.COL_LISTTAGS));
+            }while(cSor.moveToNext());
+        }else{
+            return null;
+        }
     }
 }

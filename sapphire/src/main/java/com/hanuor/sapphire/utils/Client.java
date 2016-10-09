@@ -22,6 +22,7 @@ import com.hanuor.client.NodeMonitor;
 import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.hub.Internals;
+import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.ConverterUtils;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
@@ -39,11 +40,12 @@ public class Client {
     public static Initializer mInit = new Initializer();
     public static NodeMonitor mNodeMonitor = new NodeMonitor();
     private static StorageService storageService = App42API.buildStorageService();
+    private static SapphirePrivateDB sapphirePrivateDB;
 
     public Client(Context ctx){
       App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
        this.ctx = ctx;
-
+        sapphirePrivateDB = new SapphirePrivateDB(ctx);
     }
     public static double test(){
         return mNodeMonitor.nodeIncrementor(0.1);
@@ -58,6 +60,7 @@ public class Client {
         //use a internet check here
         //use a separate DB here for handling the JSON  data
 
+        sapphirePrivateDB.storeTags(jsonDocument);
 
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override
@@ -110,6 +113,8 @@ public class Client {
         String jsonDoc =  cutils.getJsonString();
         Log.d("SapphireD",""+jsonDoc);
         //call the write Json script
+        //writeJSON makes a json object string and saves it with default valure 0.1
+
         writeJson(jsonDoc);
     }
     public static void updateJson(final ArrayList<String> tags, String docID){
