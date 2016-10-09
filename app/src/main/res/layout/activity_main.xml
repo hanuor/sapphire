@@ -11,20 +11,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/img"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img2"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/img"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <com.hanuor.sapphire.hub.SuggestionView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="#B71C1C"
-        app:headerText="BLBLBLB"
-        android:layout_alignParentEnd="true"></com.hanuor.sapphire.hub.SuggestionView>
+        android:background="#ffffff"
+        android:id="@+id/suggest"
+        app:headerText="Based on your recent activity"
+        app:headertextColor="#212121"
+        app:footerText="Frostbite engine"
+        app:footertextColor="#424242"
+        app:footertextSize="9"
+        app:headerTextFontSize="13"/>
 </RelativeLayout>

@@ -25,12 +25,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp" />
 
-    <com.hanuor.quest_android.hub.Questbox
-        android:layout_width="wrap_content"
-        android:id="@+id/questb"
-        app:backgroundColor="#212121"
-        app:headertextColor="#212121"
-        android:layout_marginTop="7dp" 
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content" />
 </RelativeLayout>

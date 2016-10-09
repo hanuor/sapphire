@@ -1,11 +1,28 @@
 package com.hanuor.sapphire.utils;
+/*
+ * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hanuor.client.NodeMonitor;
 import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.hub.Internals;
+import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.ConverterUtils;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
@@ -18,48 +35,37 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Shantanu Johri on 16-08-2016.
- */
 public class Client {
     private Context ctx;
     public static Initializer mInit = new Initializer();
     public static NodeMonitor mNodeMonitor = new NodeMonitor();
     private static StorageService storageService = App42API.buildStorageService();
+    private static SapphirePrivateDB sapphirePrivateDB;
 
     public Client(Context ctx){
       App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
        this.ctx = ctx;
-
+        sapphirePrivateDB = new SapphirePrivateDB(ctx);
     }
     public static double test(){
         return mNodeMonitor.nodeIncrementor(0.1);
     }
-    /*private void addDocument(String documentID){
-        EmailUtilities emailUtil = new EmailUtilities();
-        String pwd = "hanuor";
-        UserService userService = App42API.buildUserService();
-        userService.createUser( documentID, pwd, emailUtil.generateEmail(), new App42CallBack() {
-        public void onSuccess(Object response)
-        {
-        }
-        public void onException(Exception ex)
-        {
-            //monitor the exceptions here
-            System.out.println("Exception Message"+ex.getMessage());
-        }
-        });
 
-    }
-    */
-    public  void writeJson(final String jsonDocument){
+    public void writeJson(final String jsonDocument){
 		/*
 		Write json document to the database. This method is directly accessed from the android library.
 
 		*/
+
+        //use a internet check here
+        //use a separate DB here for handling the JSON  data
+
+        sapphirePrivateDB.storeTags(jsonDocument);
+
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override
             public void onSuccess(Object o) {
+                Log.d("SapphireUploadSuccess","true");
                 Internals internals = new Internals(ctx);
                 Storage storage  = (Storage )o;
                 ArrayList<Storage.JSONDocument> jsonDocList = storage.getJsonDocList();
@@ -67,18 +73,12 @@ public class Client {
                 internals.saveDocIdInternally(docId);
 
             }
-
-
             @Override
             public void onException(Exception e) {
+                Log.d("SapphireUploadSuccess","false");
                 e.printStackTrace();
             }
         });
-
-        //addDocument(docID);
-
-        //return docID;
-
     }
     private void getJson(String docId) {
         // TODO Auto-generated method stub
@@ -111,7 +111,10 @@ public class Client {
     public  void makeJsonString(ArrayList<String> tags){
         ConverterUtils cutils = new ConverterUtils(tags);
         String jsonDoc =  cutils.getJsonString();
+        Log.d("SapphireD",""+jsonDoc);
         //call the write Json script
+        //writeJSON makes a json object string and saves it with default valure 0.1
+
         writeJson(jsonDoc);
     }
     public static void updateJson(final ArrayList<String> tags, String docID){
@@ -163,6 +166,7 @@ public class Client {
 
     }
     protected static void updateJsonDoc(HashMap<String, String> hMap) {
+        //Imported from Eclipse
         // TODO Auto-generated method stub
         ConverterUtils cUtils = new ConverterUtils();
         try {
@@ -177,9 +181,6 @@ public class Client {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
-    }
-
+     }
 
 }

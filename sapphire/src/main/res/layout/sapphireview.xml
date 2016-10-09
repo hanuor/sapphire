@@ -8,22 +8,20 @@
         android:layout_margin="7dp"
         android:enabled="false"
         android:background="@null"
-        android:textColor="#000000"
-        android:id="@+id/valueTextView" />
+        android:id="@+id/header" />
 
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/minusButton"
+        android:id="@+id/imageBack"
         android:layout_margin="7dp"
         android:clickable="true"
-        android:layout_below="@+id/valueTextView"
-        android:src="@drawable/frost"
+        android:layout_below="@+id/header"
         android:layout_alignRight="@+id/valueLabel" />
 
     <TextView
-        android:id="@+id/valueLabel"
+        android:id="@+id/footer"
         android:text="VALLLL"
         android:layout_margin="7dp"
         android:layout_width="wrap_content"

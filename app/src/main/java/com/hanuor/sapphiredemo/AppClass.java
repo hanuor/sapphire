@@ -1,6 +1,5 @@
-package com.hanuor.sapphire.utils;
-/*
- * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
+package com.hanuor.sapphiredemo;/*
+ * Copyright (C) 2016 Hanuor Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +13,11 @@ package com.hanuor.sapphire.utils;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.shephertz.app42.paas.sdk.android.App42API;
-import com.shephertz.app42.paas.sdk.android.storage.StorageService;
 
-public class ServiceHandler {
+import android.app.Application;
 
-    public static final StorageService storageService = App42API.buildStorageService();
+public class AppClass extends Application {
+    @Override public void onCreate() {
+        super.onCreate();
+       }
 }

@@ -14,10 +14,14 @@ package com.hanuor.sapphire.utils;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.shephertz.app42.paas.sdk.android.App42API;
-import com.shephertz.app42.paas.sdk.android.storage.StorageService;
 
-public class ServiceHandler {
+public class Tree {
+    private final boolean isActivated;
 
-    public static final StorageService storageService = App42API.buildStorageService();
+    public Tree(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+    public boolean getStatus(){
+        return isActivated;
+    }
 }

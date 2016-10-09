@@ -6,26 +6,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.greenrobot.event.EventBus;
+
 
 /**
  * Created by Shantanu Johri on 30-07-2016.
  */
 public class ReceiveActivity extends AppCompatActivity {
     TextView name;
+
+    private EventBus bus = EventBus.getDefault();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.receive);
         name = (TextView) findViewById(R.id.name);
-        Bundle b = getIntent().getExtras();
-        if(b == null){
-            Toast.makeText(ReceiveActivity.this, "Null", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(ReceiveActivity.this, "Not null", Toast.LENGTH_SHORT).show();
-           DemoObject obj = getIntent().getParcelableExtra("parse");
-            String getInfo = obj.name;
-            name.setText(getInfo);
+        HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
+        // Better check that an event was actually posted before
+        if(stickyEvent != null) {
+            // "Consume" the sticky event
+            Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
+        // Now do something with it
+        }
+    }
+     @Override
+    public void onStart() {
+        super.onStart();
 
-        }
-        }
+
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+    }
 }

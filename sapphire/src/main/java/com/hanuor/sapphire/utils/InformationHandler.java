@@ -1,5 +1,4 @@
-package com.hanuor.sapphire.utils;
-/*
+package com.hanuor.sapphire.utils;/*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +13,24 @@ package com.hanuor.sapphire.utils;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.shephertz.app42.paas.sdk.android.App42API;
-import com.shephertz.app42.paas.sdk.android.storage.StorageService;
 
-public class ServiceHandler {
+public class InformationHandler {
+    private final String KEYID;
+    private final String KEYSECRET;
+    private final String VALIDATOR;
 
-    public static final StorageService storageService = App42API.buildStorageService();
+    public InformationHandler(String keyid, String keysecret, String validator) {
+        this.KEYID = keyid;
+        this.KEYSECRET = keysecret;
+        this.VALIDATOR = validator;
+    }
+    public String getKEYID(){
+        return KEYID;
+    }
+    public String getKEYSECRET(){
+        return KEYSECRET;
+    }
+    public String getVALIDATOR(){
+        return VALIDATOR;
+    }
 }

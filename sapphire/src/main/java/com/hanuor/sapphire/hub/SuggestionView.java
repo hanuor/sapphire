@@ -14,50 +14,46 @@ package com.hanuor.sapphire.hub;/*
  * limitations under the License.
  */
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
-import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hanuor.sapphire.R;
+import com.squareup.picasso.Picasso;
 
 
 public class SuggestionView extends RelativeLayout {
     private TextView textView;
-    private String TEXT_COLOR = "#eeeeee";
-    private String BACKGROUND_COLOR = "#880E4F";
-    private Context context;
-    String TEXT = "Suggestionbox";
-    ImageView imageView;
-    TextView valueTextView;
-    ImageView minusButton;
+    private String defaultheaderTextColor = "#eeeeee";
+    private String defaultfooterTextColor = "#eeeeee";
 
-    private String ICON_COLOR = "#880E4F";
+    private float footerTextSize = 13f;
+    private Context context;
+    private float headerTextSize = 13f;
+    String TEXT = "Suggestionbox";
+    String Ftext = "Default";
+    ImageView imageView;
+    TextView valueTextView, footer;
+    ImageView minusButton;
     TextView tv2;
     View rootView;
-    public SuggestionView(Context context) {
+    public SuggestionView(Context context, Drawable bmp) {
         super(context);
 
         this.context = context;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context);
+        setUPSuggestion(context, bmp);
 
     }
 
@@ -71,19 +67,34 @@ public class SuggestionView extends RelativeLayout {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.suggestionbox,0,0);
 
         try {
-
             String text = typedArray.getString(R.styleable.suggestionbox_headerText);
-            String text_color = typedArray.getString(R.styleable.suggestionbox_headertextColor);
+            String headerTextColor = typedArray.getString(R.styleable.suggestionbox_headertextColor);
             String background_color = typedArray.getString(R.styleable.suggestionbox_backgroundColor);
+            float headerTextFontSize = typedArray.getFloat(R.styleable.suggestionbox_headerTextFontSize, headerTextSize);
+            float footerTextFontSize = typedArray.getFloat(R.styleable.suggestionbox_footertextSize, footerTextSize);
+            String footerTextColor = typedArray.getString(R.styleable.suggestionbox_footertextColor);
+            String footerText = typedArray.getString(R.styleable.suggestionbox_footerText);
+
+            if(footerText!=null){
+                Ftext = footerText;
+            }
+
+            if(footerTextColor!=null){
+                defaultfooterTextColor = footerTextColor;
+            }
+
+            if(footerTextFontSize!=0){
+                footerTextSize = footerTextFontSize;
+            }
 
             if (text!=null)
                 TEXT = text;
-            if (text_color!=null)
-                TEXT_COLOR = text_color;
-            if (background_color!=null)
-                ICON_COLOR = background_color;
+            if (headerTextColor!=null)
+                defaultheaderTextColor = headerTextColor;
 
-            setUPSuggestion(context);
+            if (headerTextFontSize!=0)
+                headerTextSize = headerTextFontSize;
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
@@ -104,153 +115,95 @@ public class SuggestionView extends RelativeLayout {
         try {
 
             String text = typedArray.getString(R.styleable.suggestionbox_headerText);
-            String text_color = typedArray.getString(R.styleable.suggestionbox_headertextColor);
+            String headerTextColor = typedArray.getString(R.styleable.suggestionbox_headertextColor);
             String background_color = typedArray.getString(R.styleable.suggestionbox_backgroundColor);
+            float headerTextFontSize = typedArray.getFloat(R.styleable.suggestionbox_headerTextFontSize, headerTextSize);
+            String footerTextColor = typedArray.getString(R.styleable.suggestionbox_footertextColor);
+            float footerTextFontSize = typedArray.getFloat(R.styleable.suggestionbox_footertextSize, footerTextSize);
+            String footerText = typedArray.getString(R.styleable.suggestionbox_footerText);
+
+            if(footerText!=null){
+                Ftext = footerText;
+            }
+
+            if(footerTextColor!=null){
+                defaultfooterTextColor = footerTextColor;
+            }
+
+            if(footerTextFontSize!=0){
+                footerTextSize = footerTextFontSize;
+            }
 
             if (text!=null)
                 TEXT = text;
-            if (text_color!=null)
-                TEXT_COLOR = text_color;
-            if (background_color!=null)
-                ICON_COLOR = background_color;
+            if (headerTextColor!=null)
+                defaultheaderTextColor = headerTextColor;
+           if (headerTextFontSize!=0)
+                headerTextSize = headerTextFontSize;
 
-            setUPSuggestion(context);
+
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context);
+        setUPSuggestion(context, null);
     }
 
-    private void setUPSuggestion(final Context context) {
-        rootView = inflate(context, R.layout.questbox, this);
-        valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
+    public void setUPSuggestion(final Context context, Drawable bitmp) {
+        rootView = inflate(context, R.layout.sapphireview, this);
+        valueTextView = (TextView) rootView.findViewById(R.id.header);
+
+        footer = (TextView) rootView.findViewById(R.id.footer);
+
+
         valueTextView.setText(TEXT);
-        minusButton = (ImageView) rootView.findViewById(R.id.minusButton);
+        valueTextView.setGravity(Gravity.CENTER);
+        valueTextView.setTextSize(headerTextSize);
+        valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
+
+
+
+        minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
+        if(bitmp!= null){
+            Log.d("SappgireBut", "Here");
+            minusButton.setImageDrawable(bitmp);
+
+        }else{
+            String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
+                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+
+            Picasso.with(context).load(urlpic)
+                    .into(minusButton);
+
+        }
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
+        params.addRule(RelativeLayout.BELOW, valueTextView.getId());
+
+        minusButton.setLayoutParams(params);
+
+
+
+        footer.setTextColor(Color.parseColor(defaultfooterTextColor));
+        footer.setText(Ftext);
+        footer.setTextSize(footerTextSize);
+        RelativeLayout.LayoutParams paramsfooter = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsfooter.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
+        paramsfooter.addRule(RelativeLayout.BELOW, minusButton.getId());
+
+        footer.setLayoutParams(paramsfooter);
+
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "LALALA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
             }
         });
-        valueTextView.setGravity(Gravity.CENTER);
-
-
-
-
-
-
-        //architecture();
-        //addText();
-
-        //move the whole layout in the center of the screen
-        //moveToCenter();
-
-        //invalidate and redraw the views.
-        //invalidate();
-        // requestLayout();
-
     }
 
-    private void addText() {
-
-        textView.setText(TEXT);
-        textView.setPadding(130,30,11,3);
-        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        textView.setTextColor(Color.parseColor(TEXT_COLOR));
-        //  int nw = LayoutParams.MATCH_PARENT-11;
-        RelativeLayout.LayoutParams layoutParams = new
-                RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        //layoutParams.setMargins(124,30,0,0);
-       // layoutParams.addRule(RelativeLayout.BELOW, imageView.getId());
-
-        this.addView(textView, layoutParams);
-        addIcon();
-
-    }
-
-    private void addSubText() {
-
-        tv2.setText("Blasphemy");
-       // tv2.setPadding(120,7,11,7);
-        tv2.setGravity(Gravity.RIGHT);
-        tv2.setTextColor(Color.parseColor(TEXT_COLOR));
-        //int re = LayoutParams.MATCH_PARENT-11;
-        RelativeLayout.LayoutParams layoutParams = new
-                RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-       // layoutParams.setMargins(120,3,0,0);
-        layoutParams.addRule(RelativeLayout.BELOW, imageView.getId());
-
-        this.addView(tv2, layoutParams);
-
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private void addIcon() {
-
-        imageView.setImageResource(R.drawable.frost);
-
-        //imageView.setForegroundGravity(Gravity.RIGHT);
-
-        // imageView.setColorFilter(Color.parseColor(ICON_COLOR), PorterDuff.Mode.SRC_ATOP);
-
-        RelativeLayout.LayoutParams layoutParams = new
-                RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        //layoutParams.setMargins(240,0,0,0);
-        layoutParams.setLayoutDirection(RelativeLayout.CENTER_HORIZONTAL);
-        layoutParams.addRule(RelativeLayout.BELOW, textView.getId());
-
-        this.addView(imageView, layoutParams);
-
-        addSubText();
-
-
-    }
-
-    private void architecture() {
-
-        RoundRectShape rect = new RoundRectShape(
-                new float[]{50, 50, 50, 0, 50, 0, 50, 50},
-                null,
-                null);
-
-
-        ShapeDrawable sd = new ShapeDrawable(rect);
-        sd.getPaint().setColor(Color.parseColor(BACKGROUND_COLOR));
-
-
-        ShapeDrawable sds = new ShapeDrawable(rect);
-        sds.setShaderFactory(new ShapeDrawable.ShaderFactory() {
-
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient lg = new LinearGradient(0, 0, 0, height,
-                        new int[]{Color.parseColor("#dddddd"),
-                                Color.parseColor("#dddddd"),
-                                Color.parseColor("#dddddd"),
-                                Color.parseColor("#dddddd")}, new float[]{0,
-                        0.50f, 0.50f, 1}, Shader.TileMode.REPEAT);
-                return lg;
-            }
-        });
-
-        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{sds, sd});
-        layerDrawable.setLayerInset(0, 0, 0, 0, 0); // inset the shadow so it doesn't start right at the left/top
-        layerDrawable.setLayerInset(0, 0, 0, 0, 0); //
-
-        this.setBackgroundDrawable(layerDrawable);
-
-
-    }
-
-
-
-    public void updateText(String text){
-
-        this.TEXT = text;
-        this.textView.setText(this.TEXT);
-
-    }
 }

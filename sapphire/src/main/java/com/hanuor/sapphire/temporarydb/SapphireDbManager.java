@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 
 /**
  * Created by Shantanu Johri on 15-08-2016.
@@ -14,10 +14,19 @@ import java.util.Calendar;
 public class SapphireDbManager extends SQLiteOpenHelper {
 
 
-    public static final String DB_NAME = "SapphireInternal.db";
+    private static final String DB_NAME = "SapphireInternal.db";
     private static final String TABLE_NAME = "clientManager";
     private static final String TABLE_JSONDOC= "jsonDocManager";
     private static final String ID_DOCS = "idoc";
+
+    private static final String TABLE_TAGSDOC= "TagsDocManager";
+    private static final String TAGS_SOTRAGE = "Tagsstorage";
+    private static final String IMAGE_KEYTAG = "imagekeytag";
+
+    private static final String TABLE_PR = "privatemoduletwo";
+    private static final String COL_LISTTAGS =  "privateListTags";
+
+    private static String LIST_SEPARATOR = "__,__";
     private static final int DB_VERSION = 1;
 
     public SapphireDbManager(Context context) {
@@ -32,30 +41,59 @@ public class SapphireDbManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String TABLE_JDOCS = "CREATE TABLE "+ TABLE_JSONDOC + "("+
-                ID_DOCS + " STRING" + ")";
+                ID_DOCS + " STRING" + ");";
+        String TABLE_OFTAGS = "CREATE TABLE " + TABLE_TAGSDOC + "(" +
+                TAGS_SOTRAGE + " STRING);";
+        String TABLE_PRIVATETAGS = "CREATE TABLE " + TABLE_PR + "(" +
+                COL_LISTTAGS + " STRING" + ");";
+        sqLiteDatabase.execSQL(TABLE_PRIVATETAGS);
+        sqLiteDatabase.execSQL(TABLE_OFTAGS);
         sqLiteDatabase.execSQL(TABLE_JDOCS);
-
-    }
+}
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    }
+    public void storeTags(ArrayList<String> tagsList){
+        StringBuffer stringBuffer = new StringBuffer();
+        for (String str : tagsList) {
+            stringBuffer.append(str).append(LIST_SEPARATOR);
+        }
+        int lastIndex = stringBuffer.lastIndexOf(LIST_SEPARATOR);
+        stringBuffer.delete(lastIndex, lastIndex + LIST_SEPARATOR.length() + 1);
+        clearJDocTable(1);
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TAGS_SOTRAGE, stringBuffer.toString());
+        db.insert(TABLE_TAGSDOC, null, contentValues);
+        db.close();
 
     }
-
+    public void insertPDoc(String list){
+    }
     public void insertJDoc(String Doc){
-        clearJDocTable();
-        
+        clearJDocTable(0);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID_DOCS, Doc);
         db.insert(TABLE_JSONDOC, null, contentValues);
         db.close();
     }
-    public void clearJDocTable(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_JSONDOC, 1 + "=" + 1, null);
-        db.close();
+    public void clearJDocTable(int switcher){
+        switch(switcher){
+            case 0:
+                SQLiteDatabase db = this.getWritableDatabase();
+                db.delete(TABLE_JSONDOC, 1 + "=" + 1, null);
+                db.close();
+                break;
+            case 1:
+                SQLiteDatabase dbnew = this.getWritableDatabase();
+                dbnew.delete(TABLE_TAGSDOC, 1 + "=" + 1, null);
+                dbnew.close();
+                break;
+        }
     }
+
     public String query(){
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -71,23 +109,5 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         return returnString;
 
     }
-    public void openDBconnection(){
 
-
-        Calendar today = Calendar.getInstance();
-        int hour = today.get(Calendar.HOUR);
-        //Calendar expireDate = Calendar.getInstance();
-        //expireDate.set(2011, Calendar.AUGUST, 12);
-        //today.compareTo(expireDate) == 0 || today.compareTo(expireDate) == 1
-        //if ()
-
-        //{
-// expired - please purchase app
-
-        //}
-        //else
-       // {
-// do some stuff
-        //}
-    }
 }
