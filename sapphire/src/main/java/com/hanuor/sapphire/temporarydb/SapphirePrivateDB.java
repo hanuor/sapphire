@@ -57,14 +57,14 @@ public class SapphirePrivateDB extends SQLiteOpenHelper {
         contentValues.put(COL_LISTTAGS, jDocument);
         db.insert(TABLE_PR, null, contentValues);
         db.close();
-        Log.d("SapphireBlof",""+privategetJsonStringfromDB());
+        Log.d("SapphireBlof",""+fetchprivategetJsonStringfromDB());
     }
     private void deleteAll(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PR, 1 + "=" + 1, null);
         db.close();
     }
-    public String privategetJsonStringfromDB(){
+    public String fetchprivategetJsonStringfromDB(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query_params = "SELECT " + "*" + " FROM " + TABLE_PR;
         Cursor cSor = db.rawQuery(query_params, null);

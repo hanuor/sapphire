@@ -19,7 +19,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.backendless.Backendless;
@@ -31,6 +30,7 @@ import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
+import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.sapphire.utils.BitmapUtility;
 import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.utils.GetDayUtil;
@@ -53,6 +53,7 @@ public class Internals {
     private Context ctx = null;
     private ImagesUtil imagesUtil = new ImagesUtil();
     private static SapphireDbManager sapphireDbManager;
+    private static SapphirePrivateDB sapphirePrivateDB;
     private static SapphireImgDbHelper sapphireImgDbHelper;
     private static Initializer mInit = new Initializer();
     private static StorageService storageService;
@@ -62,6 +63,7 @@ public class Internals {
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
         sapphireImgDbHelper = new SapphireImgDbHelper(ctx);
+        sapphirePrivateDB = new SapphirePrivateDB(ctx);
         App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
         Backendless.initApp( ctx, mInit.ImgHelperId(), mInit.ImgHelperSecret(),"v1");
         storageService = App42API.buildStorageService();
@@ -150,7 +152,6 @@ public class Internals {
 
     }
 
-
     public void storImgs(Context ctx, ArrayList<ImageView> imgviews){
         Log.d("allweknow","here");
         String destination = getAppName(ctx) +"*"+ readIdfromDevice();
@@ -190,16 +191,20 @@ public class Internals {
         }
     }
 
-    public void privateLearningIni(ArrayList<ImageView> imgs, ArrayList<Button> buts){
-        int getDay = getDayUtil.getDay();
-        if(imgs!=null && buts== null) {
+   public void privateHitTag(String hitTag){
+       String jsonD = sapphirePrivateDB.fetchprivategetJsonStringfromDB();
+       try {
+           if(jsonD!=null){
+               JSONObject jObj = new JSONObject(jsonD);
+               String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(jsonD, hitTag));
+               sapphirePrivateDB.storeTags(getDoc);
+           }
+       } catch (JSONException e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+       }
+   }
 
-        }else if(imgs == null && buts != null){
-
-        }else if(imgs!=null && buts != null){
-
-        }
-    }
     public void recentTagViewHelper(String _tag, ArrayList<String> imageViewArrayList){
         ArrayList<String> tagslist = new ArrayList<String>();
         Log.d("SapphireList", ""+imageViewArrayList.size());
