@@ -17,19 +17,16 @@ package com.hanuor.sapphire.temporarydb;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class SapphirePrivateDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "SapphireInternalPrivitized.db";
     private static final int DBVERSION = 3;
-    private static final String TABLE_PTREE = "sapprivlearn";
-    private static final String COLUMN_IMG = "sappprivlearncolIMG";
 
-    private static final String TABLE_PTREETAG = "sapphirevlearnTAG";
-    private static final String COLUMN_NODE = "sappprivlearncolTAG";
+    private static final String TABLE_PR = "privatemoduletwo";
+    private static final String COL_LISTTAGS =  "privateListTags";
+
 
     public SapphirePrivateDB(Context context) {
         super(context, DB_NAME, null, DBVERSION);
@@ -42,84 +39,26 @@ public class SapphirePrivateDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String TABLEOFPROTOCOLS = "CREATE TABLE " + TABLE_PTREE + "(" +
-                COLUMN_IMG + " TEXT);";
-        String TABLEOFTAG = "CREATE TABLE " + TABLE_PTREETAG + "(" +
-                COLUMN_NODE + " TEXT);";
-        sqLiteDatabase.execSQL(TABLEOFTAG);
-        sqLiteDatabase.execSQL(TABLEOFPROTOCOLS);
+     String TABLE_PRIVATETAGS = "CREATE TABLE " + TABLE_PR + "(" +
+                COL_LISTTAGS + " STRING" + ");";
+        sqLiteDatabase.execSQL(TABLE_PRIVATETAGS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    public void storeTAG(String _tag){
-        if(_tag==null){
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues cvalues = new ContentValues();
-            cvalues.put(COLUMN_NODE, _tag);
-            db.insert(TABLE_PTREETAG, null, cvalues);
-            db.close();
-        }else{
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(TABLE_PTREETAG, 1 + "=" + 1, null);
-            db.close();
-            SQLiteDatabase dbnew = this.getWritableDatabase();
-            ContentValues cvalues = new ContentValues();
-            cvalues.put(COLUMN_NODE, _tag);
-            dbnew.insert(TABLE_PTREETAG, null, cvalues);
-            dbnew.close();
-        }
-
+    public void storeTags(String jDocument){
+        deleteAll();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_LISTTAGS, jDocument);
+        db.insert(TABLE_PR, null, contentValues);
+        db.close();
     }
-    public void storeIMG(byte[] imgArray){
-        byte retrieveBArray[] = retrievePImage();
-        if(retrieveBArray==null){
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues cvalues = new ContentValues();
-            cvalues.put(COLUMN_IMG, imgArray);
-            db.insert(TABLE_PTREE, null, cvalues);
-            db.close();
-        }else{
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(TABLE_PTREE, 1 + "=" + 1, null);
-            db.close();
-            SQLiteDatabase dbnew = this.getWritableDatabase();
-            ContentValues cvalues = new ContentValues();
-            cvalues.put(COLUMN_IMG, imgArray);
-            dbnew.insert(TABLE_PTREE, null, cvalues);
-            dbnew.close();
-        }
-
-    }
-    public String retrieveLastUsed(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + COLUMN_NODE+ " FROM " + TABLE_PTREETAG;
-        Cursor cSor = db.rawQuery(query_params, null);
-        if(cSor.moveToFirst()){
-            do{
-                Log.d("Sappyy","Yes");
-                return cSor.getString(cSor.getColumnIndexOrThrow(COLUMN_NODE));
-           }while(cSor.moveToNext());
-        }else{
-            return null;
-        }
-    }
-
-    public byte[] retrievePImage(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + COLUMN_IMG + " FROM " + TABLE_PTREE;
-        Cursor cSor = db.rawQuery(query_params, null);
-        if(cSor.moveToFirst()){
-            do{
-                Log.d("Sappyy","Yes");
-                return cSor.getBlob(cSor.getColumnIndexOrThrow(COLUMN_IMG));
-
-            }while(cSor.moveToNext());
-        }else{
-            return null;
-        }
-
+    private void deleteAll(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PR, 1 + "=" + 1, null);
+        db.close();
     }
 }
