@@ -16,6 +16,7 @@ package com.hanuor.sapphire.hub;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -106,14 +107,21 @@ public class SapphireApi {
        }
         return connect;
     }
-    public SapphireApi gain(Object tag, SuggestionView suggestionView){
+    public SapphireApi gain(Object tag, SuggestionView suggestionView, Intent intentObject){
 
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             Log.d("Sapphire]",""+tag.toString().length());
-            connect.mgainTag = (String) tag;
+            //connect.mgainTag = (String) tag;
+            if(intentObject != null){
+                //This means that the user wants to generate the ML concept
+                check(suggestionView, intentObject);
+
+            }
            // mclient.tagUpdate((String) tag);
-            mclient.invokeprivateLearning((String) tag);
+
+            // mclient.invokeprivateLearning((String) tag);
+
             //check(suggestionView);
             //mclient.setRecentPrivate((String) tag, connect.tagslist);
             return connect;
@@ -153,11 +161,11 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void check(SuggestionView suggestionView){
+    public void check(SuggestionView suggestionView, Intent intentn){
 
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
-        suggestionView.setUPSuggestion(context, imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")));
+        suggestionView.setUPSuggestion(context, imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")), intentn);
 
 
     }

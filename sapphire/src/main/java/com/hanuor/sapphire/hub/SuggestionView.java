@@ -15,6 +15,7 @@ package com.hanuor.sapphire.hub;/*
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -53,7 +54,7 @@ public class SuggestionView extends RelativeLayout {
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context, bmp);
+        setUPSuggestion(context, bmp, null);
 
     }
 
@@ -94,7 +95,7 @@ public class SuggestionView extends RelativeLayout {
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null);
+            setUPSuggestion(context, null, null);
 
         } finally {
             typedArray.recycle();
@@ -142,17 +143,17 @@ public class SuggestionView extends RelativeLayout {
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context, null);
+            setUPSuggestion(context, null, null);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context, null);
+        setUPSuggestion(context, null, null);
     }
 
-    public void setUPSuggestion(final Context context, Drawable bitmp) {
+    public void setUPSuggestion(final Context context, Drawable bitmp, final Intent intent) {
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
 
@@ -202,6 +203,9 @@ public class SuggestionView extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
+                if(intent!=null){
+                    context.startActivity(intent);
+                }
             }
         });
     }

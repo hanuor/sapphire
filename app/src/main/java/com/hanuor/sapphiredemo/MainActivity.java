@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView);
+               // Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView);
             }
         });
         img2.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
               //  Sapphire.with(MainActivity.this).gain(img2.getTag());
                 //Sapphire.with(MainActivity.this).check(img);
-                Sapphire.with(MainActivity.this).gain(img2.getTag(), suggestionView);
+
+//                Sapphire.with(MainActivity.this).gain(img2.getTag(), suggestionView);
                 }
         });
        but.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 Sapphire.with(MainActivity.this).addTags(m);
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
-                startActivity(ms);
+                ms.putExtra("1","aa");
+                ms.putExtra("2",33);
+                ms.putStringArrayListExtra("3",m);
+                Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView, ms);
+               // startActivity(ms);
             }
                       });
     }
