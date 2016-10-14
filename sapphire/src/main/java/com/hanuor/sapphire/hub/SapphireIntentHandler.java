@@ -20,13 +20,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.Iterator;
 import java.util.Set;
 
 public class SapphireIntentHandler {
     private Context context;
+    SuggestionTempDBHandler suggestionTempDBHandler;
+
     public SapphireIntentHandler(Context context){
         this.context = context;
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+
     }
     public void setIntent(Intent intentObject){
         Bundle bundle = intentObject.getExtras();
@@ -40,5 +48,15 @@ public class SapphireIntentHandler {
             }
             Log.e("SapphireIntentRes","Dumping Intent end");
         }
+    }
+    public void saveIntent(String keyTag, Intent intent){
+
+       String saveIntentthroughString = ToStringBuilder.reflectionToString(intent);
+        suggestionTempDBHandler.insertData(keyTag, saveIntentthroughString);
+    }
+
+    public void retrieveIntentData(String keyTag){
+
+        Log.d("SapphireSuggestion","" + suggestionTempDBHandler.retrieveIntentData(keyTag));
     }
 }
