@@ -10,13 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.SuggestionView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import de.greenrobot.event.EventBus;
 
 
