@@ -46,7 +46,7 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String TABLECREATE = "CREATE TABLE " + TABLENAME + "("+
                                 COLUMN_ID + " STRING," + COLUMN_VALUE
-                                + " STRING);";
+                                + " TEXT);";
         sqLiteDatabase.execSQL(TABLECREATE);
     }
 
@@ -55,7 +55,7 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public int insertData(String key, String value){
+    public int insertData(String key, byte[] value){
         //return 1 when operation successful
         //else return 0 when some error has occurred
         SQLiteDatabase db = this.getWritableDatabase();
@@ -66,13 +66,13 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
         db.close();
         return 1;
     }
-    public String retrieveIntentData(String keyTag){
+    public byte[] retrieveIntentData(String keyTag){
         SQLiteDatabase db = this.getReadableDatabase();
         String query_params = "SELECT " + COLUMN_ID + "," + COLUMN_VALUE + " FROM " + TABLENAME + " WHERE " + COLUMN_ID + "=" + "'" + keyTag + "';";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
-                return cSor.getString(cSor.getColumnIndexOrThrow(SuggestionTempDBHandler.COLUMN_VALUE));
+                return cSor.getBlob(cSor.getColumnIndexOrThrow(SuggestionTempDBHandler.COLUMN_VALUE));
             }while(cSor.moveToNext());
         }else{
             return null;

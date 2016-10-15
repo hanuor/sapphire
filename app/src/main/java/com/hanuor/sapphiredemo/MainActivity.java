@@ -10,11 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import de.greenrobot.event.EventBus;
 
 
@@ -96,11 +100,17 @@ public class MainActivity extends AppCompatActivity {
                 //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 //Sapphire.with(MainActivity.this).addTags(m);
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
-                ms.putExtra("1","aa");
                 ms.putExtra("2",33);
+                ms.putExtra("1","aa");
+
                 ms.putStringArrayListExtra("3",m);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
-                sapphireIntentHandler.saveIntent("Vamos",ms);
+                try {
+                    sapphireIntentHandler.setIntent(ms);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
                 sapphireIntentHandler.retrieveIntentData("Vamos");
                 //Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView, ms);
                // startActivity(ms);

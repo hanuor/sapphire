@@ -20,10 +20,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -36,7 +39,11 @@ public class SapphireIntentHandler {
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
 
     }
-    public void setIntent(Intent intentObject){
+    public void setIntent(Intent intentObject) throws JsonProcessingException {
+        Log.d("SappTest",intentObject.getDataString() + "    " + context.getClass().getSimpleName() + ".this");
+        String getClassName = intentObject.getComponent().getClassName();
+        String getContextName = context.getClass().getSimpleName() + ".this";
+        HashMap<String, String> hashMap = new HashMap<String, String>();
         Bundle bundle = intentObject.getExtras();
         if (bundle != null) {
             Set<String> keys = bundle.keySet();
@@ -44,15 +51,33 @@ public class SapphireIntentHandler {
             Log.e("SapphireIntentRes","Dumping Intent start");
             while (it.hasNext()) {
                 String key = it.next();
+                hashMap.put(key, bundle.get(key).toString());
                 Log.e("SapphireIntentRes","[" + key + "=" + bundle.get(key)+"]");
             }
-            Log.e("SapphireIntentRes","Dumping Intent end");
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonString  = mapper.writeValueAsString(hashMap);
+            Log.d("SapphireIntentData",jsonString);
+            Log.d("SapphireJsckson",""+mapper.writeValueAsString(intentObject));
         }
     }
-    public void saveIntent(String keyTag, Intent intent){
+    public void saveIntent(String keyTag, Intent intent) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
 
-       String saveIntentthroughString = ToStringBuilder.reflectionToString(intent);
-        suggestionTempDBHandler.insertData(keyTag, saveIntentthroughString);
+            String jsonString  = mapper.writeValueAsString(intent);
+            Log.d("SappHeya",""+jsonString);
+        //Intent bj = mapper.readValue(jsonString, Intent.class);
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("a","aa");
+        hashMap.put("b","lalala");
+        ArrayList<String> m = new ArrayList<String>();
+        m.add("frost");
+        m.add("girl");
+        m.add("Bumblebee");
+        hashMap.put("c",m.toString());
+        Log.d("SappTestTag", ""+ mapper.writeValueAsString(hashMap));
+
+        //  String saveIntentthroughString = ToStringBuilder.reflectionToString(intent);
+       // suggestionTempDBHandler.insertData(keyTag, saveIntentthroughString);
     }
 
     public void retrieveIntentData(String keyTag){
