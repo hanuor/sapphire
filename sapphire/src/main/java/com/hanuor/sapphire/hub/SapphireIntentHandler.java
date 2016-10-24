@@ -48,7 +48,7 @@ public class SapphireIntentHandler {
         String getClassName = null;
         getClassName = intentObject.getComponent().getClassName();
         String getContextName = null;
-        getContextName = context.getClass().getSimpleName() + ".this";
+        getContextName = context.getClass().getName() + ".this";
         HashMap<String, String> makeInsideJsonArray = new HashMap<String, String>();
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -86,14 +86,18 @@ public class SapphireIntentHandler {
 
         //begin here
         try {
-            JSONObject jsonObject = new JSONObject(newS.toString());
 
+            JSONObject jsonObject = new JSONObject(newS.toString());
             String toArray = jsonObject.get("intentExtras").toString();
+            String contextName = jsonObject.get("context").toString();
+            String className = jsonObject.get("className").toString();
+            HashMap<String, String> extrasHash = new HashMap<String, String>();
+
             Log.d("Sapp[][]",""+toArray);
 
             JSONObject issueObj = new JSONObject(toArray);
             for(int i = 0; i< issueObj.length() ; i++) {
-                Log.e("Sapp[]][]", "Key = " + issueObj.names().getString(i) + " value = " + issueObj.get(issueObj.names().getString(i)));
+                extrasHash.put(issueObj.names().getString(i), issueObj.get(issueObj.names().getString(i)).toString());
             }
         } catch (JSONException e) {
             e.printStackTrace();
