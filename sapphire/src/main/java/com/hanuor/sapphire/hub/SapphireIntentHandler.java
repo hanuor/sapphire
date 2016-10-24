@@ -119,16 +119,59 @@ public class SapphireIntentHandler {
                 boolean isChar = false;
                 boolean isShort = false;
                 boolean isLong = false;
-
+                double dbxi = 0.0;
+                float flxi = 0f;
+                short shxi = 0;
                 if(pair.getValue().toString().startsWith("[")){
                     startsWithspchar = true;
                 }
                 try {
                      xi = Integer.parseInt(pair.getValue().toString());
+                    isInt = true;
                 } catch (NumberFormatException e) {
+                    //not int
                     xi = -901335572;
+                    try {
+                        dbxi = Double.parseDouble(pair.getValue().toString());
+                        isDouble = true;
+                    } catch (NumberFormatException e1) {
+                        //not double
+                        dbxi = -0.900092;
+                        try {
+                            flxi = Float.parseFloat(pair.getValue().toString());
+                        } catch (NumberFormatException e2) {
+                            //not flaot
+                            flxi = -9.32f;
+                            isFloat = true;
+                            try {
+                                shxi = Short.parseShort(pair.getValue().toString());
+                                isShort = true;
+                            } catch (NumberFormatException e3) {
+                               shxi = -1099;
+                                e3.printStackTrace();
+                            }
+                            Log.d("SappppEEf",""+e.toString());
+                            e2.printStackTrace();
+                        }
+
+                        Log.d("SappppEEd",""+e.toString());
+                        e1.printStackTrace();
+                    }
+
                     Log.d("SappppEE",""+e.toString());
                     e.printStackTrace();
+                }
+
+                if(isInt){
+                    Log.d("SapppInt","Int");
+                    setIntent.putExtra(currentKey, xi);
+                }else if (isDouble){
+
+                    Log.d("SapppDouble","Double");
+                    setIntent.putExtra(currentKey, dbxi);
+                }else if (isFloat){
+                    Log.d("SapppFloat","Float");
+                    setIntent.putExtra(currentKey, flxi);
                 }
                 if(xi<0 && !startsWithspchar){
                     //must be a string  currentKey,pair.getValue().toString()

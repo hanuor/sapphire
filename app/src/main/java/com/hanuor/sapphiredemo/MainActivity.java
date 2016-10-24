@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 ms.putExtra("vamos","SSSS");
                 ms.putExtra("VV",45);
                 ms.putExtra("sSS", 43.09);
+                ms.putExtra("Dses", 32.1f);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
                     sapphireIntentHandler.setIntent(ms);
