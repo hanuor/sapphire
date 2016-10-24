@@ -30,8 +30,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +39,7 @@ import java.util.Set;
 public class SapphireIntentHandler {
     private Context context;
     SuggestionTempDBHandler suggestionTempDBHandler;
-    private static final Set<Class<?>> WRAPPER_TYPES = getWrapperTypes();
+
     public SapphireIntentHandler(Context context){
         this.context = context;
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
@@ -111,6 +111,7 @@ public class SapphireIntentHandler {
                 String currentKey = (String) pair.getKey();
                 int xi;
                 boolean startsWithspchar = false;
+                boolean isarrayInt = false;
                 boolean isInt = false;
                 boolean isFloat = false;
                 boolean isDouble = false;
@@ -122,14 +123,52 @@ public class SapphireIntentHandler {
                 if(pair.getValue().toString().startsWith("[")){
                     startsWithspchar = true;
                 }
-               
-                if(!startsWithspchar){
+                try {
+                     xi = Integer.parseInt(pair.getValue().toString());
+                } catch (NumberFormatException e) {
+                    xi = -901335572;
+                    Log.d("SappppEE",""+e.toString());
+                    e.printStackTrace();
+                }
+                if(xi<0 && !startsWithspchar){
                     //must be a string  currentKey,pair.getValue().toString()
                     //setIntent.putExtra()
                     Log.d("Sapppddd",""+setIntent.toString());
                 }
-                Log.d("SappppResult",""+currentKey + " is an integer Value" );
-                    Log.d("SappppResult",currentKey + " " + isInt + " NOT");
+                if(xi<0 && startsWithspchar){
+                    //must be an array
+                    String retString  = pair.getValue().toString().substring(1, pair.getValue().toString().length()-1);
+                    String retStringarr[] = retString.split(",");
+                    ArrayList<Integer> arrayLister = new ArrayList<>();
+
+                    try {
+                        int num = Integer.parseInt(retStringarr[0]);
+                        isarrayInt = true;
+
+                        for(int i = 0;i < retStringarr.length;i++)
+                        {
+                            arrayLister.add(Integer.parseInt(retStringarr[i]));
+                        }
+                    } catch (NumberFormatException e) {
+                        //must be a string
+                        e.printStackTrace();
+                    }
+                    if(!isarrayInt){
+                        ArrayList<String> arrayList = new ArrayList<>();
+                        Collections.addAll(arrayList, retStringarr);
+                        setIntent.putStringArrayListExtra("sa",arrayList);
+                        Log.d("Sapppddis[h",arrayList.toString());
+                    }else{
+                        Log.d("Sapppddis[h",arrayLister.toString());
+                        setIntent.putIntegerArrayListExtra("saa",arrayLister);
+                    }
+
+
+                    Log.d("Sapppddish",setIntent.toString());
+
+                }
+                Log.d("SappppResult",""+currentKey + " is an integer Value" + xi);
+                    Log.d("SappppResult",currentKey + " " + pair.getValue() + " NOT");
 
                 System.out.println(pair.getKey() + " = " + pair.getValue());
 
@@ -166,25 +205,5 @@ public class SapphireIntentHandler {
 
         Log.d("SapphireSuggestion","" + suggestionTempDBHandler.retrieveIntentData(keyTag));
 
-    }
-
-    public static boolean isWrapperType(Class<?> clazz)
-    {
-        return WRAPPER_TYPES.contains(clazz);
-    }
-
-    private static Set<Class<?>> getWrapperTypes()
-    {
-        Set<Class<?>> ret = new HashSet<Class<?>>();
-        ret.add(Boolean.class);
-        ret.add(Character.class);
-        ret.add(Byte.class);
-        ret.add(Short.class);
-        ret.add(Integer.class);
-        ret.add(Long.class);
-        ret.add(Float.class);
-        ret.add(Double.class);
-        ret.add(Void.class);
-        return ret;
     }
 }
