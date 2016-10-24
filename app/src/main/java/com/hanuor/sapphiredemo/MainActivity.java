@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //ms.putStringArrayListExtra("3",m);
                 ms.putExtra("vamos","SSSS");
+                ms.putExtra("VV",45);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
                     sapphireIntentHandler.setIntent(ms);

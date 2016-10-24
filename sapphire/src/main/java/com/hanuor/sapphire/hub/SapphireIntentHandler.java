@@ -17,6 +17,7 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -30,13 +31,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class SapphireIntentHandler {
     private Context context;
     SuggestionTempDBHandler suggestionTempDBHandler;
-
+    private static final Set<Class<?>> WRAPPER_TYPES = getWrapperTypes();
     public SapphireIntentHandler(Context context){
         this.context = context;
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
@@ -92,12 +95,47 @@ public class SapphireIntentHandler {
             String contextName = jsonObject.get("context").toString();
             String className = jsonObject.get("className").toString();
             HashMap<String, String> extrasHash = new HashMap<String, String>();
+            Intent setIntent = new Intent(contextName, Uri.parse(className));
 
             Log.d("Sapp[][]",""+toArray);
 
             JSONObject issueObj = new JSONObject(toArray);
             for(int i = 0; i< issueObj.length() ; i++) {
                 extrasHash.put(issueObj.names().getString(i), issueObj.get(issueObj.names().getString(i)).toString());
+            }
+            Iterator it = extrasHash.entrySet().iterator();
+            while (it.hasNext()) {
+                //add conditions  and checks here
+
+                Map.Entry pair = (Map.Entry)it.next();
+                String currentKey = (String) pair.getKey();
+                int xi;
+                boolean startsWithspchar = false;
+                boolean isInt = false;
+                boolean isFloat = false;
+                boolean isDouble = false;
+                boolean isByte = false;
+                boolean isChar = false;
+                boolean isShort = false;
+                boolean isLong = false;
+
+                if(pair.getValue().toString().startsWith("[")){
+                    startsWithspchar = true;
+                }
+               
+                if(!startsWithspchar){
+                    //must be a string  currentKey,pair.getValue().toString()
+                    //setIntent.putExtra()
+                    Log.d("Sapppddd",""+setIntent.toString());
+                }
+                Log.d("SappppResult",""+currentKey + " is an integer Value" );
+                    Log.d("SappppResult",currentKey + " " + isInt + " NOT");
+
+                System.out.println(pair.getKey() + " = " + pair.getValue());
+
+
+
+                it.remove();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -128,5 +166,25 @@ public class SapphireIntentHandler {
 
         Log.d("SapphireSuggestion","" + suggestionTempDBHandler.retrieveIntentData(keyTag));
 
+    }
+
+    public static boolean isWrapperType(Class<?> clazz)
+    {
+        return WRAPPER_TYPES.contains(clazz);
+    }
+
+    private static Set<Class<?>> getWrapperTypes()
+    {
+        Set<Class<?>> ret = new HashSet<Class<?>>();
+        ret.add(Boolean.class);
+        ret.add(Character.class);
+        ret.add(Byte.class);
+        ret.add(Short.class);
+        ret.add(Integer.class);
+        ret.add(Long.class);
+        ret.add(Float.class);
+        ret.add(Double.class);
+        ret.add(Void.class);
+        return ret;
     }
 }
