@@ -24,6 +24,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,25 +43,62 @@ public class SapphireIntentHandler {
 
     }
     public void setIntent(Intent intentObject) throws JsonProcessingException {
-        Log.d("SappTest",intentObject.getDataString() + "    " + context.getClass().getSimpleName() + ".this");
-        String getClassName = intentObject.getComponent().getClassName();
-        String getContextName = context.getClass().getSimpleName() + ".this";
+        ObjectMapper mapper = new ObjectMapper();
+
+        String getClassName = null;
+        getClassName = intentObject.getComponent().getClassName();
+        String getContextName = null;
+        getContextName = context.getClass().getSimpleName() + ".this";
+        HashMap<String, String> makeInsideJsonArray = new HashMap<String, String>();
+
         HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("className",getClassName);
+        hashMap.put("context",getContextName);
         Bundle bundle = intentObject.getExtras();
         if (bundle != null) {
             Set<String> keys = bundle.keySet();
             Iterator<String> it = keys.iterator();
-            Log.e("SapphireIntentRes","Dumping Intent start");
+
             while (it.hasNext()) {
                 String key = it.next();
+                makeInsideJsonArray.put(key,bundle.get(key).toString());
                 hashMap.put(key, bundle.get(key).toString());
-                Log.e("SapphireIntentRes","[" + key + "=" + bundle.get(key)+"]");
             }
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonString  = mapper.writeValueAsString(hashMap);
-            Log.d("SapphireIntentData",jsonString);
-            Log.d("SapphireJsckson",""+mapper.writeValueAsString(intentObject));
         }
+        String passArray = mapper.writeValueAsString(makeInsideJsonArray);
+        hashMap.put("intentExtras",passArray);
+
+        String intentString  = mapper.writeValueAsString(intentObject);
+        Log.d("IntentString", "" + mapper.writeValueAsString(hashMap));
+        StringBuilder a1S = new StringBuilder(mapper.writeValueAsString(hashMap));
+        a1S.deleteCharAt(mapper.writeValueAsString(hashMap).length()-1);
+        a1S.append(",");
+        String s1t = a1S.toString();
+
+        StringBuilder sb = new StringBuilder(intentString);
+        sb.deleteCharAt(0);
+        String retrString = sb.toString();
+        StringBuilder newS = new StringBuilder();
+        newS.append(s1t);
+        newS.append(retrString);
+        Log.d("Intentation",""+ newS.toString());
+
+
+        //begin here
+        try {
+            JSONObject jsonObject = new JSONObject(newS.toString());
+
+            String toArray = jsonObject.get("intentExtras").toString();
+            Log.d("Sapp[][]",""+toArray);
+
+            JSONObject issueObj = new JSONObject(toArray);
+            for(int i = 0; i< issueObj.length() ; i++) {
+                Log.e("Sapp[]][]", "Key = " + issueObj.names().getString(i) + " value = " + issueObj.get(issueObj.names().getString(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
     public void saveIntent(String keyTag, Intent intent) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -83,5 +123,6 @@ public class SapphireIntentHandler {
     public void retrieveIntentData(String keyTag){
 
         Log.d("SapphireSuggestion","" + suggestionTempDBHandler.retrieveIntentData(keyTag));
+
     }
 }

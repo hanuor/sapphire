@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 //Sapphire.with(MainActivity.this).addTags(m);
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
-                ms.putExtra("2",33);
-                ms.putExtra("1","aa");
 
-                ms.putStringArrayListExtra("3",m);
+
+                //ms.putStringArrayListExtra("3",m);
+                //ms.putExtra("vamos","SSSS");
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
                     sapphireIntentHandler.setIntent(ms);
