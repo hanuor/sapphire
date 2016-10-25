@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         });
        but.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
             @Override
             public void onClick(View view) {
                 //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
@@ -105,12 +108,27 @@ public class MainActivity extends AppCompatActivity {
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
 
                 byte bmm = 90;
+                float bmx = 33.43f;
+                int bbb = 321;
+                int[] mi  = {21,23};
+                CharSequence cs = "string";
+                short dd = 32;
+                ArrayList<Integer> gg = new ArrayList<Integer>();
+                gg.add(322);
+                gg.add(565);
+
+                boolean[] aar = {true,false};
+                ms.putIntegerArrayListExtra("JOKER",gg);
                 ms.putStringArrayListExtra("3",m);
                 ms.putExtra("vamos","SSSS");
-                ms.putExtra("VV",45);
+                ms.putExtra("VV",bbb);
                 ms.putExtra("sSS", 43.09);
-                ms.putExtra("Dses", 32.1f);
+                ms.putExtra("Dses", bmx);
                 ms.putExtra("bomb",bmm);
+                ms.putExtra("ASSDD",mi);
+                ms.putExtra("SA",3.3f);
+                ms.putExtra("sdaa",cs);
+                ms.putExtra("ASSS",dd);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
                     sapphireIntentHandler.setIntent(ms);

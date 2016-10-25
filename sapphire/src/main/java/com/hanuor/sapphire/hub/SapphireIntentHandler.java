@@ -15,10 +15,12 @@ package com.hanuor.sapphire.hub;
  * limitations under the License.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,16 +28,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 import com.hanuor.sapphire.utils.TypeChecker;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
+import java.util.zip.GZIPOutputStream;
 
 public class SapphireIntentHandler {
     private Context context;
@@ -48,7 +49,48 @@ public class SapphireIntentHandler {
         tc = new TypeChecker();
 
     }
-    public void setIntent(Intent intentObject) throws JsonProcessingException {
+    @SuppressLint("NewApi")
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public void setIntent( Intent intentObject) throws JsonProcessingException {
+       /* String patth = context.getDir("data", 0) + "/" + "intent21.dat";
+        NativeSerializer nativeSerializer = new NativeSerializer("hanuor", intentObject);
+        ObjectBinder.serialize(nativeSerializer,patth);
+        NativeSerializer nativeSerializer1 = ObjectBinder.deserialize(patth, NativeSerializer.class);
+        Intent obj = (Intent) intentObject.clone();*/
+       /* try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
+            try(ObjectOutputStream o = new ObjectOutputStream(b)){
+                o.writeObject(obj);
+            }
+            byte[] bb =  b.toByteArray();
+
+            Log.d("SapphireTagHEdd","dd "+bb.toString());
+        } catch (IOException e) {
+            Log.d("SapphireTagHEee",""+e.getMessage());
+            e.printStackTrace();
+        }
+        final ObjectBinderProvider objectBinderProvider = new ObjectBinderProvider(context);
+
+        if(intentObject!=null) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                 //  objectBinderProvider.store(intentObject);
+
+                }
+            });
+            }
+*/
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            GZIPOutputStream gzipOut = new GZIPOutputStream(baos);
+            ObjectOutputStream objectOut = new ObjectOutputStream(gzipOut);
+            objectOut.writeObject(intentObject);
+            objectOut.close();
+            byte[] bytes = baos.toByteArray();
+            Log.d("Serializable",""+bytes);
+        }catch(IOException i) {
+            i.printStackTrace();
+        }
         ObjectMapper mapper = new ObjectMapper();
 
         String getClassName = null;
@@ -64,15 +106,147 @@ public class SapphireIntentHandler {
         if (bundle != null) {
             Set<String> keys = bundle.keySet();
             Iterator<String> it = keys.iterator();
-
+            Log.d("SappsnoopDog",""+keys.size());
             while (it.hasNext()) {
                 String key = it.next();
-                makeInsideJsonArray.put(key,bundle.get(key).toString());
+                Log.d("Sapptagdog","TYPE   " + bundle.get(key).toString());
+                Log.d("NERVE",""+bundle.get(key).getClass().getAnnotations());
+
+
+                String type = bundle.get(key).getClass().getSimpleName();
+                Log.d("SappDogTAG",key + " OF TYPE " + type);
+                switch (type) {
+                    case "String":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "String[]":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Integer":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Double":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case  "double[]":
+
+                        double[] newDouble = (double[]) bundle.get(key);
+                        String fromDouble = Arrays.toString(newDouble);
+                        makeInsideJsonArray.put(key,type+"-"+fromDouble);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "int[]":
+                        int[] newArray = (int[]) bundle.get(key);
+                        String fromArray = Arrays.toString(newArray);
+                        makeInsideJsonArray.put(key,type+"-"+fromArray);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Boolean":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "boolean[]":
+
+                        boolean[] newBool = (boolean[]) bundle.get(key);
+                        String fromBool = Arrays.toString(newBool);
+                        makeInsideJsonArray.put(key,type+"-"+fromBool);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Char":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "char[]":
+
+                        char[] newChar = (char[]) bundle.get(key);
+                        String fromChar = Arrays.toString(newChar);
+                        makeInsideJsonArray.put(key,type+"-"+fromChar);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "CharSequence":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "charsequence[]":
+
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Byte":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "byte[]":
+
+                        byte[] newByte = (byte[]) bundle.get(key);
+                        String fromByte = Arrays.toString(newByte);
+                        makeInsideJsonArray.put(key,type+"-"+fromByte);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Float":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "float[]":
+
+                        float[] newFloat = (float[]) bundle.get(key);
+                        String fromFloat = Arrays.toString(newFloat);
+                        makeInsideJsonArray.put(key,type+"-"+fromFloat);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Short":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "short[]":
+
+                        short[] newShort = (short[]) bundle.get(key);
+                        String fromShort = Arrays.toString(newShort);
+                        makeInsideJsonArray.put(key,type+"-"+fromShort);
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "Long":
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+                    case "long[]":
+
+                        long[] newLong = (long[]) bundle.get(key);
+                        String fromLong = Arrays.toString(newLong);
+                        makeInsideJsonArray.put(key,type+"-"+bundle.get(key).toString());
+                        Log.d("SappDogTAG","bool array");
+                        break;
+
+                    case "ArrayList":
+                        ArrayList <Object> obj = (ArrayList<Object>) bundle.get(key);
+                        Object[] objArr = obj.toArray();
+                        if(objArr[0] instanceof Integer){
+                            ArrayList<Integer> newIntegerArray = bundle.getIntegerArrayList(key);
+                            makeInsideJsonArray.put(key,type+"Integer"+"-"+newIntegerArray.toString());
+
+                        }else if(objArr[0] instanceof String){
+                            ArrayList<String> newStringArray = bundle.getStringArrayList(key);
+
+                            makeInsideJsonArray.put(key,type+"String"+"-"+newStringArray.toString());
+
+                        }
+                        break;
+
+                    default:
+                        // whatever
+                }
+
                 hashMap.put(key, bundle.get(key).toString());
             }
         }
         String passArray = mapper.writeValueAsString(makeInsideJsonArray);
         hashMap.put("intentExtras",passArray);
+        Log.d("GOGTAD",""+passArray);
 
         String intentString  = mapper.writeValueAsString(intentObject);
         Log.d("IntentString", "" + mapper.writeValueAsString(hashMap));
@@ -90,7 +264,7 @@ public class SapphireIntentHandler {
         Log.d("Intentation",""+ newS.toString());
 
 
-        //begin here
+       /* //begin here
         try {
 
             JSONObject jsonObject = new JSONObject(newS.toString());
@@ -221,7 +395,7 @@ public class SapphireIntentHandler {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
     public void saveIntent(String keyTag, Intent intent) throws IOException {
