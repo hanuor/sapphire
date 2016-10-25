@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         bus.postSticky(new HelloWorld("Hellow orld"));
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
         // Better check that an event was actually posted before
+
+        double mf = 0.87;
+
         if(stickyEvent != null) {
         // "Consume" the sticky even
         }
@@ -101,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
                 //Sapphire.with(MainActivity.this).addTags(m);
                 Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
 
-
+                byte bmm = 90;
                 ms.putStringArrayListExtra("3",m);
                 ms.putExtra("vamos","SSSS");
                 ms.putExtra("VV",45);
                 ms.putExtra("sSS", 43.09);
                 ms.putExtra("Dses", 32.1f);
+                ms.putExtra("bomb",bmm);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
                     sapphireIntentHandler.setIntent(ms);

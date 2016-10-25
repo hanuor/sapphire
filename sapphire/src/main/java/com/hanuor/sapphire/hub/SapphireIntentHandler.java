@@ -24,6 +24,7 @@ import android.util.Log;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.TypeChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,10 +40,12 @@ import java.util.Set;
 public class SapphireIntentHandler {
     private Context context;
     SuggestionTempDBHandler suggestionTempDBHandler;
+    private TypeChecker tc;
 
     public SapphireIntentHandler(Context context){
         this.context = context;
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        tc = new TypeChecker();
 
     }
     public void setIntent(Intent intentObject) throws JsonProcessingException {
@@ -163,14 +166,14 @@ public class SapphireIntentHandler {
                 }
 
                 if(isInt){
-                    Log.d("SapppInt","Int");
+                    Log.d("SapppInt","Int" + xi);
                     setIntent.putExtra(currentKey, xi);
                 }else if (isDouble){
 
-                    Log.d("SapppDouble","Double");
+                    Log.d("SapppDouble","Double"+dbxi);
                     setIntent.putExtra(currentKey, dbxi);
                 }else if (isFloat){
-                    Log.d("SapppFloat","Float");
+                    Log.d("SapppFloat","Float"+flxi);
                     setIntent.putExtra(currentKey, flxi);
                 }
                 if(xi<0 && !startsWithspchar){
@@ -211,12 +214,9 @@ public class SapphireIntentHandler {
 
                 }
                 Log.d("SappppResult",""+currentKey + " is an integer Value" + xi);
-                    Log.d("SappppResult",currentKey + " " + pair.getValue() + " NOT");
+                Log.d("SappppResult",currentKey + " " + pair.getValue() + " NOT");
 
                 System.out.println(pair.getKey() + " = " + pair.getValue());
-
-
-
                 it.remove();
             }
         } catch (JSONException e) {
