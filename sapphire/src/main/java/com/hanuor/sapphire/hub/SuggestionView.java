@@ -29,7 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hanuor.sapphire.R;
+import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
 
 
 public class SuggestionView extends RelativeLayout {
@@ -46,6 +50,8 @@ public class SuggestionView extends RelativeLayout {
     TextView valueTextView, footer;
     ImageView minusButton;
     TextView tv2;
+    SuggestionTempDBHandler suggestionTempDBHandler ;
+    IntentationPrime intentationPrime = new IntentationPrime();
     View rootView;
     public SuggestionView(Context context, Drawable bmp) {
         super(context);
@@ -60,7 +66,7 @@ public class SuggestionView extends RelativeLayout {
 
     public SuggestionView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         textView = new TextView(context, attrs);
         tv2 = new TextView(context);
         imageView = new ImageView(context, attrs);
@@ -107,6 +113,7 @@ public class SuggestionView extends RelativeLayout {
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         textView = new TextView(context, attrs, defStyleAttr);
         imageView = new ImageView(context, attrs, defStyleAttr);
 
@@ -154,6 +161,8 @@ public class SuggestionView extends RelativeLayout {
     }
 
     public void setUPSuggestion(final Context context, Drawable bitmp, final Intent intent) {
+
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
 
@@ -202,6 +211,13 @@ public class SuggestionView extends RelativeLayout {
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("VAmos",suggestionTempDBHandler.retrieveIntentData("vamos"));
+                String retString  = suggestionTempDBHandler.retrieveIntentData("vamos");
+                try {
+                    context.startActivity(intentationPrime.jsonToINTENT(retString));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
                 if(intent!=null){
                     context.startActivity(intent);

@@ -15,8 +15,8 @@ package com.hanuor.sapphire.utils.intentation;
  * limitations under the License.
  */
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -34,17 +34,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static weborb.util.ThreadContext.context;
-
 public class IntentationPrime {
 
-    public String intentToJSON(Intent intent) throws JsonProcessingException {
+    public String intentToJSON(Context con,Intent intent) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
         String getClassName = null;
         getClassName = intent.getComponent().getClassName();
         String getContextName = null;
-        getContextName = context.getClass().getName() + ".this";
+        getContextName = con.getClass().getName() + ".this";
         HashMap<String, String> makeInsideJsonArray = new HashMap<String, String>();
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -210,15 +208,20 @@ public class IntentationPrime {
         StringBuilder newS = new StringBuilder();
         newS.append(s1t);
         newS.append(retrString);
+        Log.d("Insnsns",newS.toString());
         return newS.toString();
     }
 
     public Intent jsonToINTENT(String JSONString) throws JSONException {
+
         JSONObject jsonObject = new JSONObject(JSONString.toString());
         String toArray = jsonObject.get("intentExtras").toString();
-        String contextName = jsonObject.get("context").toString();
+        String contextName = "com.hanuor.sapphiredemo";
         String className = jsonObject.get("className").toString();
-        Intent setIntent = new Intent(contextName, Uri.parse(className));
+        Log.d("Insass",className.toString());
+
+        Intent setIntent = new Intent();
+        setIntent.setClassName(contextName, className);
         HashMap<String, String> extrasHash = new HashMap<String, String>();
         JSONObject issueObj = new JSONObject(toArray);
         for (int i = 0; i < issueObj.length(); i++) {
@@ -233,92 +236,94 @@ public class IntentationPrime {
             Log.d("HAHA",""+currentKey);
             String[] getValuethroughSplit = pair.getValue().toString().split(LibraryDatabase.JSONSEPERATOR);
             String dataType = getValuethroughSplit[0];
+            String  value = (String) getValuethroughSplit[2];
+            Log.d("Insamareen",getValuethroughSplit.length + " " +dataType+ " " +value.toString());
             switch (dataType) {
                 case "String":
-                    setIntent.putExtra(currentKey,(String) pair.getValue());
+                    setIntent.putExtra(currentKey,(String) value);
                     break;
                 case "String[]":
-                    setIntent.putExtra(currentKey,(String[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
                     break;
                 case "Integer":
-                    setIntent.putExtra(currentKey,(int) pair.getValue());
+                    setIntent.putExtra(currentKey,Integer.parseInt(value));
                     break;
                 case "Double":
-                    setIntent.putExtra(currentKey,(double) pair.getValue());
+                    setIntent.putExtra(currentKey,Double.parseDouble(value));
 
                     break;
                 case  "double[]":
-                    setIntent.putExtra(currentKey,(double[]) pair.getValue());
+                    setIntent.putExtra(currentKey,Double.parseDouble(value));
                     break;
                 case "int[]":
-                    setIntent.putExtra(currentKey,(int[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
                 case "Boolean":
-                    setIntent.putExtra(currentKey,(boolean) pair.getValue());
+                    setIntent.putExtra(currentKey,Boolean.valueOf(value));
 
                     break;
                 case "boolean[]":
-                    setIntent.putExtra(currentKey,(boolean[]) pair.getValue());
+                    setIntent.putExtra(currentKey, value);
 
                     break;
                 case "Char":
-                    setIntent.putExtra(currentKey,(char) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
                 case "char[]":
-                    setIntent.putExtra(currentKey,(char[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value.toCharArray());
 
                     break;
                 case "CharSequence":
-                    setIntent.putExtra(currentKey,(CharSequence) pair.getValue());
+                    setIntent.putExtra(currentKey,(CharSequence) value);
 
                     break;
                 case "Charsequence[]":
-                    setIntent.putExtra(currentKey,(CharSequence[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value.toString());
 
                     break;
                 case "Byte":
-                    setIntent.putExtra(currentKey,(byte) pair.getValue());
+                    setIntent.putExtra(currentKey,Byte.valueOf(value));
 
                     break;
                 case "byte[]":
-                    setIntent.putExtra(currentKey,(byte[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
                 case "Float":
-                    setIntent.putExtra(currentKey,(float) pair.getValue());
+                    setIntent.putExtra(currentKey,Float.valueOf(value));
 
                     break;
                 case "float[]":
-                    setIntent.putExtra(currentKey,(float[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
                 case "Short":
-                    setIntent.putExtra(currentKey,(short) pair.getValue());
+                    setIntent.putExtra(currentKey,Short.valueOf(value));
 
                     break;
                 case "short[]":
-                    setIntent.putExtra(currentKey,(short[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
                 case "Long":
-                    setIntent.putExtra(currentKey,(long) pair.getValue());
+                    setIntent.putExtra(currentKey,Long.valueOf(value));
 
                     break;
                 case "long[]":
-                    setIntent.putExtra(currentKey,(long[]) pair.getValue());
+                    setIntent.putExtra(currentKey,value);
 
                     break;
 
                 case "ArrayList":
-                    ArrayList <Object> obj = (ArrayList<Object>) pair.getValue();
+                   /* ArrayList <String> obj = (ArrayList<String>) value;
                     Object[] objArr = obj.toArray();
                     if(objArr[0] instanceof Integer){
-                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) pair.getValue());
+                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) value);
                     }else if(objArr[0] instanceof String){
-                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) pair.getValue());
-                    }
+                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) value);
+                    }*/
                     break;
 
                 default:

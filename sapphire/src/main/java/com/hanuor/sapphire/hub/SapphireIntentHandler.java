@@ -48,9 +48,9 @@ public class SapphireIntentHandler {
     }
     @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    public void setIntent( Intent intentObject) throws JsonProcessingException {
-
-        String getJSON = intentationPrime.intentToJSON(intentObject);
+    public void setIntent(String keyTag, Intent intentObject) throws JsonProcessingException {
+        String getJSON = intentationPrime.intentToJSON(context,intentObject);
+        suggestionTempDBHandler.insertData(keyTag, getJSON);
     }
     public void saveIntent(String keyTag, Intent intent) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

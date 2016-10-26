@@ -55,7 +55,7 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public int insertData(String key, byte[] value){
+    public int insertData(String key, String value){
         //return 1 when operation successful
         //else return 0 when some error has occurred
         SQLiteDatabase db = this.getWritableDatabase();
@@ -66,13 +66,13 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
         db.close();
         return 1;
     }
-    public byte[] retrieveIntentData(String keyTag){
+    public String retrieveIntentData(String keyTag){
         SQLiteDatabase db = this.getReadableDatabase();
         String query_params = "SELECT " + COLUMN_ID + "," + COLUMN_VALUE + " FROM " + TABLENAME + " WHERE " + COLUMN_ID + "=" + "'" + keyTag + "';";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
-                return cSor.getBlob(cSor.getColumnIndexOrThrow(SuggestionTempDBHandler.COLUMN_VALUE));
+                return cSor.getString(cSor.getColumnIndexOrThrow(SuggestionTempDBHandler.COLUMN_VALUE));
             }while(cSor.moveToNext());
         }else{
             return null;
