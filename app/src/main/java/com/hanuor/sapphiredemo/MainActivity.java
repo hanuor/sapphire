@@ -13,7 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
 
 import java.util.ArrayList;
@@ -102,12 +104,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent setIntent = new Intent();
-                setIntent.setClassName("com.hanuor.sapphiredemo","com.hanuor.sapphiredemo.ReceiveActivity");
-                startActivity(setIntent);
-                //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
+                              //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 //Sapphire.with(MainActivity.this).addTags(m);
-                /*Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
+                Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
 
                 byte bmm = 90;
                 float bmx = 33.43f;
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 ms.putExtra("ASSS",dd);
                 SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
-                    sapphireIntentHandler.setIntent("vamos",ms);
+                    sapphireIntentHandler.setIntent("gg",ms);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }

@@ -211,8 +211,8 @@ public class SuggestionView extends RelativeLayout {
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("VAmos",suggestionTempDBHandler.retrieveIntentData("vamos"));
-                String retString  = suggestionTempDBHandler.retrieveIntentData("vamos");
+                Log.d("VAmos",suggestionTempDBHandler.retrieveIntentData("gg"));
+                String retString  = suggestionTempDBHandler.retrieveIntentData("gg");
                 try {
                     context.startActivity(intentationPrime.jsonToINTENT(retString));
                 } catch (JSONException e) {

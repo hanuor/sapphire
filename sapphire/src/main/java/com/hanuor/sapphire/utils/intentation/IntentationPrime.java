@@ -68,7 +68,7 @@ public class IntentationPrime {
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "String[]":
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString());
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString().replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Integer":
@@ -84,13 +84,13 @@ public class IntentationPrime {
 
                         double[] newDouble = (double[]) bundle.get(key);
                         String fromDouble = Arrays.toString(newDouble);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromDouble);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromDouble.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "int[]":
                         int[] newArray = (int[]) bundle.get(key);
                         String fromArray = Arrays.toString(newArray);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromArray);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromArray.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Boolean":
@@ -101,7 +101,7 @@ public class IntentationPrime {
 
                         boolean[] newBool = (boolean[]) bundle.get(key);
                         String fromBool = Arrays.toString(newBool);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromBool);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromBool.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Char":
@@ -112,7 +112,7 @@ public class IntentationPrime {
 
                         char[] newChar = (char[]) bundle.get(key);
                         String fromChar = Arrays.toString(newChar);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromChar);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromChar.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "CharSequence":
@@ -121,7 +121,7 @@ public class IntentationPrime {
                         break;
                     case "charsequence[]":
 
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString());
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString().replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Byte":
@@ -132,7 +132,7 @@ public class IntentationPrime {
 
                         byte[] newByte = (byte[]) bundle.get(key);
                         String fromByte = Arrays.toString(newByte);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromByte);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromByte.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Float":
@@ -143,7 +143,7 @@ public class IntentationPrime {
 
                         float[] newFloat = (float[]) bundle.get(key);
                         String fromFloat = Arrays.toString(newFloat);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromFloat);
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromFloat.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Short":
@@ -154,7 +154,8 @@ public class IntentationPrime {
 
                         short[] newShort = (short[]) bundle.get(key);
                         String fromShort = Arrays.toString(newShort);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromShort);
+                        fromShort = fromShort.replace(" ","");
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+fromShort.replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
                     case "Long":
@@ -165,7 +166,7 @@ public class IntentationPrime {
 
                         long[] newLong = (long[]) bundle.get(key);
                         String fromLong = Arrays.toString(newLong);
-                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString());
+                        makeInsideJsonArray.put(key,type+LibraryDatabase.JSONSEPERATOR+bundle.get(key).toString().replace(" ",""));
                         Log.d("SappDogTAG","bool array");
                         break;
 
@@ -174,12 +175,12 @@ public class IntentationPrime {
                         Object[] objArr = obj.toArray();
                         if(objArr[0] instanceof Integer){
                             ArrayList<Integer> newIntegerArray = bundle.getIntegerArrayList(key);
-                            makeInsideJsonArray.put(key,type+"Integer"+LibraryDatabase.JSONSEPERATOR+newIntegerArray.toString());
+                            makeInsideJsonArray.put(key,type+"Integer"+LibraryDatabase.JSONSEPERATOR+newIntegerArray.toString().replace(" ",""));
 
                         }else if(objArr[0] instanceof String){
                             ArrayList<String> newStringArray = bundle.getStringArrayList(key);
 
-                            makeInsideJsonArray.put(key,type+"String"+LibraryDatabase.JSONSEPERATOR+newStringArray.toString());
+                            makeInsideJsonArray.put(key,type+"String"+LibraryDatabase.JSONSEPERATOR+newStringArray.toString().replace(" ",""));
 
                         }
                         break;
@@ -243,20 +244,36 @@ public class IntentationPrime {
                     setIntent.putExtra(currentKey,(String) value);
                     break;
                 case "String[]":
-                    setIntent.putExtra(currentKey,value);
+                    String comp1 = value.substring(1,value.length()-1);
+                    String[] comp2 = comp1.split(",");
+                    setIntent.putExtra(currentKey,comp2);
                     break;
                 case "Integer":
                     setIntent.putExtra(currentKey,Integer.parseInt(value));
                     break;
                 case "Double":
+
                     setIntent.putExtra(currentKey,Double.parseDouble(value));
 
                     break;
                 case  "double[]":
-                    setIntent.putExtra(currentKey,Double.parseDouble(value));
+                    String compDouble1 = value.substring(1,value.length()-1);
+                    String[] compDoub2 = compDouble1.split(",");
+                    double[] db = new double[compDoub2.length];
+                    for(int i = 0; i<compDoub2.length; i++){
+                        db[i] = Double.parseDouble(compDoub2[i]);
+                    }
+                    setIntent.putExtra(currentKey,db);
                     break;
                 case "int[]":
-                    setIntent.putExtra(currentKey,value);
+                    String compInt1 = value.substring(1,value.length()-1);
+                    String[] compInt2 = compInt1.split(",");
+                    int[] intVal = new int[compInt2.length];
+                    for(int i = 0; i<compInt2.length; i++){
+                        intVal[i] = Integer.parseInt(compInt2[i]);
+                    }
+                    Log.d("Hankey",intVal.toString());
+                    setIntent.putExtra(currentKey,intVal);
 
                     break;
                 case "Boolean":
@@ -264,6 +281,12 @@ public class IntentationPrime {
 
                     break;
                 case "boolean[]":
+                    String compB1 = value.substring(1,value.length()-1);
+                    String[] compB2 = compB1.split(",");
+                    boolean[] BVal = new boolean[compB2.length];
+                    for(int i = 0; i<compB2.length; i++){
+                        BVal[i] =Boolean.parseBoolean(compB2[i]);
+                    }
                     setIntent.putExtra(currentKey, value);
 
                     break;
@@ -272,7 +295,14 @@ public class IntentationPrime {
 
                     break;
                 case "char[]":
-                    setIntent.putExtra(currentKey,value.toCharArray());
+
+                    String ch1 = value.substring(1,value.length()-1);
+                    String[] ch2 = ch1.split(",");
+                    String newS = null;
+                    for(int i = 0; i<ch2.length; i++){
+                        newS = newS + ch2[i];
+                    }
+                    setIntent.putExtra(currentKey,newS.toCharArray());
 
                     break;
                 case "CharSequence":
@@ -288,7 +318,13 @@ public class IntentationPrime {
 
                     break;
                 case "byte[]":
-                    setIntent.putExtra(currentKey,value);
+                    String by = value.substring(1,value.length()-1);
+                    String[] by2 = by.split(",");
+                    byte[] by3 = new byte[by2.length];
+                    for(int i = 0; i<by2.length; i++){
+                        by3[i] =Byte.parseByte(by2[i]);
+                    }
+                    setIntent.putExtra(currentKey,by3);
 
                     break;
                 case "Float":
@@ -296,7 +332,13 @@ public class IntentationPrime {
 
                     break;
                 case "float[]":
-                    setIntent.putExtra(currentKey,value);
+                    String fl = value.substring(1,value.length()-1);
+                    String[] fl2 = fl.split(",");
+                    float[] fl3 = new float[fl2.length];
+                    for(int i = 0; i<fl2.length; i++){
+                        fl3[i] =Float.parseFloat(fl2[i]);
+                    }
+                    setIntent.putExtra(currentKey,fl3);
 
                     break;
                 case "Short":
@@ -304,7 +346,13 @@ public class IntentationPrime {
 
                     break;
                 case "short[]":
-                    setIntent.putExtra(currentKey,value);
+                    String sh = value.substring(1,value.length()-1);
+                    String[] sh2 = sh.split(",");
+                    short[] sh3 = new short[sh2.length];
+                    for(int i = 0; i<sh2.length; i++){
+                        sh3[i] =Short.parseShort(sh2[i]);
+                    }
+                    setIntent.putExtra(currentKey,sh3);
 
                     break;
                 case "Long":
@@ -312,20 +360,39 @@ public class IntentationPrime {
 
                     break;
                 case "long[]":
-                    setIntent.putExtra(currentKey,value);
+                    String ll = value.substring(1,value.length()-1);
+                    String[] ll2 = ll.split(",");
+                    long[] ll3 = new long[ll2.length];
+                    for(int i = 0; i<ll2.length; i++){
+                        ll3[i] =Long.parseLong(ll2[i]);
+                    }
+                    setIntent.putExtra(currentKey,ll3);
 
                     break;
 
-                case "ArrayList":
-                   /* ArrayList <String> obj = (ArrayList<String>) value;
-                    Object[] objArr = obj.toArray();
-                    if(objArr[0] instanceof Integer){
-                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) value);
-                    }else if(objArr[0] instanceof String){
-                        setIntent.putIntegerArrayListExtra(currentKey,(ArrayList<Integer>) value);
-                    }*/
-                    break;
+                case "ArrayListString":
+                    Log.d("Hankey",currentKey+" ");
+                    String arrL = value.substring(1,value.length()-1);
+                    String[] arrl2 = arrL.split(",");
+                    ArrayList<String> arrStr = new ArrayList<String>();
+                    for (int i = 0; i < arrl2.length; i++) {
+                        arrStr.add(arrl2[i]);
+                    }
+                    setIntent.putStringArrayListExtra(currentKey, arrStr);
+                    Log.d("Hankey", currentKey+" "+arrStr.toString());
 
+                    break;
+                case "ArrayListInteger":
+                    String arL = value.substring(1,value.length()-1);
+                    String[] arl2 = arL.split(",");
+                    ArrayList<Integer> arrInt = new ArrayList<Integer>();
+                    for(int i = 0; i<arl2.length; i++){
+                        arrInt.add(Integer.parseInt(arl2[i]));
+                    }
+                    Log.d("Hankey",currentKey+" "+arrInt.toString());
+                    setIntent.putIntegerArrayListExtra(currentKey,arrInt);
+
+                    break;
                 default:
                     // whatever
             }
