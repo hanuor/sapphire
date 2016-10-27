@@ -379,7 +379,6 @@ public class IntentationPrime {
                         arrStr.add(arrl2[i]);
                     }
                     setIntent.putStringArrayListExtra(currentKey, arrStr);
-                    Log.d("Hankey", currentKey+" "+arrStr.toString());
 
                     break;
                 case "ArrayListInteger":
@@ -389,7 +388,7 @@ public class IntentationPrime {
                     for(int i = 0; i<arl2.length; i++){
                         arrInt.add(Integer.parseInt(arl2[i]));
                     }
-                    Log.d("Hankey",currentKey+" "+arrInt.toString());
+
                     setIntent.putIntegerArrayListExtra(currentKey,arrInt);
 
                     break;
