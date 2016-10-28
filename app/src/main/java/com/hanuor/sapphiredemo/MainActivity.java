@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.SuggestionView;
@@ -70,6 +71,18 @@ public class MainActivity extends AppCompatActivity {
         imageViewArrayList.add(img2);
 
         Sapphire.with(MainActivity.this).registerTags(m);
+        //suggestionView.dismiss();
+
+       /* Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setStartOffset(1000);
+        fadeOut.setDuration(1000);
+        suggestionView.setAnimation(fadeOut);*/
+        suggestionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Clickeeeee", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));

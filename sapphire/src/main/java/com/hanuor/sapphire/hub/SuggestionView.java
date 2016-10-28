@@ -23,17 +23,15 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hanuor.sapphire.R;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
 
 
 public class SuggestionView extends RelativeLayout {
@@ -109,6 +107,7 @@ public class SuggestionView extends RelativeLayout {
 
 
     }
+
 
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -208,7 +207,7 @@ public class SuggestionView extends RelativeLayout {
 
         footer.setLayoutParams(paramsfooter);
 
-        minusButton.setOnClickListener(new OnClickListener() {
+       /* minusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("VAmos",suggestionTempDBHandler.retrieveIntentData("gg"));
@@ -223,7 +222,21 @@ public class SuggestionView extends RelativeLayout {
                     context.startActivity(intent);
                 }
             }
-        });
+        });*/
     }
 
+    public void setAnimation(Animation animation){
+        this.setAnimation(animation);
+    }
+    public void show(){
+        this.setVisibility(View.VISIBLE);
+    }
+    public void dismiss(){
+        this.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);
+    }
 }
