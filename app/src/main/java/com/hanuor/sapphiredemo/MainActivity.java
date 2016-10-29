@@ -9,6 +9,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -73,10 +75,29 @@ public class MainActivity extends AppCompatActivity {
         Sapphire.with(MainActivity.this).registerTags(m);
         //suggestionView.dismiss();
 
-       /* Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setStartOffset(1000);
-        fadeOut.setDuration(1000);
-        suggestionView.setAnimation(fadeOut);*/
+
+        Animation a = new AlphaAnimation(1.00f, 0.00f);
+
+        a.setDuration(1000);
+        a.setAnimationListener(new Animation.AnimationListener() {
+
+            public void onAnimationStart(Animation animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void onAnimationRepeat(Animation animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void onAnimationEnd(Animation animation) {
+
+
+            }
+        });
+        suggestionView.startanimation(a);
+
         suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

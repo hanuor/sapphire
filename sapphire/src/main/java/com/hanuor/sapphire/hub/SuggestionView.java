@@ -225,7 +225,7 @@ public class SuggestionView extends RelativeLayout {
         });*/
     }
 
-    public void setAnimation(Animation animation){
+    public void setanimation(Animation animation){
         this.setAnimation(animation);
     }
     public void show(){
@@ -238,5 +238,21 @@ public class SuggestionView extends RelativeLayout {
     @Override
     public void setOnClickListener(OnClickListener l) {
         super.setOnClickListener(l);
+    }
+
+    @Override
+    protected void onAnimationStart() {
+        super.onAnimationStart();
+    }
+
+    @Override
+    protected void onAnimationEnd() {
+        super.onAnimationEnd();
+    }
+    public void startanimation(Animation animation){
+        this.startAnimation(animation);
+    }
+    public void cancelanimation(Animation animation){
+        this.cancelanimation(animation);
     }
 }
