@@ -51,7 +51,7 @@ public class SapphireIntentHandler {
     public void setIntent(String keyTag, Intent intentObject) throws JsonProcessingException {
         String getJSON = intentationPrime.intentToJSON(context,intentObject);
 
-        suggestionTempDBHandler.insertData(keyTag, getJSON);
+       // suggestionTempDBHandler.insertData(keyTag, getJSON);
     }
     public void saveIntent(String keyTag, Intent intent) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

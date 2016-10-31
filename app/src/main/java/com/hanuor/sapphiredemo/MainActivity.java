@@ -1,5 +1,6 @@
 package com.hanuor.sapphiredemo;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,8 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
+import com.hanuor.sapphire.utils.intentation.IntentationPrime;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     DemoObject demoObject;
     ImageView img, img2;
     SuggestionView suggestionView;
+    IntentationPrime intentationPrime;
     private EventBus bus = EventBus.getDefault();
+    String getJSON = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
+        intentationPrime = new IntentationPrime();
         //for testing purpose
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
@@ -130,45 +139,53 @@ public class MainActivity extends AppCompatActivity {
 //                Sapphire.with(MainActivity.this).gain(img2.getTag(), suggestionView);
                 }
         });
-       but.setOnClickListener(new View.OnClickListener() {
+        Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
+
+        byte bmm = 90;
+        float bmx = 33.43f;
+        int bbb = 321;
+        int[] mi  = {21,23};
+        CharSequence cs = "string";
+        short dd = 32;
+        ArrayList<Integer> gg = new ArrayList<Integer>();
+        gg.add(322);
+        gg.add(565);
+
+        boolean[] aar = {true,false};
+        ms.putIntegerArrayListExtra("JOKER",gg);
+        ms.putStringArrayListExtra("3",m);
+        ms.putExtra("vamos","SSSS");
+        ms.putExtra("VV",bbb);
+        ms.putExtra("sSS", 43.09);
+        ms.putExtra("Dses", bmx);
+        ms.putExtra("bomb",bmm);
+        ms.putExtra("ASSDD",mi);
+        ms.putExtra("SA",3.3f);
+        ms.putExtra("sdaa",cs);
+        ms.putExtra("ASSS",dd);
+        SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
+        try {
+           getJSON = intentationPrime.intentToJSON(MainActivity.this,ms);
+
+            //sapphireIntentHandler.setIntent("gg",ms);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        but.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
             @Override
             public void onClick(View view) {
 
-                              //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
-                //Sapphire.with(MainActivity.this).addTags(m);
-              /*  Intent ms = new Intent(MainActivity.this, ReceiveActivity.class);
-
-                byte bmm = 90;
-                float bmx = 33.43f;
-                int bbb = 321;
-                int[] mi  = {21,23};
-                CharSequence cs = "string";
-                short dd = 32;
-                ArrayList<Integer> gg = new ArrayList<Integer>();
-                gg.add(322);
-                gg.add(565);
-
-                boolean[] aar = {true,false};
-                ms.putIntegerArrayListExtra("JOKER",gg);
-                ms.putStringArrayListExtra("3",m);
-                ms.putExtra("vamos","SSSS");
-                ms.putExtra("VV",bbb);
-                ms.putExtra("sSS", 43.09);
-                ms.putExtra("Dses", bmx);
-                ms.putExtra("bomb",bmm);
-                ms.putExtra("ASSDD",mi);
-                ms.putExtra("SA",3.3f);
-                ms.putExtra("sdaa",cs);
-                ms.putExtra("ASSS",dd);
-                SapphireIntentHandler sapphireIntentHandler = new SapphireIntentHandler(MainActivity.this);
                 try {
-                    sapphireIntentHandler.setIntent("gg",ms);
-                } catch (JsonProcessingException e) {
+                    startActivity(intentationPrime.jsonToINTENT(getJSON));
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
+                //Sapphire.with(MainActivity.this).addTags(m);
 
-                sapphireIntentHandler.retrieveIntentData("Vamos");*/
+               // sapphireIntentHandler.retrieveIntentData("Vamos");
                 //Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView, ms);
                // startActivity(ms);*/
             }

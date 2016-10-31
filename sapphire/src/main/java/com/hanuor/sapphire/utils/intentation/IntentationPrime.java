@@ -42,7 +42,9 @@ public class IntentationPrime {
         String getClassName = null;
         getClassName = intent.getComponent().getClassName();
         String getContextName = null;
-        getContextName = con.getClass().getName() + ".this";
+
+        getContextName = con.getPackageName();
+        Log.d("Logan",""+getClassName + " DD||" + getContextName);
         HashMap<String, String> makeInsideJsonArray = new HashMap<String, String>();
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -217,7 +219,7 @@ public class IntentationPrime {
 
         JSONObject jsonObject = new JSONObject(JSONString.toString());
         String toArray = jsonObject.get("intentExtras").toString();
-        String contextName = "com.hanuor.sapphiredemo";
+        String contextName = jsonObject.get("context").toString();
         String className = jsonObject.get("className").toString();
         Log.d("Insass",className.toString());
 
