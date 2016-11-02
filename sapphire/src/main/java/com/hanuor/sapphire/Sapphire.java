@@ -14,6 +14,7 @@ package com.hanuor.sapphire;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.content.Context;
 
 import com.hanuor.client.Client;
