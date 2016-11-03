@@ -17,7 +17,7 @@ android {
         exclude 'META-INF/notice.txt'
     }
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile files('libs/backendless-3.0.20.1.jar')
+    compile 'io.reactivex:rxandroid:1.2.1'
     //compile files('libs/sapphireClient.jar')
     compile files('libs/App42_ANDROID_SDK_3.8.jar')
     compile files('libs/jackson-core-2.8.1.jar')
