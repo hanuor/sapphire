@@ -25,7 +25,6 @@ import android.util.Log;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
-import com.hanuor.sapphire.utils.TypeChecker;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.io.IOException;
@@ -35,16 +34,14 @@ import java.util.HashMap;
 public class SapphireIntentHandler {
     private Context context;
     SuggestionTempDBHandler suggestionTempDBHandler;
-    private TypeChecker tc;
+
     private IntentationPrime intentationPrime;
 
 
     public SapphireIntentHandler(Context context){
         this.context = context;
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
-        tc = new TypeChecker();
         intentationPrime = new IntentationPrime();
-
     }
     @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
