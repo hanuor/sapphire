@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         suggestionView.startanimation(a);
-
         suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

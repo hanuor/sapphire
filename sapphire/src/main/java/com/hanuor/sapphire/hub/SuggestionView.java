@@ -255,4 +255,5 @@ public class SuggestionView extends RelativeLayout {
     public void cancelanimation(Animation animation){
         this.cancelanimation(animation);
     }
+    
 }
