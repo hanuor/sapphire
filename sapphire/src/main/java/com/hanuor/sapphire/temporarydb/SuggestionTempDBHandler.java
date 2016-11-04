@@ -58,12 +58,19 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     public int insertData(String key, String value){
         //return 1 when operation successful
         //else return 0 when some error has occurred
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID, key);
-        contentValues.put(COLUMN_VALUE, value);
-        db.insert(TABLENAME, null, contentValues);
-        db.close();
+        String valueCheck = null;
+        valueCheck = retrieveIntentData(key);
+        if(valueCheck!=null){
+
+        }else{
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COLUMN_ID, key);
+            contentValues.put(COLUMN_VALUE, value);
+            db.insert(TABLENAME, null, contentValues);
+            db.close();
+        }
+
         return 1;
     }
     public String retrieveIntentData(String keyTag){
@@ -77,6 +84,10 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
         }else{
             return null;
         }
+    }
+    public boolean deleteIntentforKeyTag(String keyTag){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLENAME, keyTag + "=" + COLUMN_ID, null) > 0;
     }
 
 }
