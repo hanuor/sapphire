@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SuggestionTempDBHandler extends SQLiteOpenHelper {
 
@@ -61,15 +62,15 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
         String valueCheck = null;
         valueCheck = retrieveIntentData(key);
         if(valueCheck!=null){
-
-        }else{
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(COLUMN_ID, key);
-            contentValues.put(COLUMN_VALUE, value);
-            db.insert(TABLENAME, null, contentValues);
-            db.close();
+            Log.d("TEMPHAND","Exists _ OP DEL " + deleteIntentforKeyTag(key) );
+            deleteIntentforKeyTag(key);
         }
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_ID, key);
+        contentValues.put(COLUMN_VALUE, value);
+        db.insert(TABLENAME, null, contentValues);
+        db.close();
 
         return 1;
     }
@@ -87,7 +88,9 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     }
     public boolean deleteIntentforKeyTag(String keyTag){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLENAME, keyTag + "=" + COLUMN_ID, null) > 0;
+        String query_params =  COLUMN_ID + "=" + "'" + keyTag + "';";
+
+        return db.delete(TABLENAME, query_params, null) > 0;
     }
 
 }

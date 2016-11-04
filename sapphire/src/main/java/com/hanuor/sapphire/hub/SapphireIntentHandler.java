@@ -53,6 +53,10 @@ public class SapphireIntentHandler {
 
        // suggestionTempDBHandler.insertData(keyTag, getJSON);
     }
+    public void tast(String key, String value){
+        suggestionTempDBHandler.insertData(key,value);
+        Log.d("KAPAC","DODO  "+suggestionTempDBHandler.retrieveIntentData(key));
+    }
     public void saveIntent(String keyTag, Intent intent) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 

@@ -15,51 +15,7 @@ package com.hanuor.sapphire.temporarydb;
  * limitations under the License.
  */
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+public class ObjectBinderProvider  {
 
-import java.util.List;
-
-public class ObjectBinderProvider extends ObjectBinderHelper {
-
-    private static ObjectBinderProvider provider = null;
-
-    //configure Db4oHelper by Passing Context.
-    public ObjectBinderProvider(Context ctx) {
-        super(ctx);
-    }
-
-    public static ObjectBinderProvider getInstance(Context ctx) {
-        if (provider == null)
-            provider = new ObjectBinderProvider(ctx);
-        return provider;
-    }
-
-    //This method is used to store the object into the database.
-    public void store(Intent exercise) {
-        db().store(exercise);
-        Log.d("SapphireDb40","Stored");
-    }
-
-    //This method is used to delete the object into the database.
-    public void delete(Intent exercise) {
-        db().delete(exercise);
-    }
-
-    //This method is used to retrive all object from database.
-    public List<Intent> findAll() {
-        return db().query(Intent.class);
-    }
-
-    //This method is used to retrive matched object from database.
-    public List<Intent> getRecord(Intent s) {
-        return db().queryByExample(s);
-    }
-// public ObjectSet<Student> getAllData() {
-//  Student proto = new Student(null, null, 0);
-//  ObjectSet result = db().queryByExample(proto);
-//  return result;
-// }
 
 }

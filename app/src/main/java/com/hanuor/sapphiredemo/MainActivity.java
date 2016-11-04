@@ -22,8 +22,6 @@ import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -178,11 +176,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                try {
-                    startActivity(intentationPrime.jsonToINTENT(getJSON));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+              SapphireIntentHandler sapphireIntentHandler1 = new SapphireIntentHandler(MainActivity.this);
+                sapphireIntentHandler1.tast("hhn","mefa");
                 //Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
                 //Sapphire.with(MainActivity.this).addTags(m);
 
