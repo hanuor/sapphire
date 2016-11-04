@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 public class SapphireIntentHandler {
     private Context context;
-    SuggestionTempDBHandler suggestionTempDBHandler;
+    private SuggestionTempDBHandler suggestionTempDBHandler;
 
     private IntentationPrime intentationPrime;
 

@@ -29,13 +29,6 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "KEYTAG";
     private static final String COLUMN_VALUE = "VALUE";
     private static final int DBVERSION = 3;
-
-/*
-    private static final String ATTR_INT = "INTEGERSTORE";
-    private static final String ATTR_STRING = "STRINGSTORE";
-    private static final String ATTR_BOOLEAN = "BOOLEANSTORE";
-    private static final String ATTR_INT = "INTEGERSTORE";
-    private static final String ATTR_INT = "INTEGERSTORE";*/
     public SuggestionTempDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -45,6 +38,7 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         String TABLECREATE = "CREATE TABLE " + TABLENAME + "("+
                                 COLUMN_ID + " STRING," + COLUMN_VALUE
                                 + " TEXT);";
@@ -92,5 +86,9 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
 
         return db.delete(TABLENAME, query_params, null) > 0;
     }
-
+    public void eraseEverything(){
+        SQLiteDatabase dbnew = this.getWritableDatabase();
+        dbnew.delete(TABLENAME, 1 + "=" + 1, null); //get boolean status here
+        dbnew.close();
+    }
 }
