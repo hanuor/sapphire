@@ -42,7 +42,7 @@ public class ClientConnect {
         //checking jar library
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
-            dayModuloDeterminer.startpvtTreelearning(tags);
+//              dayModuloDeterminer.startpvtTreelearning(tags);
             Client mC = new Client(ctx);
             mC.makeJsonString(tags);
         }else{

@@ -33,11 +33,6 @@ public class DayModuloDeterminer {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         PrivateDatabaseHelper privateDatabaseHelper = new PrivateDatabaseHelper(context);
-        if(privateDatabaseHelper.retrieveNodeColumnValue(day)!=null){
-            privateDatabaseHelper.enterColumnNode(_tags,privateDatabaseHelper.retrieveNodeColumnValue(day),day);
-        }else{
-
-        }
 
 
 
