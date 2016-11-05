@@ -64,25 +64,25 @@ public class PrivateDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         switch (columnSET){
-            case 0:
+            case 1:
                 GETCOLUMNNAME = "Sun";
             break;
-            case 1:
+            case 2:
                 GETCOLUMNNAME = "Mon";
                 break;
-            case 2:
+            case 3:
                 GETCOLUMNNAME = "Tue";
                 break;
-            case 3:
+            case 4:
                 GETCOLUMNNAME = "Wed";
                 break;
-            case 4:
+            case 5:
                 GETCOLUMNNAME = "Thu";
                 break;
-            case 5:
+            case 6:
                 GETCOLUMNNAME = "Fri";
                 break;
-            case 6:
+            case 7:
                 GETCOLUMNNAME = "Sat";
                 break;
             default:
