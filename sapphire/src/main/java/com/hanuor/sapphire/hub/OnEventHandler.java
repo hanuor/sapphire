@@ -15,6 +15,8 @@ package com.hanuor.sapphire.hub;
  * limitations under the License.
  */
 
+import android.content.Context;
+
 public interface OnEventHandler {
-    public void onEvent();
+    public void setUpEvent(Context context);
 }

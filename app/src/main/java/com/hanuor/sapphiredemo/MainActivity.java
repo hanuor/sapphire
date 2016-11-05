@@ -1,5 +1,6 @@
 package com.hanuor.sapphiredemo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.hub.OnEventHandler;
 import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
@@ -28,7 +30,7 @@ import java.util.Calendar;
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnEventHandler {
     Button but;
     DemoObject demoObject;
     ImageView img, img2;
@@ -148,7 +150,13 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer> gg = new ArrayList<Integer>();
         gg.add(322);
         gg.add(565);
-
+        suggestionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnEventHandler onnnn = new MainActivity();
+                onnnn.setUpEvent(MainActivity.this);
+            }
+        });
         boolean[] aar = {true,false};
         ms.putIntegerArrayListExtra("JOKER",gg);
         ms.putStringArrayListExtra("3",m);
@@ -185,10 +193,12 @@ public class MainActivity extends AppCompatActivity {
                // startActivity(ms);*/
             }
                       });
+
     }
 
 
-
-
-
+    @Override
+    public void setUpEvent(Context context) {
+        Toast.makeText(context, "Heya What is up!", Toast.LENGTH_SHORT).show();
+    }
 }

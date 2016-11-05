@@ -172,7 +172,7 @@ public class SuggestionView extends RelativeLayout {
         valueTextView.setGravity(Gravity.CENTER);
         valueTextView.setTextSize(headerTextSize);
         valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
-
+        valueTextView.setClickable(false);
 
 
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
@@ -194,12 +194,14 @@ public class SuggestionView extends RelativeLayout {
         params.addRule(RelativeLayout.BELOW, valueTextView.getId());
 
         minusButton.setLayoutParams(params);
+        minusButton.setClickable(false);
 
 
 
         footer.setTextColor(Color.parseColor(defaultfooterTextColor));
         footer.setText(Ftext);
         footer.setTextSize(footerTextSize);
+        footer.setClickable(false);
         RelativeLayout.LayoutParams paramsfooter = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsfooter.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
@@ -255,5 +257,5 @@ public class SuggestionView extends RelativeLayout {
     public void cancelanimation(Animation animation){
         this.cancelanimation(animation);
     }
-    
+
 }

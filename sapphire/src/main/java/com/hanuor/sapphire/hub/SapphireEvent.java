@@ -26,7 +26,6 @@ public class SapphireEvent {
        //This code will call Suggestion View directly
         //passing the necessary parameters.
 
-        if (mOnEventListener != null)
-            mOnEventListener.onEvent(); // event object :)
+
     }
 }
