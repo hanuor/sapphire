@@ -7,12 +7,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,6 +50,34 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
         intentationPrime = new IntentationPrime();
+        Animation RightSwipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide);
+
+        final Animation lswipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.left);
+        RightSwipe.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        suggestionView.startanimation(lswipe);
+                        suggestionView.setVisibility(View.INVISIBLE);
+                    }
+                }, 5000);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        suggestionView.startAnimation(RightSwipe);
         //for testing purpose
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
@@ -85,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         Sapphire.with(MainActivity.this).registerTags(m);
         //suggestionView.dismiss();
 
-
+/*
         Animation a = new AlphaAnimation(1.00f, 0.00f);
 
         a.setDuration(1000);
@@ -106,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
 
             }
         });
-        suggestionView.startanimation(a);
+        suggestionView.startanimation(a);*/
         suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

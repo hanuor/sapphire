@@ -18,7 +18,7 @@ android {
     }
     defaultConfig {
         applicationId "com.hanuor.sapphiredemo"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -36,7 +36,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile project(':sapphire')
-
     compile 'org.greenrobot:eventbus:3.0.0'
 
 }

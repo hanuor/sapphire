@@ -208,23 +208,6 @@ public class SuggestionView extends RelativeLayout {
         paramsfooter.addRule(RelativeLayout.BELOW, minusButton.getId());
 
         footer.setLayoutParams(paramsfooter);
-
-       /* minusButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("VAmos",suggestionTempDBHandler.retrieveIntentData("gg"));
-                String retString  = suggestionTempDBHandler.retrieveIntentData("gg");
-                try {
-                    context.startActivity(intentationPrime.jsonToINTENT(retString));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
-                if(intent!=null){
-                    context.startActivity(intent);
-                }
-            }
-        });*/
     }
 
     public void setanimation(Animation animation){
