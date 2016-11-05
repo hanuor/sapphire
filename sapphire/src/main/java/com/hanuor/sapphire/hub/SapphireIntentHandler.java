@@ -47,8 +47,9 @@ public class SapphireIntentHandler {
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void setIntent(String keyTag, Intent intentObject) throws JsonProcessingException {
         String getJSON = intentationPrime.intentToJSON(context,intentObject);
-
-       // suggestionTempDBHandler.insertData(keyTag, getJSON);
+        Log.d("Valhalla",getJSON);
+        Log.d("VALHALLA",""+intentObject.getFlags());
+        // suggestionTempDBHandler.insertData(keyTag, getJSON);
     }
     public void tast(String key, String value){
         suggestionTempDBHandler.insertData(key,value);

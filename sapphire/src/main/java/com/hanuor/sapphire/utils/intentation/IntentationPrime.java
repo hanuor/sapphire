@@ -37,14 +37,17 @@ import java.util.Set;
 public class IntentationPrime {
 
     public String intentToJSON(Context con,Intent intent) throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
-
-        String getClassName = null;
-        getClassName = intent.getComponent().getClassName();
         String getContextName = null;
+        String getClassName = null;
+        try {
+            getClassName = intent.getComponent().getClassName();
+            getContextName = con.getPackageName();
+        } catch (Exception e) {
+            e.printStackTrace();
 
-        getContextName = con.getPackageName();
-        Log.d("Logan",""+getClassName + " DD||" + getContextName);
+        }
         HashMap<String, String> makeInsideJsonArray = new HashMap<String, String>();
 
         HashMap<String, String> hashMap = new HashMap<String, String>();

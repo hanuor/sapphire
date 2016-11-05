@@ -154,7 +154,13 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
             @Override
             public void onClick(View view) {
                 OnEventHandler onnnn = new MainActivity();
-                onnnn.setUpEvent(MainActivity.this);
+                try {
+                    onnnn.setUpEvent(MainActivity.this);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
         boolean[] aar = {true,false};
@@ -197,8 +203,19 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
-    public void setUpEvent(Context context) {
+    public void setUpEvent(Context context){
+        Intent asss = new Intent();
+        asss.setFlags(Intent.FILL_IN_ACTION);
+        asss.setFlags(Intent.EXTRA_DOCK_STATE_DESK);
+        SapphireIntentHandler sapphireIntentHandler1 = new SapphireIntentHandler(MainActivity.this);
+        try {
+            sapphireIntentHandler1.setIntent("pyasas",asss);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         Toast.makeText(context, "Heya What is up!", Toast.LENGTH_SHORT).show();
     }
 }

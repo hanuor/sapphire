@@ -17,6 +17,8 @@ package com.hanuor.sapphire.hub;
 
 import android.content.Context;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface OnEventHandler {
-    public void setUpEvent(Context context);
+    public void setUpEvent(Context context) throws JsonProcessingException;
 }
