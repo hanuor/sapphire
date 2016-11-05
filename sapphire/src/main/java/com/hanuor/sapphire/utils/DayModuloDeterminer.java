@@ -19,6 +19,7 @@ import android.content.Context;
 
 import com.hanuor.sapphire.temporarydb.PrivateDatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DayModuloDeterminer {
@@ -28,49 +29,16 @@ public class DayModuloDeterminer {
         this.context = context;
     }
 
-    public void startpvtTreelearning(){
+    public void startpvtTreelearning(ArrayList<String> _tags){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
         PrivateDatabaseHelper privateDatabaseHelper = new PrivateDatabaseHelper(context);
-        privateDatabaseHelper.retrieveNodeColumnValue(new Calendar() {
-            @Override
-            protected void computeTime() {
+        if(privateDatabaseHelper.retrieveNodeColumnValue(day)!=null){
+            privateDatabaseHelper.enterColumnNode(_tags,privateDatabaseHelper.retrieveNodeColumnValue(day),day);
+        }else{
 
-            }
+        }
 
-            @Override
-            protected void computeFields() {
-
-            }
-
-            @Override
-            public void add(int i, int i1) {
-
-            }
-
-            @Override
-            public void roll(int i, boolean b) {
-
-            }
-
-            @Override
-            public int getMinimum(int i) {
-                return 0;
-            }
-
-            @Override
-            public int getMaximum(int i) {
-                return 0;
-            }
-
-            @Override
-            public int getGreatestMinimum(int i) {
-                return 0;
-            }
-
-            @Override
-            public int getLeastMaximum(int i) {
-                return 0;
-            }
-        }.get(Calendar.DAY_OF_WEEK));
 
 
     }

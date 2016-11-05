@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
+import com.hanuor.sapphire.utils.DayModuloDeterminer;
 import com.hanuor.sapphire.utils.ExceptionHandler;
 import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.sapphire.utils.InformationHandler;
@@ -46,7 +47,6 @@ public class SapphireApi {
     private String mgainTag = null;
     private ArrayList<ImageView> imageViews = null;
     private EventBus bus = EventBus.getDefault();
-
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
     private boolean individualmode = false;
@@ -75,6 +75,7 @@ public class SapphireApi {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             connect.tags = tags;
             mclient.register(context, tags);
+
             return connect;
            }else{
             Utility.throwRuntimeException();

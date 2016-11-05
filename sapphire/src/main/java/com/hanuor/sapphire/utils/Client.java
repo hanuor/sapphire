@@ -117,7 +117,7 @@ public class Client {
     public  void makeJsonString(ArrayList<String> tags){
         ConverterUtils cutils = new ConverterUtils(tags);
         String jsonDoc =  cutils.getJsonString();
-        Log.d("SapphireD",""+jsonDoc);
+
         //call the write Json script
         //writeJSON makes a json object string and saves it with default valure 0.1
 

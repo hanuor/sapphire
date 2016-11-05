@@ -19,7 +19,6 @@ import android.content.Context;
 
 import com.hanuor.sapphire.hub.SapphireApi;
 import com.hanuor.sapphire.temporarydb.Differentiator;
-import com.hanuor.sapphire.utils.DayModuloDeterminer;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -32,7 +31,6 @@ public class Sapphire {
     private static String questappkey;
     private static RuntimeHandler runtimeHandler;
     private static EventBus bus = EventBus.getDefault();
-    private static DayModuloDeterminer dayModuloDeterminer;
     public Sapphire(){
 
     }
@@ -51,7 +49,6 @@ public class Sapphire {
         runtimeHandler.setKey_secret(keySecret);
         runtimeHandler.setaBoolean("true");
         bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
-        dayModuloDeterminer.startpvtTreelearning();
         questappkey = appKeyID;
         //check if key matches to the key stored in Database
         //if else statement
