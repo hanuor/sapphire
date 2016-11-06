@@ -92,7 +92,11 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
             return null;
         }
 
-
+    }
+    public void clearImgDB(){
+        SQLiteDatabase dbnew = this.getWritableDatabase();
+        dbnew.delete(TABLE_IMAGE, 1 + "=" + 1, null);
+        dbnew.close();
     }
 
 }
