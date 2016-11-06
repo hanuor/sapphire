@@ -162,6 +162,7 @@ public class SuggestionView extends RelativeLayout {
     }
 
     public void setUPSuggestion(final Context context, Bitmap bitmp) {
+      //  Log.d("SapphireDoen",""+bitmp.toString());
         //bitmp is the incoming dataset from the database.
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);

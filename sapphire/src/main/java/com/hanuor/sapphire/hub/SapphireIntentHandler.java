@@ -24,7 +24,9 @@ import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.io.IOException;
@@ -78,6 +80,15 @@ public class SapphireIntentHandler {
     public void retrieveIntentData(String keyTag){
 
         Log.d("SapphireSuggestion","" + suggestionTempDBHandler.retrieveIntentData(keyTag));
+
+    }
+    public void check(SuggestionView suggestionView){
+        Log.d("SapphireAccess","true0");
+        SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
+        ImagesUtil imagesUtil = new ImagesUtil();
+        Log.d("SapphireAccess","true1");
+        suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")));
+
 
     }
 }

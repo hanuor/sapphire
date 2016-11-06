@@ -163,10 +163,10 @@ public class SapphireApi {
     //Delete this method. This is just for testing
 
     public void check(SuggestionView suggestionView){
-
+        Log.d("SapphireAccess","true0");
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
-
+        Log.d("SapphireAccess","true1");
         suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")));
 
 
