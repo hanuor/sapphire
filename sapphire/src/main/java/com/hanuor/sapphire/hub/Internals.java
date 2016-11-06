@@ -22,12 +22,10 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.backendless.Backendless;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-import com.backendless.files.BackendlessFile;
 import com.hanuor.client.Client;
 import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
+import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
@@ -59,11 +57,13 @@ public class Internals {
     private static StorageService storageService;
     private  BitmapUtility bitmapUtility = new BitmapUtility();
     private GetDayUtil getDayUtil = new GetDayUtil();
+    private KapacRecentDB kapacRecentDB;
     public Internals(Context ctx){
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
         sapphireImgDbHelper = new SapphireImgDbHelper(ctx);
         sapphirePrivateDB = new SapphirePrivateDB(ctx);
+        kapacRecentDB = new KapacRecentDB(ctx);
         App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
         Backendless.initApp( ctx, mInit.ImgHelperId(), mInit.ImgHelperSecret(),"v1");
         storageService = App42API.buildStorageService();
@@ -141,9 +141,12 @@ public class Internals {
     public void hitTags(String _tag){
         //fetch from database
         String retrievedDoc = sapphireDbManager.query();
+        String kapac_value = kapacRecentDB.queryKAPACVALUES();
 
         try {
+
             String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
+            kapacRecentDB.insertKAPACDOC(Client.updateJsonDoc(Client.SapphireHitTag(kapac_value, _tag)));
             sapphireDbManager.insertJDoc(getDoc);
             Log.d("Sapphire",""+sapphireDbManager.query());
         } catch (JSONException e) {
@@ -167,7 +170,11 @@ public class Internals {
             Bitmap bmp = null;
             try {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
-                Backendless.Files.Android.upload(bitmapUtility.createResizedBitmap(bmp), Bitmap.CompressFormat.PNG,
+
+                //Put an exp backoff here so that it uses min. usage of internet.
+
+
+               /* Backendless.Files.Android.upload(bitmapUtility.createResizedBitmap(bmp), Bitmap.CompressFormat.PNG,
                         100, tag, destination , new AsyncCallback<BackendlessFile>() {
                             @Override
                             public void handleResponse(BackendlessFile backendlessFile) {
@@ -177,7 +184,7 @@ public class Internals {
                             public void handleFault(BackendlessFault backendlessFault) {
                                 Log.d("allweknowFault",""+backendlessFault.getMessage());
                             }
-                        });
+                        });*/
             } catch (Exception e) {
                 e.printStackTrace();
             }

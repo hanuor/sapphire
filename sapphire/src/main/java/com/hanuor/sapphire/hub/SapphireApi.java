@@ -119,7 +119,7 @@ public class SapphireApi {
               //  check(suggestionView, intentObject);
 
             }
-           // mclient.tagUpdate((String) tag);
+            mclient.tagUpdate((String) tag);
 
             // mclient.invokeprivateLearning((String) tag);
 

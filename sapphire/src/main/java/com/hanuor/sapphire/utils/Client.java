@@ -22,6 +22,7 @@ import com.hanuor.client.NodeMonitor;
 import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.hub.Internals;
+import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.ConverterUtils;
 import com.hanuor.utils.GetDayUtil;
@@ -43,11 +44,13 @@ public class Client {
     private static StorageService storageService = App42API.buildStorageService();
     private static SapphirePrivateDB sapphirePrivateDB;
     private static GetDayUtil getDayUtil;
+    private KapacRecentDB kapacRecentDB;
     public Client(Context ctx){
       App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
        this.ctx = ctx;
         getDayUtil = new GetDayUtil();
         sapphirePrivateDB = new SapphirePrivateDB(ctx);
+        kapacRecentDB = new KapacRecentDB(ctx);
     }
     public static double test(){
         return mNodeMonitor.nodeIncrementor(0.1);
@@ -64,9 +67,14 @@ public class Client {
 
         //This is for private tree learning
         sapphirePrivateDB.storeTags(jsonDocument);
+
         Log.d("Saaap","here");
         sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), jsonDocument);
         //end of pvt tree learning
+
+        //For public learning. That is maintaining the recent visited profile tags we are shifting to KAPAC Intelligence.
+        kapacRecentDB.insertKAPACDOC(jsonDocument);
+
 
         ServiceHandler.storageService.insertJSONDocument(LibraryDatabase.DBNAME, LibraryDatabase.collectionName, jsonDocument, new App42CallBack() {
             @Override
