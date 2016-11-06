@@ -60,6 +60,14 @@ public class KapacRecentDB extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public void updateDOCwithKAPAC(String _data){
+        deleteKAPACDOc();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(_clnm, _data);
+        db.insert(_tbnm, null, contentValues);
+        db.close();
+    }
     //handles deletion automatically
     private boolean deleteKAPACDOc(){
         SQLiteDatabase db6 = this.getWritableDatabase();
