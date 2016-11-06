@@ -15,10 +15,9 @@ package com.hanuor.sapphire.hub;/*
  */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,9 +28,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hanuor.sapphire.R;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
-import com.squareup.picasso.Picasso;
 
 
 public class SuggestionView extends RelativeLayout {
@@ -48,23 +47,25 @@ public class SuggestionView extends RelativeLayout {
     TextView valueTextView, footer;
     ImageView minusButton;
     TextView tv2;
+    private SapphireImgDbHelper sapphireImgDbHelper;
     SuggestionTempDBHandler suggestionTempDBHandler ;
     IntentationPrime intentationPrime = new IntentationPrime();
     View rootView;
-    public SuggestionView(Context context, Drawable bmp) {
+    public SuggestionView(Context context, Bitmap bmp) {
         super(context);
-
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         this.context = context;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context, bmp, null);
+        setUPSuggestion(context, bmp);
 
     }
 
     public SuggestionView(Context context, AttributeSet attrs) {
         super(context, attrs);
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs);
         tv2 = new TextView(context);
         imageView = new ImageView(context, attrs);
@@ -99,7 +100,7 @@ public class SuggestionView extends RelativeLayout {
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null, null);
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
@@ -113,6 +114,7 @@ public class SuggestionView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
 
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs, defStyleAttr);
         imageView = new ImageView(context, attrs, defStyleAttr);
 
@@ -149,18 +151,18 @@ public class SuggestionView extends RelativeLayout {
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context, null, null);
+            setUPSuggestion(context, null);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context, null, null);
+        setUPSuggestion(context, null);
     }
 
-    public void setUPSuggestion(final Context context, Drawable bitmp, final Intent intent) {
-
+    public void setUPSuggestion(final Context context, Bitmap bitmp) {
+        //bitmp is the incoming dataset from the database.
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
@@ -178,14 +180,14 @@ public class SuggestionView extends RelativeLayout {
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
         if(bitmp!= null){
             Log.d("SappgireBut", "Here");
-            minusButton.setImageDrawable(bitmp);
-
+           // minusButton.setImageDrawable(bitmp);
+            minusButton.setImageBitmap(bitmp);
         }else{
-            String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
+            Log.d("SappgireBut", "Hereii");
+          /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
                     "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+*/
 
-            Picasso.with(context).load(urlpic)
-                    .into(minusButton);
 
         }
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(

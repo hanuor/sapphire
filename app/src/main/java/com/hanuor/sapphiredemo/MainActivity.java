@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         arrayOfImgViews.add(img);
         arrayOfImgViews.add(img2);
         Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
+        S
 
         Bitmap bitmap = ((BitmapDrawable)img2.getDrawable()).getBitmap();
         Log.d("Sappitttt",""+bitmap.toString());

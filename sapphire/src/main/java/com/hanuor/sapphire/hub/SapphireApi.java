@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
-import com.hanuor.sapphire.utils.DayModuloDeterminer;
 import com.hanuor.sapphire.utils.ExceptionHandler;
 import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.sapphire.utils.InformationHandler;
@@ -117,7 +116,7 @@ public class SapphireApi {
             //connect.mgainTag = (String) tag;
             if(intentObject != null){
                 //This means that the user wants to generate the ML concept
-                check(suggestionView, intentObject);
+              //  check(suggestionView, intentObject);
 
             }
            // mclient.tagUpdate((String) tag);
@@ -163,11 +162,12 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void check(SuggestionView suggestionView, Intent intentn){
+    public void check(SuggestionView suggestionView){
 
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
-        suggestionView.setUPSuggestion(context, imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")), intentn);
+
+        suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")));
 
 
     }

@@ -38,11 +38,11 @@ public class ImagesUtil {
     }
 
 
-    public  Drawable byteToDrawable(byte[] data) {
+    public  Bitmap byteToBitmap(byte[] data) {
 
         if (data == null)
             return null;
         else
-            return new BitmapDrawable(BitmapFactory.decodeByteArray(data, 0, data.length));
+            return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 }
