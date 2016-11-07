@@ -206,6 +206,7 @@ public class Internals {
                 bmp = ((BitmapDrawable)imgviews.get(i).getDrawable()).getBitmap();
 
                 //Put an exp backoff here so that it uses min. usage of internet.
+                //switch back and forth from imgstorebackendless class
 
 
                /* Backendless.Files.Android.upload(bitmapUtility.createResizedBitmap(bmp), Bitmap.CompressFormat.PNG,
