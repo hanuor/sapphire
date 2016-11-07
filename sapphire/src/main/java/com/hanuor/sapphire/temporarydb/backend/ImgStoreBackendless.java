@@ -15,8 +15,22 @@ package com.hanuor.sapphire.temporarydb.backend;
  * limitations under the License.
  */
 
+import android.util.Log;
+
+import java.util.Calendar;
+
 public class ImgStoreBackendless {
+    Calendar c;
+    int minutes;
+    int hour;
+    public ImgStoreBackendless(){
+        c = Calendar.getInstance();
+        minutes = c.get(Calendar.MINUTE);
+        hour = c.get(Calendar.HOUR);
+        Log.d("Youth",""+hour);
+    }
     public void performEfficientStorageOperation(){
+        
 
     }
 }

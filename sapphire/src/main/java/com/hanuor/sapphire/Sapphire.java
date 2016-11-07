@@ -19,6 +19,7 @@ import android.content.Context;
 
 import com.hanuor.sapphire.hub.SapphireApi;
 import com.hanuor.sapphire.temporarydb.Differentiator;
+import com.hanuor.sapphire.temporarydb.backend.ImgStoreBackendless;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -48,6 +49,8 @@ public class Sapphire {
         runtimeHandler.setKey_ID(appKeyID);
         runtimeHandler.setKey_secret(keySecret);
         runtimeHandler.setaBoolean("true");
+        ImgStoreBackendless imgStoreBackendless = new ImgStoreBackendless();
+
         bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
         questappkey = appKeyID;
         //check if key matches to the key stored in Database
