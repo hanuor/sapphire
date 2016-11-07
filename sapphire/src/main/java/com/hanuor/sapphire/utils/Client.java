@@ -69,7 +69,10 @@ public class Client {
         //use a separate DB here for handling the JSON  data
 
         //This is for private tree learning
-        sapphireDbManager.insertJDoc(jsonDocument);
+        if(sapphireDbManager.query().length()==0){
+
+            sapphireDbManager.insertJDoc(jsonDocument);
+        }
         sapphirePrivateDB.storeTags(jsonDocument);
 
         Log.d("Saaap","here");
