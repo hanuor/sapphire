@@ -142,6 +142,7 @@ public class Internals {
         //fetch from database
         String retrievedDoc = sapphireDbManager.query();
         String kapac_value = kapacRecentDB.queryKAPACVALUES();
+
         if(kapac_value == null){
             Log.d("KapacIntel",""+kapac_value);
         }
@@ -151,6 +152,7 @@ public class Internals {
             String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
             kapacRecentDB.updateDOCwithKAPAC(Client.updateJsonDoc(Client.SapphireHitTag(kapac_value, _tag)));
             sapphireDbManager.insertJDoc(getDoc);
+            privateHitTag(_tag);
             Log.d("Sapphire",""+sapphireDbManager.query());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -159,6 +161,33 @@ public class Internals {
         }
 
     }
+    public void privateHitTag(String hitTag){
+        String jsonD = sapphirePrivateDB.fetchprivategetJsonStringfromDB();
+        String nodePRdaydoc = sapphirePrivateDB.queryPRnodefor(getDayUtil.getDay());
+        Log.d("SapGET",""+nodePRdaydoc);
+        Log.d("SapGETPP",""+jsonD);
+
+        try {
+            if(jsonD!=null){
+                JSONObject jObj = new JSONObject(jsonD);
+                String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(jsonD, hitTag));
+                sapphirePrivateDB.storeTags(getDoc);
+
+                //update to cloud as well
+            }
+            if(nodePRdaydoc!=null){
+                //Update for days wise as well
+                Log.d("Sapppp",nodePRdaydoc);
+                JSONObject jObj = new JSONObject(nodePRdaydoc);
+                String getPRNODEData = Client.updateJsonDoc(Client.SapphireHitTag(nodePRdaydoc, hitTag));
+                sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), getPRNODEData);
+            }
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
     public void storImgs(Context ctx, ArrayList<ImageView> imgviews){
         Log.d("allweknow","here");
@@ -205,31 +234,6 @@ public class Internals {
         }
     }
 
-   public void privateHitTag(String hitTag){
-       String jsonD = sapphirePrivateDB.fetchprivategetJsonStringfromDB();
-       String nodePRdaydoc = sapphirePrivateDB.queryPRnodefor(getDayUtil.getDay());
-       Log.d("SapGET",""+nodePRdaydoc);
-
-       try {
-           if(jsonD!=null){
-               JSONObject jObj = new JSONObject(jsonD);
-               String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(jsonD, hitTag));
-               sapphirePrivateDB.storeTags(getDoc);
-
-               //update to cloud as well
-           }
-           if(nodePRdaydoc!=null){
-               //Update for days wise as well
-               Log.d("Sapppp",nodePRdaydoc);
-               JSONObject jObj = new JSONObject(nodePRdaydoc);
-               String getPRNODEData = Client.updateJsonDoc(Client.SapphireHitTag(nodePRdaydoc, hitTag));
-               sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), getPRNODEData);
-           }
-       } catch (JSONException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-       }
-   }
 
     public void recentTagViewHelper(String _tag, ArrayList<String> imageViewArrayList){
         ArrayList<String> tagslist = new ArrayList<String>();

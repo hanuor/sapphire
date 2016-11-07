@@ -55,9 +55,6 @@ public class Client {
         sapphireDbManager  = new SapphireDbManager(ctx);
         kapacRecentDB = new KapacRecentDB(ctx);
     }
-    public static double test(){
-        return mNodeMonitor.nodeIncrementor(0.1);
-    }
 
     public void writeJson(final String jsonDocument){
 		/*
@@ -70,13 +67,12 @@ public class Client {
 
         //This is for private tree learning
         if(sapphireDbManager.query().length()==0){
-
             sapphireDbManager.insertJDoc(jsonDocument);
         }
-        sapphirePrivateDB.storeTags(jsonDocument);
-
-        Log.d("Saaap","here");
-        sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), jsonDocument);
+        if(sapphirePrivateDB.queryPRnodefor(getDayUtil.getDay())==null){
+            sapphirePrivateDB.storeTags(jsonDocument);
+        }
+        //sapphirePrivateDB.nodeupdatePRDAYsModulo2(getDayUtil.getDay(), jsonDocument);
         //end of pvt tree learning
 
         //For public learning. That is maintaining the recent visited profile tags we are shifting to KAPAC Intelligence.
