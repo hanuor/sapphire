@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.hanuor.sapphire.utils.enumeration.KapacRecent;
 
@@ -27,9 +28,10 @@ public class KapacRecentDB extends SQLiteOpenHelper {
     private static final KapacRecent TBNM = KapacRecent.RECENT_KAPAC_TABLE;
     private static final KapacRecent DBNM = KapacRecent.KAPAC_RECENT_DATABASE;
     private static final KapacRecent CLNM = KapacRecent.COLUMN_VALUE;
-    private static final String _tbnm = TBNM.name();
-    private static final String _dbnm = DBNM.name();
-    private static final String _clnm =  CLNM.name();
+    private static final String _tbnm = "KAPACTBNM";
+    private static final String _dbnm = "KAPACDBNM";
+    private static final String _clnm =  "KAPACCLNM";
+
     private static final int KAPACRECENT = 1;
     public KapacRecentDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -37,7 +39,7 @@ public class KapacRecentDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE" + _tbnm + "(" + _clnm + " STRING);");
+        sqLiteDatabase.execSQL("CREATE TABLE " + _tbnm + "(" + _clnm + " STRING);");
     }
 
     @Override
@@ -67,6 +69,7 @@ public class KapacRecentDB extends SQLiteOpenHelper {
         contentValues.put(_clnm, _data);
         db.insert(_tbnm, null, contentValues);
         db.close();
+        Log.d("KapacIntel",queryKAPACVALUES());
     }
     //handles deletion automatically
     private boolean deleteKAPACDOc(){

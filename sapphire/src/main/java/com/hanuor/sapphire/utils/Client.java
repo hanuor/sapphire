@@ -23,6 +23,7 @@ import com.hanuor.container.Initializer;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.hub.Internals;
 import com.hanuor.sapphire.temporarydb.KapacRecentDB;
+import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.ConverterUtils;
 import com.hanuor.utils.GetDayUtil;
@@ -45,11 +46,13 @@ public class Client {
     private static SapphirePrivateDB sapphirePrivateDB;
     private static GetDayUtil getDayUtil;
     private KapacRecentDB kapacRecentDB;
+    private SapphireDbManager sapphireDbManager;
     public Client(Context ctx){
       App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
        this.ctx = ctx;
         getDayUtil = new GetDayUtil();
         sapphirePrivateDB = new SapphirePrivateDB(ctx);
+        sapphireDbManager  = new SapphireDbManager(ctx);
         kapacRecentDB = new KapacRecentDB(ctx);
     }
     public static double test(){
@@ -66,6 +69,7 @@ public class Client {
         //use a separate DB here for handling the JSON  data
 
         //This is for private tree learning
+        sapphireDbManager.insertJDoc(jsonDocument);
         sapphirePrivateDB.storeTags(jsonDocument);
 
         Log.d("Saaap","here");

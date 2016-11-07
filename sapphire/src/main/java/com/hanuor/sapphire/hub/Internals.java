@@ -142,14 +142,19 @@ public class Internals {
         //fetch from database
         String retrievedDoc = sapphireDbManager.query();
         String kapac_value = kapacRecentDB.queryKAPACVALUES();
+        if(kapac_value == null){
+            Log.d("KapacIntel",""+kapac_value);
+        }
 
         try {
-
+            Log.d("KapacIntel","getDoc " + retrievedDoc);
             String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(retrievedDoc, _tag));
-            kapacRecentDB.insertKAPACDOC(Client.updateJsonDoc(Client.SapphireHitTag(kapac_value, _tag)));
+            kapacRecentDB.updateDOCwithKAPAC(Client.updateJsonDoc(Client.SapphireHitTag(kapac_value, _tag)));
             sapphireDbManager.insertJDoc(getDoc);
             Log.d("Sapphire",""+sapphireDbManager.query());
         } catch (JSONException e) {
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
 

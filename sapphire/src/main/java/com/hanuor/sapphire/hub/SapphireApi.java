@@ -16,7 +16,6 @@ package com.hanuor.sapphire.hub;
  */
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -108,17 +107,17 @@ public class SapphireApi {
        }
         return connect;
     }
-    public SapphireApi gain(Object tag, SuggestionView suggestionView, Intent intentObject){
+    public SapphireApi gain(Object tag){
 
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             Log.d("Sapphire]",""+tag.toString().length());
             //connect.mgainTag = (String) tag;
-            if(intentObject != null){
+           /* if(intentObject != null){
                 //This means that the user wants to generate the ML concept
               //  check(suggestionView, intentObject);
 
-            }
+            }*/
             mclient.tagUpdate((String) tag);
 
             // mclient.invokeprivateLearning((String) tag);

@@ -159,13 +159,15 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Sapphire.with(MainActivity.this).gain(img.getTag());
                // Sapphire.with(MainActivity.this).gain(img.getTag(), suggestionView);
             }
         });
         img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  Sapphire.with(MainActivity.this).gain(img2.getTag());
+                Sapphire.with(MainActivity.this).gain(img2.getTag());
+                //  Sapphire.with(MainActivity.this).gain(img2.getTag());
                 //Sapphire.with(MainActivity.this).check(img);
 
 //                Sapphire.with(MainActivity.this).gain(img2.getTag(), suggestionView);
@@ -215,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
 
         but.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
