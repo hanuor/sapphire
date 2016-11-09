@@ -36,7 +36,7 @@
         android:background="#ffffff"
         android:id="@+id/suggest"
         app:headerText="Based on your recent activity"
-        app:headertextColor="#212121"
+        app:headertextColor="#F50057"
         app:footerText="Frostbite engine"
         app:footertextColor="#424242"
         app:footertextSize="9"
