@@ -3,6 +3,7 @@ package com.hanuor.sapphiredemo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class ReceiveActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.name);
         HelloWorld stickyEvent = EventBus.getDefault().getStickyEvent(HelloWorld.class);
         // Better check that an event was actually posted before
+        Log.d("Hans","ss");
         if(stickyEvent != null) {
             // "Consume" the sticky event
             Toast.makeText(ReceiveActivity.this, ""+stickyEvent.getMessage(), Toast.LENGTH_SHORT).show();
