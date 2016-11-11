@@ -42,7 +42,6 @@ public class Sapphire {
         return mconnect;
     }
     public static boolean initialize(Context context, String appKeyID, String keySecret){
-
         Utility.throwExceptionIfNullOrBlank(context, "context");
         Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
         runtimeHandler = new RuntimeHandler();
