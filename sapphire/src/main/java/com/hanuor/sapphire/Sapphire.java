@@ -49,7 +49,6 @@ public class Sapphire {
         runtimeHandler.setKey_secret(keySecret);
         runtimeHandler.setaBoolean("true");
         ImgStoreBackendless imgStoreBackendless = new ImgStoreBackendless();
-
         bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
         questappkey = appKeyID;
         //check if key matches to the key stored in Database
