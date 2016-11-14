@@ -47,7 +47,6 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
     public int insertData(String key, String value){
