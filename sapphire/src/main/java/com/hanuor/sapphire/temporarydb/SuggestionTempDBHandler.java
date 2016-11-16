@@ -32,7 +32,6 @@ public class SuggestionTempDBHandler extends SQLiteOpenHelper {
     public SuggestionTempDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
-
     public SuggestionTempDBHandler(Context context) {
         super(context, DBNAME, null, DBVERSION);
     }
