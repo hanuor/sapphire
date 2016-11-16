@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.ExceptionHandler;
 import com.hanuor.sapphire.utils.ImagesUtil;
@@ -50,6 +51,7 @@ public class SapphireApi {
     private boolean individualmode = false;
     private ArrayList<String> tagslist;
     private ArrayList<Button> buttonArrayList = null;
+    private StartEngineModulePrimary startEngineModulePrimary;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         if(context == null){
@@ -161,6 +163,12 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
+    public void setRandomMeasures(boolean value){
+        if(value){
+            startEngineModulePrimary = new StartEngineModulePrimary();
+        }
+
+    }
     public void check(SuggestionView suggestionView){
         Log.d("SapphireAccess","true0");
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
