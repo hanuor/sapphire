@@ -165,7 +165,7 @@ public class SapphireApi {
 
     public void setRandomMeasures(boolean value){
         if(value){
-            startEngineModulePrimary = new StartEngineModulePrimary();
+            startEngineModulePrimary = new StartEngineModulePrimary(context);
         }
 
     }
