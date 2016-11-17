@@ -66,7 +66,7 @@ public class Client {
         //use a separate DB here for handling the JSON  data
 
         //This is for private tree learning
-        if(sapphireDbManager.query().length()==0){
+        if(sapphireDbManager.query() == null){
             sapphireDbManager.insertJDoc(jsonDocument);
         }
         if(sapphirePrivateDB.queryPRnodefor(getDayUtil.getDay())==null){
