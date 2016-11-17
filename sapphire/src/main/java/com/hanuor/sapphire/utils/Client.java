@@ -59,12 +59,9 @@ public class Client {
     public void writeJson(final String jsonDocument){
 		/*
 		Write json document to the database. This method is directly accessed from the android library.
-
 		*/
-
         //use a internet check here
         //use a separate DB here for handling the JSON  data
-
         //This is for private tree learning
         if(sapphireDbManager.query() == null){
             sapphireDbManager.insertJDoc(jsonDocument);

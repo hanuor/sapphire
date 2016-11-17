@@ -18,6 +18,11 @@ package com.hanuor.sapphire.infoGet;
 import android.content.Context;
 
 public class StartEngineModulePrimary {
+/*
+
+    SapphireprivateDB is for mapping events occuring on specific days.
+*/
+
     private Context context;
     public StartEngineModulePrimary(Context ctx){
         this.context = ctx;
