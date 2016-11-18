@@ -36,8 +36,6 @@ public class TrainingTracker extends SQLiteOpenHelper {
                 WED_COL + " INTEGER," + THU_COL + " INTEGER," +
                 FRI_COL + " INTEGER," + SAT_COL + " INTEGER," +
                 SUN_COL + " INTEGER" + ");");
-
-
     }
     private static int Db_VERSION_VALUE = 13;
     public TrainingTracker(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
