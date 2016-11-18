@@ -15,7 +15,9 @@ package com.hanuor.sapphire.temporarydb;
  * limitations under the License.
  */
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -49,5 +51,60 @@ public class TrainingTracker extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+
+    public void updateValue(int day){
+        String GETCOLUMNNAME = null;
+        switch (day){
+            case 0:
+                GETCOLUMNNAME = SUN_COL;
+                break;
+            case 1:
+                GETCOLUMNNAME = MON_COL;
+                break;
+            case 2:
+                GETCOLUMNNAME = TUE_COL;
+                break;
+            case 3:
+                GETCOLUMNNAME = WED_COL;
+                break;
+            case 4:
+                GETCOLUMNNAME = THU_COL;
+                break;
+            case 5:
+                GETCOLUMNNAME = FRI_COL;
+                break;
+            case 6:
+                GETCOLUMNNAME = SAT_COL;
+                break;
+            default:
+                GETCOLUMNNAME = SUN_COL;
+                break;
+        }
+
+        //query here then store
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GETCOLUMNNAME, 1);
+        db.insert(TRAINING_TABLE, null, contentValues);
+        db.close();
+    }
+
+    public void queryTracker(int day, boolean forAll){
+        if(forAll){
+            SQLiteDatabase db = this.getReadableDatabase();
+            String query_params = "SELECT " + "*" + " FROM " + TRAINING_TABLE;
+            Cursor cSor = db.rawQuery(query_params, null);
+            if(cSor.moveToFirst()){
+                do{
+                    return cSor.getColumnIndexOrThrow(cSor.getColumnIndexOrThrow(SapphirePrivateDB.COL_LISTTAGS));
+                }while(cSor.moveToNext());
+            }else{
+            }
+
+        }else{
+
+        }
     }
 }
