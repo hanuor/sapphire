@@ -24,10 +24,8 @@ public class StartEngineModulePrimary {
     private SapphirePrivateDB sapphirePrivateDB;
     private GetDayUtil getDayUtil;
 /*
-
     SapphireprivateDB is for mapping events occuring on specific days.
 */
-
     private Context context;
     public StartEngineModulePrimary(Context ctx){
         this.context = ctx;
