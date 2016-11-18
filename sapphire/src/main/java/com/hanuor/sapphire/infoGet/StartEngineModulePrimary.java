@@ -20,6 +20,9 @@ import android.content.Context;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.utils.GetDayUtil;
 
+/*
+A one week training is needed here. This class is used to implement trained data when the whole week has been completed.*/
+
 public class StartEngineModulePrimary {
     private SapphirePrivateDB sapphirePrivateDB;
     private GetDayUtil getDayUtil;
