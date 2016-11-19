@@ -44,7 +44,7 @@ public class StartEngineModulePrimary {
             //display
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), false);
-            Log.d("TrainingTracker",""+valmos);
+            Log.d("TrainingTrackerEngine",""+valmos);
 
         }else{
             //keep on modelling

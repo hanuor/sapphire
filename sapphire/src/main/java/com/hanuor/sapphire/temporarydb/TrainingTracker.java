@@ -183,14 +183,8 @@ public class TrainingTracker extends SQLiteOpenHelper {
                     return null;
                 }
             }
-            for(int i = 0 ; i<validatorHelper.length; i++){
-                if(validatorHelper[i]){
-                    validator   = true;
-                }else{
-                    validator = false;
-                }
-            }
-            if(validator){
+
+            if(areAllTrue(validatorHelper)){
                 return "stored";
             }else{
                 return null;
@@ -198,5 +192,9 @@ public class TrainingTracker extends SQLiteOpenHelper {
 
         }
     }
-
+    public static boolean areAllTrue(boolean[] array)
+    {
+        for(boolean b : array) if(!b) return false;
+        return true;
+    }
 }
