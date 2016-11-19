@@ -142,6 +142,7 @@ public class TrainingTracker extends SQLiteOpenHelper {
             }
 
         }else{
+
             String query_params0 = "SELECT " + SUN_COL + " FROM " + TRAINING_TABLE;
             String query_params1 = "SELECT " + MON_COL + " FROM " + TRAINING_TABLE;
             String query_params2 = "SELECT " + TUE_COL + " FROM " + TRAINING_TABLE;
@@ -149,17 +150,28 @@ public class TrainingTracker extends SQLiteOpenHelper {
             String query_params4 = "SELECT " + THU_COL + " FROM " + TRAINING_TABLE;
             String query_params5 = "SELECT " + FRI_COL + " FROM " + TRAINING_TABLE;
             String query_params6 = "SELECT " + SAT_COL + " FROM " + TRAINING_TABLE;
+            String queryArr[] = {query_params0, query_params1, query_params2, query_params4, query_params5,query_params6};
             boolean validator = false;
             String query_p = "query_params";
             for(int i = 0; i<7; i++){
-                Cursor cSor = db.rawQuery(query_params, null);
+                Cursor cSor = db.rawQuery(queryArr[i], null);
                 if(cSor.moveToFirst()){
                     do{
-                        return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
+                        int Rvalue  =  cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
+                        if(Rvalue == 0){
+                            validator = false;
+                        }else{
+                            validator = true;
+                        }
                     }while(cSor.moveToNext());
                 }else{
                     return 0;
                 }
+            }
+            if(validator){
+                return 1;
+            }else{
+                return 0;
             }
 
         }
