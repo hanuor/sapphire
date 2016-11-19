@@ -96,6 +96,11 @@ public class TrainingTracker extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void clearTable(){
+        SQLiteDatabase db0 = this.getWritableDatabase();
+        db0.delete(TRAINING_TABLE,1+"="+1 , null);
+        db0.close();
+    }
     public String queryTracker(int day, boolean forAll){
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -135,7 +140,7 @@ public class TrainingTracker extends SQLiteOpenHelper {
                 query_params = "SELECT " + SUN_COL + " FROM " + TRAINING_TABLE;
                 break;
         }
-        if(forAll){
+        if(!forAll){
             Cursor cSor = db.rawQuery(query_params, null);
             if(cSor.moveToFirst()){
                 do{

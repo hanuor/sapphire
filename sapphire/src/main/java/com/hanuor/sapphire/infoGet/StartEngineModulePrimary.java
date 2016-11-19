@@ -42,8 +42,9 @@ public class StartEngineModulePrimary {
     public void switchRandomness(boolean decision){
         if(decision){
             //display
+            trainingTracker.clearTable();
         trainingTracker.updateValue(getDayUtil.getDay());
-         String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), false);
+         String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
             Log.d("TrainingTrackerEngine",""+valmos);
 
         }else{
