@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class TrainingTracker extends SQLiteOpenHelper {
     private static final String DB_NAME_VALUE = "TrainindData.db";
@@ -34,11 +35,12 @@ public class TrainingTracker extends SQLiteOpenHelper {
     private static  String COLUMN;
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE "+ TRAINING_TABLE + "("+
-                MON_COL + " INTEGER," + TUE_COL + " INTEGER," +
-                WED_COL + " INTEGER," + THU_COL + " INTEGER," +
-                FRI_COL + " INTEGER," + SAT_COL + " INTEGER," +
-                SUN_COL + " INTEGER" + ");");
+        String CREATE_ = "CREATE TABLE "+ TRAINING_TABLE + "("+
+                MON_COL + " TEXT," + TUE_COL + " TEXT," +
+                WED_COL + " TEXT," + THU_COL + " TEXT," +
+                FRI_COL + " TEXT," + SAT_COL + " TEXT," +
+                SUN_COL + " TEXT" + ");";
+        sqLiteDatabase.execSQL(CREATE_);
     }
     private static int Db_VERSION_VALUE = 13;
     public TrainingTracker(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -87,12 +89,14 @@ public class TrainingTracker extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(GETCOLUMNNAME, 1);
-        db.insert(TRAINING_TABLE, null, contentValues);
+        contentValues.put(GETCOLUMNNAME, "stored");
+
+        long ff = db.insert(TRAINING_TABLE, null, contentValues);
+        Log.d("TrainingTracker",GETCOLUMNNAME+"  "+ff);
         db.close();
     }
 
-    public int queryTracker(int day, boolean forAll){
+    public String queryTracker(int day, boolean forAll){
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query_params = null;
@@ -135,10 +139,10 @@ public class TrainingTracker extends SQLiteOpenHelper {
             Cursor cSor = db.rawQuery(query_params, null);
             if(cSor.moveToFirst()){
                 do{
-                    return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
+                    return cSor.getString(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
                 }while(cSor.moveToNext());
             }else{
-                return 0;
+                return null;
             }
 
         }else{
@@ -150,28 +154,37 @@ public class TrainingTracker extends SQLiteOpenHelper {
             String query_params4 = "SELECT " + THU_COL + " FROM " + TRAINING_TABLE;
             String query_params5 = "SELECT " + FRI_COL + " FROM " + TRAINING_TABLE;
             String query_params6 = "SELECT " + SAT_COL + " FROM " + TRAINING_TABLE;
-            String queryArr[] = {query_params0, query_params1, query_params2, query_params4, query_params5,query_params6};
+            String queryArr[] = {query_params0, query_params1, query_params2,query_params3, query_params4, query_params5,query_params6};
+            String corresP_D[] = {SUN_COL,MON_COL, TUE_COL, WED_COL, THU_COL, FRI_COL, SAT_COL};
             boolean validator = false;
-            String query_p = "query_params";
             for(int i = 0; i<7; i++){
                 Cursor cSor = db.rawQuery(queryArr[i], null);
+
                 if(cSor.moveToFirst()){
                     do{
-                        int Rvalue  =  cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
-                        if(Rvalue == 0){
-                            validator = false;
-                        }else{
-                            validator = true;
+
+                        try {
+                            String  Rvalue  =  cSor.getString(cSor.getColumnIndexOrThrow(corresP_D[i]));
+                            Log.d("TrainingT",""+Rvalue + " for " + corresP_D[i]);
+                            if(Rvalue.length()==0){
+                                validator = false;
+                            }else{
+                                validator = true;
+                            }
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
+                        } finally {
+                            continue;
                         }
                     }while(cSor.moveToNext());
                 }else{
-                    return 0;
+                    return null;
                 }
             }
             if(validator){
-                return 1;
+                return "stored";
             }else{
-                return 0;
+                return null;
             }
 
         }

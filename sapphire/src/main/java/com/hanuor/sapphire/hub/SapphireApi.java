@@ -166,6 +166,7 @@ public class SapphireApi {
     public void setRandomMeasures(boolean value){
         if(value){
             startEngineModulePrimary = new StartEngineModulePrimary(context);
+            startEngineModulePrimary.switchRandomness(true);
         }
 
     }

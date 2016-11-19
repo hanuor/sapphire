@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
             }
         });
         suggestionView.startAnimation(RightSwipe);
+        Sapphire.with(MainActivity.this).setRandomMeasures(true);
         //for testing purpose
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
