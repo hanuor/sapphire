@@ -24,6 +24,8 @@ import com.hanuor.utils.GetDayUtil;
 
 /*
 A one week training is needed here. This class is used to implement trained data when the whole week has been completed.*/
+/*
+we need to link sv to this engine in order to make functionality and demo ready.*/
 
 public class StartEngineModulePrimary {
     private SapphirePrivateDB sapphirePrivateDB;
