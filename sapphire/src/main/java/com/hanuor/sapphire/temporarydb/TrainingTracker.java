@@ -31,6 +31,7 @@ public class TrainingTracker extends SQLiteOpenHelper {
     private static final String FRI_COL = "FridayColumn";
     private static final String SAT_COL = "SaturdayColumn";
     private static final String SUN_COL = "SundayColumn";
+    private static  String COLUMN;
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE "+ TRAINING_TABLE + "("+
@@ -91,19 +92,64 @@ public class TrainingTracker extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void queryTracker(int day, boolean forAll){
+    public int queryTracker(int day, boolean forAll){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = null;
+        COLUMN = null;
+        switch (day){
+            case 0:
+                query_params = "SELECT " + SUN_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = SUN_COL;
+                break;
+            case 1:
+                query_params = "SELECT " + MON_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = MON_COL;
+                break;
+            case 2:
+                query_params = "SELECT " + TUE_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = TUE_COL;
+                break;
+            case 3:
+                query_params = "SELECT " + WED_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = WED_COL;
+                break;
+            case 4:
+                query_params = "SELECT " + THU_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = THU_COL;
+                break;
+            case 5:
+                query_params = "SELECT " + FRI_COL + " FROM " + TRAINING_TABLE;
+                COLUMN = FRI_COL;
+                break;
+            case 6:
+                COLUMN = SAT_COL;
+                query_params = "SELECT " + SAT_COL + " FROM " + TRAINING_TABLE;
+                break;
+            default:
+                COLUMN = SUN_COL;
+                query_params = "SELECT " + SUN_COL + " FROM " + TRAINING_TABLE;
+                break;
+        }
         if(forAll){
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query_params = "SELECT " + "*" + " FROM " + TRAINING_TABLE;
             Cursor cSor = db.rawQuery(query_params, null);
             if(cSor.moveToFirst()){
                 do{
-                    return cSor.getColumnIndexOrThrow(cSor.getColumnIndexOrThrow(SapphirePrivateDB.COL_LISTTAGS));
+                    return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
                 }while(cSor.moveToNext());
             }else{
+                return 0;
             }
 
         }else{
+            Cursor cSor = db.rawQuery(query_params, null);
+            if(cSor.moveToFirst()){
+                do{
+                    return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
+                }while(cSor.moveToNext());
+            }else{
+                return 0;
+            }
 
         }
     }
