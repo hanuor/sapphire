@@ -142,15 +142,27 @@ public class TrainingTracker extends SQLiteOpenHelper {
             }
 
         }else{
-            Cursor cSor = db.rawQuery(query_params, null);
-            if(cSor.moveToFirst()){
-                do{
-                    return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
-                }while(cSor.moveToNext());
-            }else{
-                return 0;
+            String query_params0 = "SELECT " + SUN_COL + " FROM " + TRAINING_TABLE;
+            String query_params1 = "SELECT " + MON_COL + " FROM " + TRAINING_TABLE;
+            String query_params2 = "SELECT " + TUE_COL + " FROM " + TRAINING_TABLE;
+            String query_params3 = "SELECT " + WED_COL + " FROM " + TRAINING_TABLE;
+            String query_params4 = "SELECT " + THU_COL + " FROM " + TRAINING_TABLE;
+            String query_params5 = "SELECT " + FRI_COL + " FROM " + TRAINING_TABLE;
+            String query_params6 = "SELECT " + SAT_COL + " FROM " + TRAINING_TABLE;
+            boolean validator = false;
+            String query_p = "query_params";
+            for(int i = 0; i<7; i++){
+                Cursor cSor = db.rawQuery(query_params, null);
+                if(cSor.moveToFirst()){
+                    do{
+                        return cSor.getInt(cSor.getColumnIndexOrThrow(TrainingTracker.COLUMN));
+                    }while(cSor.moveToNext());
+                }else{
+                    return 0;
+                }
             }
 
         }
     }
+
 }
