@@ -156,6 +156,7 @@ public class TrainingTracker extends SQLiteOpenHelper {
             String query_params6 = "SELECT " + SAT_COL + " FROM " + TRAINING_TABLE;
             String queryArr[] = {query_params0, query_params1, query_params2,query_params3, query_params4, query_params5,query_params6};
             String corresP_D[] = {SUN_COL,MON_COL, TUE_COL, WED_COL, THU_COL, FRI_COL, SAT_COL};
+            boolean validatorHelper[]  =new boolean[7];
             boolean validator = false;
             for(int i = 0; i<7; i++){
                 Cursor cSor = db.rawQuery(queryArr[i], null);
@@ -171,6 +172,7 @@ public class TrainingTracker extends SQLiteOpenHelper {
                             }else{
                                 validator = true;
                             }
+                            validatorHelper[i]  = validator;
                         } catch (IllegalArgumentException e) {
                             e.printStackTrace();
                         } finally {
@@ -179,6 +181,13 @@ public class TrainingTracker extends SQLiteOpenHelper {
                     }while(cSor.moveToNext());
                 }else{
                     return null;
+                }
+            }
+            for(int i = 0 ; i<validatorHelper.length; i++){
+                if(validatorHelper[i]){
+                    validator   = true;
+                }else{
+                    validator = false;
                 }
             }
             if(validator){
