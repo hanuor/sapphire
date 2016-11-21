@@ -18,6 +18,7 @@ package com.hanuor.sapphire.infoGet;
 import android.content.Context;
 import android.util.Log;
 
+import com.hanuor.client.MaxValueEvaluator;
 import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
@@ -79,7 +80,8 @@ public class StartEngineModulePrimary {
                     String value = (String) jsonArray.get(key);
                     stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
-                Log.d("Enging dump value",""+stringDoubleHashMap.toString());
+                String key_node = MaxValueEvaluator.processHash(stringDoubleHashMap);
+                Log.d("Enging dump value",""+key_node);
 
             } catch (JSONException e) {
                 Log.d("EngHASSS",e.toString());
