@@ -11,6 +11,9 @@ import java.util.ArrayList;
 /**
  * Created by Shantanu Johri on 15-08-2016.
  */
+
+/*
+Store tags and their values in a json format*/
 public class SapphireDbManager extends SQLiteOpenHelper {
 
 

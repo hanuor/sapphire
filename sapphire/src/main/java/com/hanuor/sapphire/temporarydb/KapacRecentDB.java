@@ -23,7 +23,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.hanuor.sapphire.utils.enumeration.KapacRecent;
-
+/*
+Kapac displays the recent activity*/
 public class KapacRecentDB extends SQLiteOpenHelper {
     private static final KapacRecent TBNM = KapacRecent.RECENT_KAPAC_TABLE;
     private static final KapacRecent DBNM = KapacRecent.KAPAC_RECENT_DATABASE;

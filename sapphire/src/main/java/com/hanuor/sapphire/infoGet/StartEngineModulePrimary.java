@@ -19,9 +19,16 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hanuor.sapphire.hub.SuggestionView;
+import com.hanuor.sapphire.temporarydb.SapphireDbManager;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.sapphire.temporarydb.TrainingTracker;
 import com.hanuor.utils.GetDayUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 
 /*
 A one week training is needed here. This class is used to implement trained data when the whole week has been completed.*/
@@ -29,10 +36,12 @@ A one week training is needed here. This class is used to implement trained data
 we need to link sv to this engine in order to make functionality and demo ready.*/
 
 public class StartEngineModulePrimary {
-    private SapphirePrivateDB sapphirePrivateDB;
     private GetDayUtil getDayUtil;
     private TrainingTracker trainingTracker;
     private SuggestionView suggestionView;
+    private SapphirePrivateDB sapphirePrivateDB;
+    private SapphireDbManager sapphireDbManager;
+    private SapphireImgDbHelper sapphireImgDbHelper;
 /*
     SapphireprivateDB is for mapping events occuring on specific days.
 */
@@ -42,19 +51,35 @@ public class StartEngineModulePrimary {
         sapphirePrivateDB = new SapphirePrivateDB(context);
         getDayUtil = new GetDayUtil();
         trainingTracker = new TrainingTracker(context);
+        sapphirePrivateDB = new SapphirePrivateDB(context);
+        sapphireDbManager = new SapphireDbManager(context);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
        // suggestionView = new SuggestionView(context);
-        
+
     }
-    public void switchRandomness(boolean decision){
+    public void startSuggestions(boolean decision){
         if(decision){
             //display
             trainingTracker.clearTable();
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
             Log.d("TrainingTrackerEngine",""+valmos);
-            if(valmos.equals("stored")){
+           String getJsonDoc = sapphireDbManager.query();
+            Log.d("Engine",""+getJsonDoc);
+            try {
+                JSONObject jsonArray = new JSONObject(getJsonDoc);
+                Log.d("Enignee",""+jsonArray.length());
+                Iterator<String> flavourI = jsonArray.keys();
 
+                while (flavourI.hasNext()){
+                    Log.d("Enigne Dum",""+flavourI.next());
+                }
+
+            } catch (JSONException e) {
+                Log.d("EngHASSS",e.toString());
+                e.printStackTrace();
             }
+
 
         }else{
             //keep on modelling
