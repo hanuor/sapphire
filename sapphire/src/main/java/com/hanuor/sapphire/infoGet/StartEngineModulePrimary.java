@@ -29,6 +29,7 @@ import com.hanuor.utils.GetDayUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -72,21 +73,25 @@ public class StartEngineModulePrimary {
                 HashMap<String, Double> stringDoubleHashMap = new HashMap<String, Double>();
                 String getJsonDoc = sapphireDbManager.query();
                 JSONObject jsonArray = new JSONObject(getJsonDoc);
-                Log.d("Enignee",""+jsonArray.length());
                 Iterator<String> flavourI = jsonArray.keys();
-
                 while (flavourI.hasNext()){
                     String key = flavourI.next();
                     String value = (String) jsonArray.get(key);
                     stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
-                String key_node = MaxValueEvaluator.processHash(stringDoubleHashMap);
-                Log.d("Enging dump value",""+key_node);
 
+
+                ArrayList<String> keys = new ArrayList<String>();
+                ArrayList<Double> values = new ArrayList<Double>();
+                Object key_name = null;
+               // Double _ofMAXVALUE = Collections.max(values);
+                String vaAbbreviation = (String) MaxValueEvaluator.processHash(stringDoubleHashMap);
+                Log.d("Enging dump value",""+vaAbbreviation);
             } catch (JSONException e) {
                 Log.d("EngHASSS",e.toString());
                 e.printStackTrace();
             }catch (Exception e1){
+                Log.d("EngHASSS",e1.toString());
                 e1.printStackTrace();
             }
 
