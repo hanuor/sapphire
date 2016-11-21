@@ -18,6 +18,7 @@ package com.hanuor.sapphire.infoGet;
 import android.content.Context;
 import android.util.Log;
 
+import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.sapphire.temporarydb.TrainingTracker;
 import com.hanuor.utils.GetDayUtil;
@@ -31,6 +32,7 @@ public class StartEngineModulePrimary {
     private SapphirePrivateDB sapphirePrivateDB;
     private GetDayUtil getDayUtil;
     private TrainingTracker trainingTracker;
+    private SuggestionView suggestionView;
 /*
     SapphireprivateDB is for mapping events occuring on specific days.
 */
@@ -40,6 +42,8 @@ public class StartEngineModulePrimary {
         sapphirePrivateDB = new SapphirePrivateDB(context);
         getDayUtil = new GetDayUtil();
         trainingTracker = new TrainingTracker(context);
+       // suggestionView = new SuggestionView(context);
+        
     }
     public void switchRandomness(boolean decision){
         if(decision){
@@ -48,6 +52,9 @@ public class StartEngineModulePrimary {
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
             Log.d("TrainingTrackerEngine",""+valmos);
+            if(valmos.equals("stored")){
+
+            }
 
         }else{
             //keep on modelling
