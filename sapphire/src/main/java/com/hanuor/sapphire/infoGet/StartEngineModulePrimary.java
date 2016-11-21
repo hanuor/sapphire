@@ -28,6 +28,7 @@ import com.hanuor.utils.GetDayUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 /*
@@ -64,20 +65,27 @@ public class StartEngineModulePrimary {
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
             Log.d("TrainingTrackerEngine",""+valmos);
-           String getJsonDoc = sapphireDbManager.query();
-            Log.d("Engine",""+getJsonDoc);
+           ////String getJsonDoc = sapphireDbManager.query();
+            //Log.d("Engine",""+getJsonDoc);
             try {
+                HashMap<String, Double> stringDoubleHashMap = new HashMap<String, Double>();
+                String getJsonDoc = sapphireDbManager.query();
                 JSONObject jsonArray = new JSONObject(getJsonDoc);
                 Log.d("Enignee",""+jsonArray.length());
                 Iterator<String> flavourI = jsonArray.keys();
 
                 while (flavourI.hasNext()){
-                    Log.d("Enigne Dum",""+flavourI.next());
+                    String key = flavourI.next();
+                    String value = (String) jsonArray.get(key);
+                    stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
+                Log.d("Enging dump value",""+stringDoubleHashMap.toString());
 
             } catch (JSONException e) {
                 Log.d("EngHASSS",e.toString());
                 e.printStackTrace();
+            }catch (Exception e1){
+                e1.printStackTrace();
             }
 
 
