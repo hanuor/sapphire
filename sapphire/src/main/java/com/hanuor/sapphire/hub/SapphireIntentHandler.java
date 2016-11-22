@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 import com.hanuor.sapphire.utils.ImagesUtil;
+import com.hanuor.sapphire.utils.NativeSerializer;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.io.IOException;
@@ -87,7 +88,19 @@ public class SapphireIntentHandler {
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
         Log.d("SapphireAccess","true1");
-        suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")));
+        NativeSerializer nativeSerializer = new NativeSerializer();
+        try {
+           byte[] nt =  nativeSerializer.serialize(suggestionView);
+            SuggestionView sV= (SuggestionView) nativeSerializer.deserialize(nt);
+          //  sV.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("Heteee","Ex"+e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.d("Heteee","Ex"+e.getMessage());
+        }
+
 
 
     }

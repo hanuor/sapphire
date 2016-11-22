@@ -28,18 +28,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hanuor.sapphire.R;
+import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
-import com.hanuor.sapphire.utils.intentation.IntentationPrime;
+import com.hanuor.sapphire.utils.ImagesUtil;
+
+import java.io.Serializable;
 
 
-public class SuggestionView extends RelativeLayout {
+public class SuggestionView extends RelativeLayout implements Serializable{
     private TextView textView;
     private String defaultheaderTextColor = "#eeeeee";
     private String defaultfooterTextColor = "#eeeeee";
 
     private float footerTextSize = 13f;
-    private Context context;
+    private transient Context context;
     private float headerTextSize = 13f;
     String TEXT = "Suggestionbox";
     String Ftext = "Default";
@@ -48,18 +51,18 @@ public class SuggestionView extends RelativeLayout {
     ImageView minusButton;
     TextView tv2;
     private SapphireImgDbHelper sapphireImgDbHelper;
+    private StartEngineModulePrimary startEngineModulePrimary;
     SuggestionTempDBHandler suggestionTempDBHandler ;
-    IntentationPrime intentationPrime = new IntentationPrime();
     View rootView;
-    public SuggestionView(Context context, Bitmap bmp) {
-        super(context);
+    public SuggestionView(Context con, Bitmap bmp) {
+        super(con);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
-        this.context = context;
+        this.context = con;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
         setUPSuggestion(context, bmp);
-
+        //startEngineModulePrimary = new StartEngineModulePrimary(context);
     }
 
     public SuggestionView(Context context, AttributeSet attrs) {
@@ -164,6 +167,7 @@ public class SuggestionView extends RelativeLayout {
     public void setUPSuggestion(final Context context, Bitmap bitmp) {
       //  Log.d("SapphireDoen",""+bitmp.toString());
         //bitmp is the incoming dataset from the database.
+        Log.d("Engine Sugges", "Call received");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
@@ -180,16 +184,20 @@ public class SuggestionView extends RelativeLayout {
 
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
         if(bitmp!= null){
-            Log.d("SappgireBut", "Here");
+            Log.d("SappgireButoo", "Here");
            // minusButton.setImageDrawable(bitmp);
-            minusButton.setImageBitmap(bitmp);
+           minusButton.setImageBitmap(bitmp);
         }else{
-            Log.d("SappgireBut", "Hereii");
+            Log.d("EngineReTag ","");
+            //String queryName = startEngineModulePrimary.startSuggestions(true);
+           // Log.d("EngineReTag ",""+queryName);
+            ImagesUtil imagesUtil = new ImagesUtil();
+            //byte[] mm = sapphireImgDbHelper.imgquery(queryName);
+            //minusButton.setImageBitmap(imagesUtil.byteToBitmap(mm));
+            Log.d("SappgireBut", "Hereii" + context.toString());
           /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
                     "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
 */
-
-
         }
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

@@ -163,9 +163,9 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void setRandomMeasures(boolean value){
+    public void setRandomMeasures(boolean value, SuggestionView suggestionView){
         if(value){
-            startEngineModulePrimary = new StartEngineModulePrimary(context);
+            startEngineModulePrimary = new StartEngineModulePrimary(context, suggestionView);
             startEngineModulePrimary.startSuggestions(true);
         }
 

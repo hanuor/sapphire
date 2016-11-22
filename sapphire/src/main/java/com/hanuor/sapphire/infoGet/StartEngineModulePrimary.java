@@ -24,12 +24,11 @@ import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
 import com.hanuor.sapphire.temporarydb.TrainingTracker;
+import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.utils.GetDayUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -45,11 +44,13 @@ public class StartEngineModulePrimary {
     private SapphirePrivateDB sapphirePrivateDB;
     private SapphireDbManager sapphireDbManager;
     private SapphireImgDbHelper sapphireImgDbHelper;
+    private ImagesUtil imagesUtil;
+    private SuggestionView suggestionViewOb;
 /*
     SapphireprivateDB is for mapping events occuring on specific days.
 */
     private Context context;
-    public StartEngineModulePrimary(Context ctx){
+    public StartEngineModulePrimary(Context ctx, SuggestionView suggestionView1){
         this.context = ctx;
         sapphirePrivateDB = new SapphirePrivateDB(context);
         getDayUtil = new GetDayUtil();
@@ -57,18 +58,17 @@ public class StartEngineModulePrimary {
         sapphirePrivateDB = new SapphirePrivateDB(context);
         sapphireDbManager = new SapphireDbManager(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
-       // suggestionView = new SuggestionView(context);
+        imagesUtil = new ImagesUtil();
+        this.suggestionViewOb = suggestionView1;
+
 
     }
-    public void startSuggestions(boolean decision){
+    public String startSuggestions(boolean decision){
         if(decision){
-            //display
             trainingTracker.clearTable();
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
             Log.d("TrainingTrackerEngine",""+valmos);
-           ////String getJsonDoc = sapphireDbManager.query();
-            //Log.d("Engine",""+getJsonDoc);
             try {
                 HashMap<String, Double> stringDoubleHashMap = new HashMap<String, Double>();
                 String getJsonDoc = sapphireDbManager.query();
@@ -79,25 +79,21 @@ public class StartEngineModulePrimary {
                     String value = (String) jsonArray.get(key);
                     stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
-
-
-                ArrayList<String> keys = new ArrayList<String>();
-                ArrayList<Double> values = new ArrayList<Double>();
-                Object key_name = null;
-               // Double _ofMAXVALUE = Collections.max(values);
                 String vaAbbreviation = (String) MaxValueEvaluator.processHash(stringDoubleHashMap);
-                Log.d("Enging dump value",""+vaAbbreviation);
-            } catch (JSONException e) {
-                Log.d("EngHASSS",e.toString());
-                e.printStackTrace();
-            }catch (Exception e1){
-                Log.d("EngHASSS",e1.toString());
-                e1.printStackTrace();
-            }
+                byte[] slipstream = sapphireImgDbHelper.imgquery(vaAbbreviation);
+               // suggestionView = new SuggestionView(context, imagesUtil.byteToBitmap(slipstream));
+                suggestionViewOb.setUPSuggestion(context,imagesUtil.byteToBitmap(slipstream));
+                return vaAbbreviation;
 
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+
+            }
 
         }else{
             //keep on modelling
+            return null;
         }
     }
 }

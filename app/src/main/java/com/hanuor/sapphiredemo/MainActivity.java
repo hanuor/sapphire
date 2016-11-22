@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
                     @Override
                     public void run() {
                         //Do something after 100ms
-                        suggestionView.startanimation(lswipe);
-                        suggestionView.setVisibility(View.INVISIBLE);
+                       // suggestionView.startanimation(lswipe);
+                        //suggestionView.setVisibility(View.INVISIBLE);
                     }
                 }, 5000);
             }
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
             }
         });
         suggestionView.startAnimation(RightSwipe);
-        Sapphire.with(MainActivity.this).setRandomMeasures(true);
+        Sapphire.with(MainActivity.this).setRandomMeasures(true,suggestionView);
         //for testing purpose
         Calendar today = Calendar.getInstance();
         int hour = today.get(Calendar.HOUR);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         img = (ImageView) findViewById(R.id.img);
         img2 = (ImageView) findViewById(R.id.img2);
         Bitmap icon1 = BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.lp);
+                R.drawable.frost);
         Bitmap icon2  = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.email);
         img.setImageBitmap(icon1);

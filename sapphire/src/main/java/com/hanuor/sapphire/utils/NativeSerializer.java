@@ -15,66 +15,35 @@ package com.hanuor.sapphire.utils;
  * limitations under the License.
  */
 
-import android.content.Intent;
+import android.annotation.TargetApi;
+import android.os.Build;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 public class NativeSerializer implements Serializable {
 
-    private String tag;
-    private Intent intent;
-
-    public NativeSerializer(
-            final String newTag,
-            final Intent newIntent)
-    {
-        this.tag = newTag;
-        this.intent = newIntent;
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static byte[] serialize(Object obj) throws IOException {
+        try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
+            try(ObjectOutputStream o = new ObjectOutputStream(b)){
+                o.writeObject(obj);
+            }
+            return b.toByteArray();
+        }
     }
 
-    public String getTag() {
-        return tag;
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        try(ByteArrayInputStream b = new ByteArrayInputStream(bytes)){
+            try(ObjectInputStream o = new ObjectInputStream(b)){
+                return o.readObject();
+            }
+        }
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-
-    @Override
-    public String toString()
-    {
-        return this.tag + " of " + this.intent;
-    }
-
-   /* private void writeObject(final ObjectOutputStream out) throws IOException
-    {
-        out.writeUTF(this.tag);
-        out.writeUTF(this.intent.hasExtra());
-        out.writeUTF(this.cityAndState.getStateName());
-    }
-
-    *//**
-     * Deserialize this instance from input stream.
-     *
-     * @param in Input Stream from which this instance is to be deserialized.
-     * @throws IOException Thrown if error occurs in deserialization.
-     * @throws ClassNotFoundException Thrown if expected class is not found.
-     *//*
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
-        this.lastName = in.readUTF();
-        this.firstName = in.readUTF();
-        this.cityAndState = new CityState(in.readUTF(), in.readUTF());
-    }
-*/
-    private void readObjectNoData() throws ObjectStreamException
-    {
-        throw new InvalidObjectException("Stream data required");
-    }
 }
