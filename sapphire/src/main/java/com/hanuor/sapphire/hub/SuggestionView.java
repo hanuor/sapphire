@@ -19,7 +19,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,7 +30,6 @@ import com.hanuor.sapphire.R;
 import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
-import com.hanuor.sapphire.utils.ImagesUtil;
 
 import java.io.Serializable;
 
@@ -167,14 +165,19 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     public void setUPSuggestion(final Context context, Bitmap bitmp) {
       //  Log.d("SapphireDoen",""+bitmp.toString());
         //bitmp is the incoming dataset from the database.
-        Log.d("Engine Sugges", "Call received");
+
+
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
 
         footer = (TextView) rootView.findViewById(R.id.footer);
 
-
+        RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, valueTextView.getId());
+        paramsT.setMargins(21,22,22,22);
+        valueTextView.setLayoutParams(paramsT);
         valueTextView.setText(TEXT);
         valueTextView.setGravity(Gravity.CENTER);
         valueTextView.setTextSize(headerTextSize);
@@ -182,43 +185,39 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         valueTextView.setClickable(false);
 
 
+
+
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
-        if(bitmp!= null){
-            Log.d("SappgireButoo", "Here");
-           // minusButton.setImageDrawable(bitmp);
-           minusButton.setImageBitmap(bitmp);
-        }else{
-            Log.d("EngineReTag ","");
-            //String queryName = startEngineModulePrimary.startSuggestions(true);
-           // Log.d("EngineReTag ",""+queryName);
-            ImagesUtil imagesUtil = new ImagesUtil();
-            //byte[] mm = sapphireImgDbHelper.imgquery(queryName);
-            //minusButton.setImageBitmap(imagesUtil.byteToBitmap(mm));
-            Log.d("SappgireBut", "Hereii" + context.toString());
-          /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
-                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
-*/
-        }
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
         params.addRule(RelativeLayout.BELOW, valueTextView.getId());
 
+
+
         minusButton.setLayoutParams(params);
         minusButton.setClickable(false);
+        if(bitmp!= null){
+           minusButton.setImageBitmap(bitmp);
+        }else{
+
+          /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
+                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+*/
+        }
 
 
-
+        RelativeLayout.LayoutParams paramsF = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsF.addRule(RelativeLayout.CENTER_HORIZONTAL, footer.getId());
+       paramsF.addRule(RelativeLayout.BELOW, minusButton.getId());
+        paramsF.setMargins(3,5,3,5);
+        footer.setLayoutParams(paramsF);
         footer.setTextColor(Color.parseColor(defaultfooterTextColor));
         footer.setText(Ftext);
         footer.setTextSize(footerTextSize);
         footer.setClickable(false);
-        RelativeLayout.LayoutParams paramsfooter = new RelativeLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        paramsfooter.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
-        paramsfooter.addRule(RelativeLayout.BELOW, minusButton.getId());
 
-        footer.setLayoutParams(paramsfooter);
     }
 
     public void setanimation(Animation animation){
@@ -254,5 +253,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     public void tagEventActionListener(){
 
     }
+
 
 }
