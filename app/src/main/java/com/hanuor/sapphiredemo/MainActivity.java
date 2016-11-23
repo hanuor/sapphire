@@ -23,6 +23,7 @@ import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.OnEventHandler;
 import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
+import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.util.ArrayList;
@@ -45,7 +46,12 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
-
+        ArrayList<String> vmm = new ArrayList<String>();
+        vmm.add("Hi welcome to my new app");
+        vmm.add("We have sapphire already integrated within it");
+        vmm.add("Sapphire is an upcoming SDK which modifies the in-app notification concept");
+        HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
+        hintsStoreDB.storeDetails(vmm);
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");

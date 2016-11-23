@@ -21,7 +21,7 @@ public class RandomUtility {
     public RandomUtility(){
 
     }
-    public int getRandomValue(int maxVal, int minVal){
+    public static int getRandomValue(int maxVal, int minVal){
         Random rand = null;
 
         // nextInt is normally exclusive of the top value,

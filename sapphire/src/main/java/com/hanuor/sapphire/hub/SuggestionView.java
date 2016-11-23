@@ -28,17 +28,20 @@ import android.widget.TextView;
 
 import com.hanuor.sapphire.R;
 import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
+import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.RandomUtility;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class SuggestionView extends RelativeLayout implements Serializable{
     private TextView textView;
     private String defaultheaderTextColor = "#eeeeee";
     private String defaultfooterTextColor = "#eeeeee";
-
+    private HintsStoreDB hintsStoreDB;
     private float footerTextSize = 13f;
     private transient Context context;
     private float headerTextSize = 13f;
@@ -59,7 +62,8 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context, bmp);
+        hintsStoreDB = new HintsStoreDB(context);
+        setUPSuggestion(context, bmp, 1);
         //startEngineModulePrimary = new StartEngineModulePrimary(context);
     }
 
@@ -101,7 +105,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null);
+            setUPSuggestion(context, null, 0);
 
         } finally {
             typedArray.recycle();
@@ -152,21 +156,53 @@ public class SuggestionView extends RelativeLayout implements Serializable{
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context, null);
+            setUPSuggestion(context, null,0);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context, null);
+        setUPSuggestion(context, null,0);
     }
 
-    public void setUPSuggestion(final Context context, Bitmap bitmp) {
-      //  Log.d("SapphireDoen",""+bitmp.toString());
-        //bitmp is the incoming dataset from the database.
+    public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
 
+        switch (resId){
+            case 0:
+                case0(context,bitmp);
+                break;
+            case 1:
+                case1(context);
+                break;
+            default:
+                case0(context,bitmp);
+                break;
+        }
 
+    }
+
+    private void case1(Context context){
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        rootView = inflate(context, R.layout.singleheaderview, this);
+        valueTextView = (TextView) rootView.findViewById(R.id.headerText);
+
+        RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, valueTextView.getId());
+        paramsT.setMargins(21,22,22,22);
+        valueTextView.setLayoutParams(paramsT);
+
+        valueTextView.setGravity(Gravity.CENTER);
+        valueTextView.setTextSize(headerTextSize);
+        valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
+        valueTextView.setClickable(false);
+        ArrayList<String> recString  = new ArrayList<String>();
+        recString = hintsStoreDB.query();
+        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
+        valueTextView.setText(recString.get(no));
+    }
+    private void case0(Context context,Bitmap bitmp){
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
@@ -198,7 +234,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         minusButton.setLayoutParams(params);
         minusButton.setClickable(false);
         if(bitmp!= null){
-           minusButton.setImageBitmap(bitmp);
+            minusButton.setImageBitmap(bitmp);
         }else{
 
           /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
@@ -210,7 +246,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         RelativeLayout.LayoutParams paramsF = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsF.addRule(RelativeLayout.CENTER_HORIZONTAL, footer.getId());
-       paramsF.addRule(RelativeLayout.BELOW, minusButton.getId());
+        paramsF.addRule(RelativeLayout.BELOW, minusButton.getId());
         paramsF.setMargins(3,5,3,5);
         footer.setLayoutParams(paramsF);
         footer.setTextColor(Color.parseColor(defaultfooterTextColor));
