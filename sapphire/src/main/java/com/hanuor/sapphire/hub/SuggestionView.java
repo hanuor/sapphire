@@ -19,6 +19,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -69,6 +70,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
     public SuggestionView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Log.d("Case","Con 1");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs);
@@ -105,7 +107,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null, 0);
+            //setUPSuggestion(context, null, 0);
 
         } finally {
             typedArray.recycle();
@@ -117,7 +119,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        Log.d("Case","Con 2");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs, defStyleAttr);
@@ -167,7 +169,9 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     }
 
     public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
+        Log.d("Case","Con 3");
 
+        Log.d("CaseFace",""+hintsStoreDB.query().toString());
         switch (resId){
             case 0:
                 case0(context,bitmp);
@@ -175,14 +179,15 @@ public class SuggestionView extends RelativeLayout implements Serializable{
             case 1:
                 case1(context);
                 break;
-            default:
-                case0(context,bitmp);
-                break;
+
         }
 
     }
 
     private void case1(Context context){
+        Log.d("Case1","ss");
+
+        Log.d("CaseFace","Ha");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.headerText);
@@ -198,11 +203,14 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
         valueTextView.setClickable(false);
         ArrayList<String> recString  = new ArrayList<String>();
-        recString = hintsStoreDB.query();
+        recString = hintsStoreDB.query();        Log.d("CaseFace","Ha");
+        Log.d("CaseFace","Han   "+ recString.toString());
+
         int no = RandomUtility.getRandomValue(recString.size()-1, 0);
         valueTextView.setText(recString.get(no));
     }
     private void case0(Context context,Bitmap bitmp){
+        Log.d("Case0","ss");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
