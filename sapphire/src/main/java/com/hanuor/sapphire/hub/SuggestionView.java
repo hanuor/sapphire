@@ -207,7 +207,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         Log.d("CaseFace","Han   "+ recString.toString());
 
         int no = RandomUtility.getRandomValue(recString.size()-1, 0);
-        valueTextView.setText(recString.get(no));
+        valueTextView.setText("VAMOS");
     }
     private void case0(Context context,Bitmap bitmp){
         Log.d("Case0","ss");
