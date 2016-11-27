@@ -205,7 +205,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         ArrayList<String> recString  = new ArrayList<String>();
         recString = hintsStoreDB.query();        Log.d("CaseFace","Ha");
         Log.d("CaseFace","Han   "+ recString.toString());
-
         int no = RandomUtility.getRandomValue(recString.size()-1, 0);
         valueTextView.setText("VAMOS");
     }
