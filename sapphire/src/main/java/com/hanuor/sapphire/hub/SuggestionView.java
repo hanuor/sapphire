@@ -227,9 +227,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
         valueTextView.setClickable(false);
 
-
-
-
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
