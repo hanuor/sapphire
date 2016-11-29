@@ -245,8 +245,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
                     "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
 */
         }
-
-
         RelativeLayout.LayoutParams paramsF = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsF.addRule(RelativeLayout.CENTER_HORIZONTAL, footer.getId());
