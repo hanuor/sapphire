@@ -32,7 +32,6 @@ import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
-import com.hanuor.sapphire.utils.RandomUtility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     String TEXT = "Suggestionbox";
     String Ftext = "Default";
     ImageView imageView;
-    TextView valueTextView, footer;
+    TextView valueTextView, footer, headerText;
     ImageView minusButton;
     TextView tv2;
     private SapphireImgDbHelper sapphireImgDbHelper;
@@ -107,7 +106,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            //setUPSuggestion(context, null, 0);
+            setUPSuggestion(context, null, 1);
 
         } finally {
             typedArray.recycle();
@@ -171,7 +170,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
         Log.d("Case","Con 3");
 
-        Log.d("CaseFace",""+hintsStoreDB.query().toString());
+//        Log.d("CaseFace",""+hintsStoreDB.query().toString());
         switch (resId){
             case 0:
                 case0(context,bitmp);
@@ -190,23 +189,23 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         Log.d("CaseFace","Ha");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
-        valueTextView = (TextView) rootView.findViewById(R.id.headerText);
+        headerText = (TextView) rootView.findViewById(R.id.headerText);
 
         RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, valueTextView.getId());
+        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, headerText.getId());
         paramsT.setMargins(21,22,22,22);
-        valueTextView.setLayoutParams(paramsT);
+        headerText.setLayoutParams(paramsT);
 
-        valueTextView.setGravity(Gravity.CENTER);
-        valueTextView.setTextSize(headerTextSize);
-        valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
-        valueTextView.setClickable(false);
+        headerText.setGravity(Gravity.CENTER);
+        headerText.setTextSize(headerTextSize);
+        headerText.setTextColor(Color.parseColor(defaultheaderTextColor));
+        headerText.setClickable(false);
         ArrayList<String> recString  = new ArrayList<String>();
-        recString = hintsStoreDB.query();        Log.d("CaseFace","Ha");
-        Log.d("CaseFace","Han   "+ recString.toString());
-        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
-        valueTextView.setText("VAMOS");
+//        recString = hintsStoreDB.query();        Log.d("CaseFace","Ha");
+       // Log.d("CaseFace","Han   "+ recString.toString());
+//        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
+        headerText.setText("VAMOS");
     }
     private void case0(Context context,Bitmap bitmp){
         Log.d("Case0","ss");
