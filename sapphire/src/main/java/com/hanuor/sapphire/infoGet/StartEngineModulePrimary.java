@@ -85,7 +85,7 @@ public class StartEngineModulePrimary {
                 String vaAbbreviation = (String) MaxValueEvaluator.processHash(stringDoubleHashMap);
                 byte[] slipstream = sapphireImgDbHelper.imgquery(vaAbbreviation);
                // suggestionView = new SuggestionView(context, imagesUtil.byteToBitmap(slipstream));
-                suggestionViewOb.setUPSuggestion(context,imagesUtil.byteToBitmap(slipstream),1);
+                suggestionViewOb.setUPSuggestion(context,imagesUtil.byteToBitmap(slipstream),0);
                 return vaAbbreviation;
 
             } catch (Exception e) {
