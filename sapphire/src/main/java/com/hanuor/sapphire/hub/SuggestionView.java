@@ -63,7 +63,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         tv2 = new TextView(context);
         imageView = new ImageView(context);
         hintsStoreDB = new HintsStoreDB(context);
-        setUPSuggestion(context, bmp, 1);
+        //setUPSuggestion(context, bmp, 0);
         //startEngineModulePrimary = new StartEngineModulePrimary(context);
     }
 
@@ -106,7 +106,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null, 1);
+            //setUPSuggestion(context, null, 0);
 
         } finally {
             typedArray.recycle();
@@ -164,23 +164,23 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         }
 
 
-        setUPSuggestion(context, null,0);
+        //setUPSuggestion(context, null,0);
     }
 
     public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
-        switch (resId){
-            case 0:
-                case0(context,bitmp);
-                break;
-            case 1:
-                case1(context);
-                break;
 
+        if(resId == 0){
+
+            Log.d("Case 1","L " + context + " $ " + resId);
+            case0(context,bitmp);
+        }else{
+            Log.d("Case 2","L " + context + " $ " + resId);
+            case1(context);
         }
-
     }
 
     private void case1(Context context){
+        Log.d("Casee","cass");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
         headerText = (TextView) rootView.findViewById(R.id.headerText);
@@ -202,6 +202,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         headerText.setText("VAMOS");
     }
     private void case0(Context context,Bitmap bitmp){
+        Log.d("Case0","Reach");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
