@@ -202,7 +202,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         headerText.setText("VAMOS");
     }
     private void case0(Context context,Bitmap bitmp){
-        Log.d("Case0","ss");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
@@ -225,9 +224,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
         params.addRule(RelativeLayout.BELOW, valueTextView.getId());
-
-
-
         minusButton.setLayoutParams(params);
         minusButton.setClickable(false);
         if(bitmp!= null){
