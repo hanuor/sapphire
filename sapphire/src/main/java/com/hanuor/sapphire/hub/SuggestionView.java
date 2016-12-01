@@ -168,9 +168,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     }
 
     public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
-        Log.d("Case","Con 3");
-
-//        Log.d("CaseFace",""+hintsStoreDB.query().toString());
         switch (resId){
             case 0:
                 case0(context,bitmp);
@@ -184,9 +181,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     }
 
     private void case1(Context context){
-        Log.d("Case1","ss");
-
-        Log.d("CaseFace","Ha");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
         headerText = (TextView) rootView.findViewById(R.id.headerText);
