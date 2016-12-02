@@ -176,8 +176,6 @@ public class SapphireApi {
         ImagesUtil imagesUtil = new ImagesUtil();
         Log.d("SapphireAccess","true1");
         suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")), 1);
-
-
     }
 
 }

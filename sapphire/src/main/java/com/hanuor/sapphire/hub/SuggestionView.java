@@ -261,6 +261,8 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     @Override
     public void setOnClickListener(OnClickListener l) {
         super.setOnClickListener(l);
+
+
     }
 
     @Override

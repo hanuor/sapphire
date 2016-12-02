@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +20,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.rebound.BaseSpringSystem;
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringSystem;
+import com.facebook.rebound.SpringUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
 import com.hanuor.sapphire.hub.OnEventHandler;
@@ -40,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
     IntentationPrime intentationPrime;
     private EventBus bus = EventBus.getDefault();
     String getJSON = null;
+    final BaseSpringSystem mSpringSystem = SpringSystem.create();
+    final ExampleSpringListener mSpringListener = new ExampleSpringListener();
 
+    Spring mScaleSpring;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,12 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
             }
         });
         suggestionView.startanimation(a);*/
-        suggestionView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Clickeeeee", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         demoObject = new DemoObject("Quest for android");
         bus.postSticky(new HelloWorld("Hellow orld"));
@@ -191,9 +196,34 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         ArrayList<Integer> gg = new ArrayList<Integer>();
         gg.add(322);
         gg.add(565);
-        suggestionView.setOnClickListener(new View.OnClickListener() {
+       /* suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
+
+                SpringSystem springSystem = SpringSystem.create();
+
+// Add a spring to the system.
+                Spring spring = springSystem.createSpring();
+
+// Add a listener to observe the motion of the spring.
+                spring.addListener(new SimpleSpringListener() {
+
+                    @Override
+                    public void onSpringUpdate(Spring spring) {
+                        // You can observe the updates in the spring
+                        // state by asking its current value in onSpringUpdate.
+                        float value = (float) spring.getCurrentValue();
+                        float scale = 1f - (value * 0.5f);
+                        view.setScaleX(scale);
+                        view.setScaleY(scale);
+                    }
+                });
+
+// Set the spring in motion; moving from 0 to 1
+                spring.setEndValue(1);
+
+
+
                 OnEventHandler onnnn = new MainActivity();
                 try {
                     onnnn.setUpEvent(MainActivity.this);
@@ -203,7 +233,40 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
 
 
             }
+        });*/
+        final GestureDetector gestureDetector = new GestureDetector(this, new SingleTapConfirm());
+        mScaleSpring = mSpringSystem.createSpring();
+        suggestionView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (gestureDetector.onTouchEvent(event)) {
+                    // single tap
+                    Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+                    // your code for move and drag
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // When pressed start solving the spring to 1.
+                            mScaleSpring.setEndValue(1);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            // When released start solving the spring to 0.
+                            mScaleSpring.setEndValue(0);
+                            break;
+                    }
+
+                    return true;
+                }
+
+
+
+
+            }
         });
+
         boolean[] aar = {true,false};
         ms.putIntegerArrayListExtra("JOKER",gg);
         ms.putStringArrayListExtra("3",m);
@@ -243,6 +306,12 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
                       });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add a listener to the spring when the Activity resumes.
+        mScaleSpring.addListener(mSpringListener);
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
@@ -257,7 +326,29 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+       }
 
-        Toast.makeText(context, "Heya What is up!", Toast.LENGTH_SHORT).show();
+    private class ExampleSpringListener extends SimpleSpringListener {
+        @Override
+        public void onSpringUpdate(Spring spring) {
+            // On each update of the spring value, we adjust the scale of the image view to match the
+            // springs new value. We use the SpringUtil linear interpolation function mapValueFromRangeToRange
+            // to translate the spring's 0 to 1 scale to a 100% to 50% scale range and apply that to the View
+            // with setScaleX/Y. Note that rendering is an implementation detail of the application and not
+            // Rebound itself. If you need Gingerbread compatibility consider using NineOldAndroids to update
+            // your view properties in a backwards compatible manner.
+            float mappedValue = (float) SpringUtil.mapValueFromRangeToRange(spring.getCurrentValue(), 0, 1, 1, 0.5);
+            suggestionView.setScaleX(mappedValue);
+            suggestionView.setScaleY(mappedValue);
+        }
     }
+
+    private class SingleTapConfirm extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            return true;
+        }
+    }
+
 }
