@@ -260,10 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
 
                     return true;
                 }
-
-
-
-
+                
             }
         });
 
