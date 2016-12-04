@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         vmm.add("Sapphire is an upcoming SDK which modifies the in-app notification concept");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
         hintsStoreDB.storeDetails(vmm);
+        Log.d("BadAct",""+hintsStoreDB.query());
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
 
                     return true;
                 }
-                
+
             }
         });
 

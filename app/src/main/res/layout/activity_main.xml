@@ -33,10 +33,10 @@
     <com.hanuor.sapphire.hub.SuggestionView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="#B3E5FC"
         android:id="@+id/suggest"
         app:headerText="Based on your recent activity"
-        app:headertextColor="#F50057"
+        app:headertextColor="#9E9E9E"
         app:footerText="Frostbite engine"
         app:footertextColor="#424242"
         app:footertextSize="9"

@@ -46,13 +46,13 @@ public class HintsStoreDB extends SQLiteOpenHelper {
     }
 
     public void storeDetails(ArrayList<String> details){
+        clearDatabase();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         for(String  element: details){
             contentValues.put(COLUMN_NAME, element);
+            long val = db.insert(TABLE_NAME, null, contentValues);
         }
-        long val = db.insert(TABLE_NAME, null, contentValues);
-        Log.d("CaseVa",""+val);
         db.close();
     }
     public void clearDatabase(){
@@ -61,14 +61,12 @@ public class HintsStoreDB extends SQLiteOpenHelper {
         db.close();
     }
     public ArrayList<String> query(){
-        Log.d("CaseOf","N");
         ArrayList<String> retString  = new ArrayList<String>();
         SQLiteDatabase db0 = this.getReadableDatabase();
         String query_params0 = "SELECT " + "*" + " FROM " + TABLE_NAME;
         Cursor cSor0 = db0.rawQuery(query_params0, null);
         if(cSor0.moveToFirst()){
             do{
-                Log.d("CaseDD",cSor0.getString(cSor0.getColumnIndexOrThrow(HintsStoreDB.COLUMN_NAME)));
                 retString.add(cSor0.getString(cSor0.getColumnIndexOrThrow(HintsStoreDB.COLUMN_NAME))) ;
             }while(cSor0.moveToNext());
             return retString;

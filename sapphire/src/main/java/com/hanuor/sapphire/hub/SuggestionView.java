@@ -32,6 +32,7 @@ import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.RandomUtility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        hintsStoreDB = new HintsStoreDB(context);
         //setUPSuggestion(context, bmp, 0);
         //startEngineModulePrimary = new StartEngineModulePrimary(context);
     }
@@ -157,7 +157,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context, null,0);
+            setUPSuggestion(context, null,1);
 
         } finally {
             typedArray.recycle();
@@ -195,11 +195,14 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         headerText.setTextSize(headerTextSize);
         headerText.setTextColor(Color.parseColor(defaultheaderTextColor));
         headerText.setClickable(false);
-        ArrayList<String> recString  = new ArrayList<String>();
-//        recString = hintsStoreDB.query();        Log.d("CaseFace","Ha");
-       // Log.d("CaseFace","Han   "+ recString.toString());
-//        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
-        headerText.setText("VAMOS");
+        hintsStoreDB = new HintsStoreDB(context);
+
+        ArrayList<String> recString = new ArrayList<String>();
+       recString = hintsStoreDB.query();
+       Log.d("CaseFace","Han   "+ recString);
+    int no = RandomUtility.getRandomValue(recString.size()-1, 0);
+        Log.d("Case","AceBl"+ no);
+        headerText.setText(recString.get(no));
     }
     private void case0(Context context,Bitmap bitmp){
         Log.d("Case0","Reach");
