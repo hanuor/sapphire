@@ -16,7 +16,6 @@ package com.hanuor.sapphire.infoGet;
  */
 
 import android.content.Context;
-import android.util.Log;
 
 import com.hanuor.client.MaxValueEvaluator;
 import com.hanuor.sapphire.hub.SuggestionView;
@@ -60,15 +59,13 @@ public class StartEngineModulePrimary {
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         imagesUtil = new ImagesUtil();
         this.suggestionViewOb = suggestionView1;
-
-
     }
     public String startSuggestions(boolean decision){
         if(decision){
             trainingTracker.clearTable();
         trainingTracker.updateValue(getDayUtil.getDay());
          String  valmos = trainingTracker.queryTracker(getDayUtil.getDay(), true);
-            Log.d("TrainingTrackerEngine",""+valmos);
+
             try {
                 HashMap<String, Double> stringDoubleHashMap = new HashMap<String, Double>();
                 String getJsonDoc = sapphireDbManager.query();
@@ -79,7 +76,6 @@ public class StartEngineModulePrimary {
                     String value = (String) jsonArray.get(key);
                     stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
-
                 //Notice that this returns the maximum node value. We also want a descending order name list.
 
                 String vaAbbreviation = (String) MaxValueEvaluator.processHash(stringDoubleHashMap);

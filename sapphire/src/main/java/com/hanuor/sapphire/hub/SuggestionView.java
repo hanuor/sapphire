@@ -56,20 +56,20 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     private StartEngineModulePrimary startEngineModulePrimary;
     SuggestionTempDBHandler suggestionTempDBHandler ;
     View rootView;
-    public SuggestionView(Context con, Bitmap bmp) {
+    public SuggestionView(Context con) {
         super(con);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         this.context = con;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        //setUPSuggestion(context, bmp, 0);
-        //startEngineModulePrimary = new StartEngineModulePrimary(context);
     }
 
     public SuggestionView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.d("Case","Con 1");
+
+        //Calling constructor to initialize values and Classes.
+
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs);
@@ -118,7 +118,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Log.d("Case","Con 2");
+        Log.d("SuperME","2");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs, defStyleAttr);
@@ -170,17 +170,14 @@ public class SuggestionView extends RelativeLayout implements Serializable{
     public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
 
         if(resId == 0){
-
-            Log.d("Case 1","L " + context + " $ " + resId);
-            case0(context,bitmp);
+         case0(context,bitmp);
         }else{
-            Log.d("Case 2","L " + context + " $ " + resId);
             case1(context);
         }
     }
 
     private void case1(Context context){
-        Log.d("Casee","cass");
+        hintsStoreDB = new HintsStoreDB(context);
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
         headerText = (TextView) rootView.findViewById(R.id.headerText);
@@ -195,23 +192,16 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         headerText.setTextSize(headerTextSize);
         headerText.setTextColor(Color.parseColor(defaultheaderTextColor));
         headerText.setClickable(false);
-        hintsStoreDB = new HintsStoreDB(context);
-
         ArrayList<String> recString = new ArrayList<String>();
        recString = hintsStoreDB.query();
-       Log.d("CaseFace","Han   "+ recString);
-    int no = RandomUtility.getRandomValue(recString.size()-1, 0);
-        Log.d("Case","AceBl"+ no);
+        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
         headerText.setText(recString.get(no));
     }
     private void case0(Context context,Bitmap bitmp){
-        Log.d("Case0","Reach");
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
-
         footer = (TextView) rootView.findViewById(R.id.footer);
-
         RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, valueTextView.getId());
@@ -222,7 +212,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         valueTextView.setTextSize(headerTextSize);
         valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
         valueTextView.setClickable(false);
-
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -233,6 +222,8 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         if(bitmp!= null){
             minusButton.setImageBitmap(bitmp);
         }else{
+
+            //Try to fetch image from the backend. Try the internet connection . Use internet for thart.
 
           /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
                     "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
@@ -248,7 +239,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         footer.setText(Ftext);
         footer.setTextSize(footerTextSize);
         footer.setClickable(false);
-
     }
 
     public void setanimation(Animation animation){
@@ -263,16 +253,11 @@ public class SuggestionView extends RelativeLayout implements Serializable{
 
     @Override
     public void setOnClickListener(OnClickListener l) {
-        super.setOnClickListener(l);
-
-
-    }
-
+        super.setOnClickListener(l);}
     @Override
     protected void onAnimationStart() {
         super.onAnimationStart();
     }
-
     @Override
     protected void onAnimationEnd() {
         super.onAnimationEnd();
