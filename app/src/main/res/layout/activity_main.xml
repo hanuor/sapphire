@@ -21,6 +21,13 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/img"/>
 
+    07
+    <ImageView
+    android:id="@+id/imageView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/frost" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

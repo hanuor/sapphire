@@ -36,7 +36,7 @@ public class ImagesUtil {
     }
 
 
-    public  Bitmap byteToBitmap(byte[] data) {
+    public   Bitmap byteToBitmap(byte[] data) {
         if (data == null)
             return null;
         else

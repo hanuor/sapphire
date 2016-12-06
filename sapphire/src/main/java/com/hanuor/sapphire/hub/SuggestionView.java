@@ -268,7 +268,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         this.cancelanimation(animation);
     }
     public void tagEventActionListener(){
-
     }
 
 

@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,7 +43,7 @@ import java.util.Calendar;
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends AppCompatActivity implements OnEventHandler {
+public class MainActivity extends AppCompatActivity implements OnEventHandler, SensorEventListener {
     Button but;
     DemoObject demoObject;
     ImageView img, img2;
@@ -49,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
     String getJSON = null;
     final BaseSpringSystem mSpringSystem = SpringSystem.create();
     final ExampleSpringListener mSpringListener = new ExampleSpringListener();
+    private SensorManager mSensorManager;
+    ImageView iv;
+    private Sensor mSensor;
+
 
     Spring mScaleSpring;
     @Override
@@ -56,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         but  = (Button) findViewById(R.id.button);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        Toast.makeText(this, "Hell" + mSensor.getMaximumRange(), Toast.LENGTH_SHORT).show();
+        iv = (ImageView) findViewById(R.id.imageView1);
         ArrayList<String> vmm = new ArrayList<String>();
         vmm.add("Hi welcome to my new app");
         vmm.add("We have sapphire already integrated within it");
@@ -308,9 +320,16 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
     public void onResume() {
         super.onResume();
         // Add a listener to the spring when the Activity resumes.
+        mSensorManager.registerListener(this, mSensor,
+                SensorManager.SENSOR_DELAY_NORMAL);
         mScaleSpring.addListener(mSpringListener);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -325,6 +344,26 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler {
             e.printStackTrace();
         }
        }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] >= -0.01 && event.values[0]< 1.01) {
+                //near
+
+                Toast.makeText(this, ""+event.values[0], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+            } else {
+                //far
+
+                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
 
     private class ExampleSpringListener extends SimpleSpringListener {
         @Override
