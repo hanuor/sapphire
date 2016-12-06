@@ -222,7 +222,6 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         if(bitmp!= null){
             minusButton.setImageBitmap(bitmp);
         }else{
-
             //Try to fetch image from the backend. Try the internet connection . Use internet for thart.
 
           /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
