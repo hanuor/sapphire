@@ -22,12 +22,8 @@ public class RandomUtility {
 
     }
     public static int getRandomValue(int maxVal, int minVal){
-
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
+        //Using the Random Class
         Random rand = new Random();
-
         int  _random = rand.nextInt(maxVal) + minVal;
         return _random;
     }
