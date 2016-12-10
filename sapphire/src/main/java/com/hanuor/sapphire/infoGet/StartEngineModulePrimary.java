@@ -123,7 +123,11 @@ public class StartEngineModulePrimary implements SensorEventListener {
                 //near
                 Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am far");
 
-            } else {
+            }else if((_sensorMaximumRange/2) == sensorEvent.values[0]){
+                Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am near/2");
+
+            }
+            else {
                 //far
                 Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am near");
 
