@@ -47,6 +47,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 public class Internals {
     private Context ctx = null;
     private ImagesUtil imagesUtil = new ImagesUtil();
@@ -58,7 +59,10 @@ public class Internals {
     private  BitmapUtility bitmapUtility = new BitmapUtility();
     private GetDayUtil getDayUtil = new GetDayUtil();
     private KapacRecentDB kapacRecentDB;
+
     public Internals(Context ctx){
+
+        Log.d("25 minutes", "Internals");
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
         sapphireImgDbHelper = new SapphireImgDbHelper(ctx);
@@ -67,7 +71,9 @@ public class Internals {
         App42API.initialize(ctx, mInit.Appkey(),mInit.AppSecret());
         Backendless.initApp( ctx, mInit.ImgHelperId(), mInit.ImgHelperSecret(),"v1");
         storageService = App42API.buildStorageService();
+
     }
+
     public  void saveDocIdInternally(String docID){
         //Don't forget to add wrtie permission in android
         new FilePrinterAsyncTaskSapphire().execute(docID);
@@ -89,6 +95,7 @@ public class Internals {
             return null;
         }
     }
+
     private class FilePrinterAsyncTaskSapphire extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... urls) {
@@ -240,5 +247,6 @@ public class Internals {
         ArrayList<String> tagslist = new ArrayList<String>();
         Log.d("SapphireList", ""+imageViewArrayList.size());
     }
+
 
 }

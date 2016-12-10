@@ -9,10 +9,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -72,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         vmm.add("Hi welcome to my new app");
         vmm.add("We have sapphire already integrated within it");
         vmm.add("Sapphire is an upcoming SDK which modifies the in-app notification concept");
+        vmm.add("Sapphire is powered by Hanuor's own hoomcooked Dynalitic Engine");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
         hintsStoreDB.storeDetails(vmm);
-        Log.d("BadAct",""+hintsStoreDB.query());
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
@@ -209,44 +207,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         ArrayList<Integer> gg = new ArrayList<Integer>();
         gg.add(322);
         gg.add(565);
-       /* suggestionView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
 
-                SpringSystem springSystem = SpringSystem.create();
-
-// Add a spring to the system.
-                Spring spring = springSystem.createSpring();
-
-// Add a listener to observe the motion of the spring.
-                spring.addListener(new SimpleSpringListener() {
-
-                    @Override
-                    public void onSpringUpdate(Spring spring) {
-                        // You can observe the updates in the spring
-                        // state by asking its current value in onSpringUpdate.
-                        float value = (float) spring.getCurrentValue();
-                        float scale = 1f - (value * 0.5f);
-                        view.setScaleX(scale);
-                        view.setScaleY(scale);
-                    }
-                });
-
-// Set the spring in motion; moving from 0 to 1
-                spring.setEndValue(1);
-
-
-
-                OnEventHandler onnnn = new MainActivity();
-                try {
-                    onnnn.setUpEvent(MainActivity.this);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });*/
         final GestureDetector gestureDetector = new GestureDetector(this, new SingleTapConfirm());
         mScaleSpring = mSpringSystem.createSpring();
         suggestionView.setOnTouchListener(new View.OnTouchListener() {
@@ -300,7 +261,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
 
 
         but.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
             @Override
             public void onClick(View view) {
 
@@ -320,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     public void onResume() {
         super.onResume();
         // Add a listener to the spring when the Activity resumes.
-        mSensorManager.registerListener(this, mSensor,
+
+        mSensorManager.registerListener(MainActivity.this, mSensor,
                 SensorManager.SENSOR_DELAY_NORMAL);
         mScaleSpring.addListener(mSpringListener);
     }
@@ -331,7 +292,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         mSensorManager.unregisterListener(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void setUpEvent(Context context){
         Intent asss = new Intent();
@@ -348,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0] >= -0.01 && event.values[0]< 1.01) {
+            if (event.values[0] >= -0.01 && event.values[0]< .55) {
                 //near
 
                 Toast.makeText(this, ""+event.values[0], Toast.LENGTH_SHORT).show();
