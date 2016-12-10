@@ -1,4 +1,4 @@
-package com.hanuor.sapphire.utils;
+package com.hanuor.sapphire.utils.enumeration;
 /*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
@@ -15,13 +15,6 @@ package com.hanuor.sapphire.utils;
  * limitations under the License.
  */
 
-public class Tree {
-    private final boolean isActivated;
-
-    public Tree(boolean isActivated) {
-        this.isActivated = isActivated;
-    }
-    public boolean getStatus(){
-        return isActivated;
-    }
+public enum KapacRecent {
+    RECENT_KAPAC_TABLE, COLUMN_VALUE, KAPAC_RECENT_DATABASE
 }

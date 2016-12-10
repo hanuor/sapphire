@@ -66,7 +66,7 @@ public class PrivateDatabaseHelper extends SQLiteOpenHelper {
         switch (columnSET){
             case 0:
                 GETCOLUMNNAME = "Sun";
-            break;
+                break;
             case 1:
                 GETCOLUMNNAME = "Mon";
                 break;

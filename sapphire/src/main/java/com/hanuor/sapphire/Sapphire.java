@@ -14,12 +14,10 @@ package com.hanuor.sapphire;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.content.Context;
 
-import com.hanuor.client.Client;
 import com.hanuor.sapphire.hub.SapphireApi;
-import com.hanuor.sapphire.temporarydb.Differentiator;
-import com.hanuor.sapphire.temporarydb.PrivateDatabaseHelper;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -28,7 +26,6 @@ import de.greenrobot.event.EventBus;
 
 public class Sapphire {
 
-    private static Differentiator differentiator = new Differentiator();
     private static String questappkey;
     private static RuntimeHandler runtimeHandler;
     private static EventBus bus = EventBus.getDefault();
@@ -42,23 +39,18 @@ public class Sapphire {
         return mconnect;
     }
     public static boolean initialize(Context context, String appKeyID, String keySecret){
-
-        PrivateDatabaseHelper privateDatabaseHelper = new PrivateDatabaseHelper(context);
-        privateDatabaseHelper.retrieveNodeColumnValue(1);
-
         Utility.throwExceptionIfNullOrBlank(context, "context");
         Utility.throwExceptionIfNullOrBlank(appKeyID, "appKey");
         runtimeHandler = new RuntimeHandler();
         runtimeHandler.setKey_ID(appKeyID);
         runtimeHandler.setKey_secret(keySecret);
         runtimeHandler.setaBoolean("true");
-        bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
 
-        double mm = Client.test();
+        bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
         questappkey = appKeyID;
         //check if key matches to the key stored in Database
         //if else statement
-        differentiator.setManage(true);
+
         if(questappkey.equalsIgnoreCase("hanuor")){
             return true;
      }else{

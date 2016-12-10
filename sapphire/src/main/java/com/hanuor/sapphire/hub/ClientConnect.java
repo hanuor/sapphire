@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.hanuor.sapphire.utils.Client;
+import com.hanuor.sapphire.utils.DayModuloDeterminer;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.Utility;
 
@@ -30,7 +31,7 @@ public class ClientConnect {
     private Internals internals;
     private ClientConnect mclient;
     private InformationHandler stickyEvent;
-
+    private static DayModuloDeterminer dayModuloDeterminer;
     public ClientConnect(Context ctx){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         internals = new Internals(ctx);
@@ -41,6 +42,7 @@ public class ClientConnect {
         //checking jar library
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
+//              dayModuloDeterminer.startpvtTreelearning(tags);
             Client mC = new Client(ctx);
             mC.makeJsonString(tags);
         }else{
@@ -80,6 +82,9 @@ public class ClientConnect {
         }else{
             Utility.throwRuntimeException();
         }
+    }
+    public void invokeprivateLearning(String _tag){
+        internals.privateHitTag(_tag);
     }
     public void setRecentPrivate(String _tag, ArrayList<String> imageViewArrayList){
         internals.recentTagViewHelper(_tag, imageViewArrayList);

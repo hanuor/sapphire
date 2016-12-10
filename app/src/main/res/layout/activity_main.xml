@@ -4,13 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    android:background="#0091EA"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +21,13 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/img"/>
 
+    07
+    <ImageView
+    android:id="@+id/imageView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/frost" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,10 +40,10 @@
     <com.hanuor.sapphire.hub.SuggestionView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="#B3E5FC"
         android:id="@+id/suggest"
         app:headerText="Based on your recent activity"
-        app:headertextColor="#212121"
+        app:headertextColor="#9E9E9E"
         app:footerText="Frostbite engine"
         app:footertextColor="#424242"
         app:footertextSize="9"

@@ -16,50 +16,62 @@ package com.hanuor.sapphire.hub;/*
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hanuor.sapphire.R;
-import com.squareup.picasso.Picasso;
+import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
+import com.hanuor.sapphire.temporarydb.HintsStoreDB;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
+import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
+import com.hanuor.sapphire.utils.RandomUtility;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 
-public class SuggestionView extends RelativeLayout {
+public class SuggestionView extends RelativeLayout implements Serializable{
     private TextView textView;
     private String defaultheaderTextColor = "#eeeeee";
     private String defaultfooterTextColor = "#eeeeee";
-
+    private HintsStoreDB hintsStoreDB;
     private float footerTextSize = 13f;
-    private Context context;
+    private transient Context context;
     private float headerTextSize = 13f;
     String TEXT = "Suggestionbox";
     String Ftext = "Default";
     ImageView imageView;
-    TextView valueTextView, footer;
+    TextView valueTextView, footer, headerText;
     ImageView minusButton;
     TextView tv2;
+    private SapphireImgDbHelper sapphireImgDbHelper;
+    private StartEngineModulePrimary startEngineModulePrimary;
+    SuggestionTempDBHandler suggestionTempDBHandler ;
     View rootView;
-    public SuggestionView(Context context, Drawable bmp) {
-        super(context);
-
-        this.context = context;
+    public SuggestionView(Context con) {
+        super(con);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
+        this.context = con;
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
-        setUPSuggestion(context, bmp);
-
     }
 
     public SuggestionView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        //Calling constructor to initialize values and Classes.
+
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs);
         tv2 = new TextView(context);
         imageView = new ImageView(context, attrs);
@@ -94,7 +106,7 @@ public class SuggestionView extends RelativeLayout {
 
             if (headerTextFontSize!=0)
                 headerTextSize = headerTextFontSize;
-            setUPSuggestion(context, null);
+            //setUPSuggestion(context, null, 0);
 
         } finally {
             typedArray.recycle();
@@ -103,9 +115,12 @@ public class SuggestionView extends RelativeLayout {
 
     }
 
+
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        Log.d("SuperME","2");
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         textView = new TextView(context, attrs, defStyleAttr);
         imageView = new ImageView(context, attrs, defStyleAttr);
 
@@ -142,68 +157,118 @@ public class SuggestionView extends RelativeLayout {
                 headerTextSize = headerTextFontSize;
 
 
-            setUPSuggestion(context, null);
+            setUPSuggestion(context, null,1);
 
         } finally {
             typedArray.recycle();
         }
 
 
-        setUPSuggestion(context, null);
+        //setUPSuggestion(context, null,0);
     }
 
-    public void setUPSuggestion(final Context context, Drawable bitmp) {
+    public void setUPSuggestion(final Context context, Bitmap bitmp, int resId) {
+
+        if(resId == 0){
+         case0(context,bitmp);
+        }else{
+            case1(context);
+        }
+    }
+
+    private void case1(Context context){
+        hintsStoreDB = new HintsStoreDB(context);
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
+        rootView = inflate(context, R.layout.singleheaderview, this);
+        headerText = (TextView) rootView.findViewById(R.id.headerText);
+
+        RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, headerText.getId());
+        paramsT.setMargins(21,22,22,22);
+        headerText.setLayoutParams(paramsT);
+
+        headerText.setGravity(Gravity.CENTER);
+        headerText.setTextSize(headerTextSize);
+        headerText.setTextColor(Color.parseColor(defaultheaderTextColor));
+        headerText.setClickable(false);
+        ArrayList<String> recString = new ArrayList<String>();
+       recString = hintsStoreDB.query();
+        int no = RandomUtility.getRandomValue(recString.size()-1, 0);
+        headerText.setText(recString.get(no));
+    }
+    private void case0(Context context,Bitmap bitmp){
+        suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.sapphireview, this);
         valueTextView = (TextView) rootView.findViewById(R.id.header);
-
         footer = (TextView) rootView.findViewById(R.id.footer);
-
-
+        RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsT.addRule(RelativeLayout.CENTER_HORIZONTAL, valueTextView.getId());
+        paramsT.setMargins(21,22,22,22);
+        valueTextView.setLayoutParams(paramsT);
         valueTextView.setText(TEXT);
         valueTextView.setGravity(Gravity.CENTER);
         valueTextView.setTextSize(headerTextSize);
         valueTextView.setTextColor(Color.parseColor(defaultheaderTextColor));
-
-
-
+        valueTextView.setClickable(false);
         minusButton = (ImageView) rootView.findViewById(R.id.imageBack);
-        if(bitmp!= null){
-            Log.d("SappgireBut", "Here");
-            minusButton.setImageDrawable(bitmp);
-
-        }else{
-            String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
-                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
-
-            Picasso.with(context).load(urlpic)
-                    .into(minusButton);
-
-        }
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
         params.addRule(RelativeLayout.BELOW, valueTextView.getId());
-
         minusButton.setLayoutParams(params);
+        minusButton.setClickable(false);
+        if(bitmp!= null){
+            minusButton.setImageBitmap(bitmp);
+        }else{
+            //Try to fetch image from the backend. Try the internet connection . Use internet for thart.
 
-
-
+          /*  String urlpic = "https://api.backendless.com/ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00/v1" +
+                    "/files/SapphireDemo*57f3f577e4b0b14082481f27/girl*57f3f577e4b0b14082481f27.jpg";
+*/
+        }
+        RelativeLayout.LayoutParams paramsF = new RelativeLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        paramsF.addRule(RelativeLayout.CENTER_HORIZONTAL, footer.getId());
+        paramsF.addRule(RelativeLayout.BELOW, minusButton.getId());
+        paramsF.setMargins(3,5,3,5);
+        footer.setLayoutParams(paramsF);
         footer.setTextColor(Color.parseColor(defaultfooterTextColor));
         footer.setText(Ftext);
         footer.setTextSize(footerTextSize);
-        RelativeLayout.LayoutParams paramsfooter = new RelativeLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        paramsfooter.addRule(RelativeLayout.CENTER_HORIZONTAL, minusButton.getId());
-        paramsfooter.addRule(RelativeLayout.BELOW, minusButton.getId());
-
-        footer.setLayoutParams(paramsfooter);
-
-        minusButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Clicked ;)", Toast.LENGTH_SHORT).show();
-            }
-        });
+        footer.setClickable(false);
     }
+
+    public void setanimation(Animation animation){
+        this.setAnimation(animation);
+    }
+    public void show(){
+        this.setVisibility(View.VISIBLE);
+    }
+    public void dismiss(){
+        this.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);}
+    @Override
+    protected void onAnimationStart() {
+        super.onAnimationStart();
+    }
+    @Override
+    protected void onAnimationEnd() {
+        super.onAnimationEnd();
+    }
+    public void startanimation(Animation animation){
+        this.startAnimation(animation);
+    }
+    public void cancelanimation(Animation animation){
+        this.cancelanimation(animation);
+    }
+    public void tagEventActionListener(){
+    }
+
 
 }

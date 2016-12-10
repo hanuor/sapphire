@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.hanuor.sapphire.infoGet.StartEngineModulePrimary;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.utils.ExceptionHandler;
 import com.hanuor.sapphire.utils.ImagesUtil;
@@ -50,6 +51,7 @@ public class SapphireApi {
     private boolean individualmode = false;
     private ArrayList<String> tagslist;
     private ArrayList<Button> buttonArrayList = null;
+    private StartEngineModulePrimary startEngineModulePrimary;
     public SapphireApi(Context context){
         stickyEvent = EventBus.getDefault().getStickyEvent(InformationHandler.class);
         if(context == null){
@@ -73,6 +75,7 @@ public class SapphireApi {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             connect.tags = tags;
             mclient.register(context, tags);
+
             return connect;
            }else{
             Utility.throwRuntimeException();
@@ -106,14 +109,22 @@ public class SapphireApi {
        }
         return connect;
     }
-    public SapphireApi gain(Object tag, SuggestionView suggestionView){
+    public SapphireApi gain(Object tag){
 
         if(stickyEvent != null) {
             Log.d("Sticky bus event"," " + stickyEvent.getKEYID() + " "+stickyEvent.getKEYSECRET()+" "+stickyEvent.getVALIDATOR());
             Log.d("Sapphire]",""+tag.toString().length());
-            connect.mgainTag = (String) tag;
-           // mclient.tagUpdate((String) tag);
-            check(suggestionView);
+            //connect.mgainTag = (String) tag;
+           /* if(intentObject != null){
+                //This means that the user wants to generate the ML concept
+              //  check(suggestionView, intentObject);
+
+            }*/
+            mclient.tagUpdate((String) tag);
+
+            // mclient.invokeprivateLearning((String) tag);
+
+            //check(suggestionView);
             //mclient.setRecentPrivate((String) tag, connect.tagslist);
             return connect;
         }else{
@@ -152,13 +163,19 @@ public class SapphireApi {
 
     //Delete this method. This is just for testing
 
-    public void check(SuggestionView suggestionView){
+    public void setRandomMeasures(boolean value, SuggestionView suggestionView){
+        if(value){
+            startEngineModulePrimary = new StartEngineModulePrimary(context, suggestionView);
+            startEngineModulePrimary.startSuggestions(true);
+        }
 
+    }
+    public void check(SuggestionView suggestionView){
+        Log.d("SapphireAccess","true0");
         SapphireImgDbHelper sapphireImgDbHelper = new SapphireImgDbHelper(context);
         ImagesUtil imagesUtil = new ImagesUtil();
-        suggestionView.setUPSuggestion(context, imagesUtil.byteToDrawable(sapphireImgDbHelper.imgquery("girl")));
-
-
+        Log.d("SapphireAccess","true1");
+        suggestionView.setUPSuggestion(context, imagesUtil.byteToBitmap(sapphireImgDbHelper.imgquery("girl")), 1);
     }
 
 }

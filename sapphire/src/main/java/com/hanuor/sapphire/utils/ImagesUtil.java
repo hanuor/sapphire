@@ -24,7 +24,6 @@ import java.io.ByteArrayOutputStream;
 
 public class ImagesUtil {
     public  byte[] drawableToByteArray(Drawable d) {
-
         if (d != null) {
             Bitmap imageBitmap = ((BitmapDrawable) d).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -34,15 +33,13 @@ public class ImagesUtil {
             return byteData;
         } else
             return null;
-
     }
 
 
-    public  Drawable byteToDrawable(byte[] data) {
-
+    public   Bitmap byteToBitmap(byte[] data) {
         if (data == null)
             return null;
         else
-            return new BitmapDrawable(BitmapFactory.decodeByteArray(data, 0, data.length));
+            return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 }

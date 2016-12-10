@@ -11,6 +11,9 @@ import java.util.ArrayList;
 /**
  * Created by Shantanu Johri on 15-08-2016.
  */
+
+/*
+Store tags and their values in a json format*/
 public class SapphireDbManager extends SQLiteOpenHelper {
 
 
@@ -69,8 +72,6 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         db.close();
 
     }
-    public void insertPDoc(String list){
-    }
     public void insertJDoc(String Doc){
         clearJDocTable(0);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -102,9 +103,7 @@ public class SapphireDbManager extends SQLiteOpenHelper {
         if(cSor.moveToFirst()){
             do{
                 returnString =  cSor.getString(cSor.getColumnIndex(SapphireDbManager.ID_DOCS));
-
             }while(cSor.moveToNext());
-
         }
         return returnString;
 
