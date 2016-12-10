@@ -16,10 +16,6 @@ package com.hanuor.sapphire.infoGet;
  */
 
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.util.Log;
 
 import com.hanuor.client.MaxValueEvaluator;
@@ -36,14 +32,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import static android.content.Context.SENSOR_SERVICE;
-
 /*
 A one week training is needed here. This class is used to implement trained data when the whole week has been completed.*/
 /*
 we need to link sv to this engine in order to make functionality and demo ready.*/
 
-public class StartEngineModulePrimary implements SensorEventListener {
+public class StartEngineModulePrimary{
     private GetDayUtil getDayUtil;
     private TrainingTracker trainingTracker;
     private SuggestionView suggestionView;
@@ -53,9 +47,6 @@ public class StartEngineModulePrimary implements SensorEventListener {
     private ImagesUtil imagesUtil;
     private SuggestionView suggestionViewOb;
 
-    private Sensor mSensor;
-    private SensorManager mSensorManager;
-    private float _sensorMaximumRange;
 /*
     SapphireprivateDB is for mapping events occuring on specific days.
 */
@@ -71,12 +62,7 @@ public class StartEngineModulePrimary implements SensorEventListener {
         imagesUtil = new ImagesUtil();
         this.suggestionViewOb = suggestionView1;
         Log.d("minutes","Re invent");
-        mSensorManager = (SensorManager) ctx.getSystemService(SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        mSensorManager.registerListener(this, mSensor,
-                SensorManager.SENSOR_DELAY_NORMAL);
-        _sensorMaximumRange = mSensor.getMaximumRange();
 
 
     }
@@ -116,27 +102,4 @@ public class StartEngineModulePrimary implements SensorEventListener {
         }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (_sensorMaximumRange == sensorEvent.values[0]) {
-                //near
-                Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am far");
-
-            }else if((_sensorMaximumRange/2) == sensorEvent.values[0]){
-                Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am near/2");
-
-            }
-            else {
-                //far
-                Log.d("25 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am near");
-
-            }
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-        Log.d("25 minutes","Accuracy changed");
-    }
-}
+  }

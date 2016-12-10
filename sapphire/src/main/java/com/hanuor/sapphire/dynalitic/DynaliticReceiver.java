@@ -1,4 +1,4 @@
-package com.hanuor.sapphire.infoGet;
+package com.hanuor.sapphire.dynalitic;
 /*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
