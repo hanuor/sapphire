@@ -162,7 +162,7 @@ public class DynaliticService extends Service implements SensorEventListener {
                        }
                         final long starttime = fetchLongTime();
                        if(starttime == timeStampGS.getSetTime()) {
-                            //startTimeStoreDB.clearTimestampTable();
+                           //startTimeStoreDB.clearTimestampTable();
                            Log.d("nucleyaTimeStapm","tart " + starttime + "  " +timeStampGS.getSetTime());
                            startTimeStoreDB.addTimeStampToDB(timeStampGS.getSetTime());
                         }
