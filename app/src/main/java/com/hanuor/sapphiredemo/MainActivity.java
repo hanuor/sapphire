@@ -1,5 +1,6 @@
 package com.hanuor.sapphiredemo;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +30,7 @@ import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.dynalitic.DynaliticService;
 import com.hanuor.sapphire.hub.OnEventHandler;
 import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
@@ -39,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, DynaliticService.class);
+        // Start service
+        this.startService(serviceIntent);
         if (mTimer != null) {
             mTimer.cancel();
         } else {
@@ -81,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         }
         // schedule task
         mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
+
 
 
 

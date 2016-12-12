@@ -15,7 +15,9 @@ package com.hanuor.sapphire.dynalitic;
  * limitations under the License.
  */
 
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -26,8 +28,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.hanuor.sapphire.infoGet.TimeStampGS;
+import com.hanuor.sapphire.temporarydb.StartTimeStoreDB;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,6 +43,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     private SensorManager mSensorManager;
     private float _sensorMaximumRange;
     private long durationValue;
+    private StartTimeStoreDB startTimeStoreDB;
     // constant
     public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
 
@@ -54,8 +61,18 @@ public class DynaliticService extends Service implements SensorEventListener {
     }
 
     @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("doobie","smoke weed");
+        return super.onStartCommand(intent, flags, startId);
+
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("troySegan","Service up and running");
+
+        startTimeStoreDB = new StartTimeStoreDB(this);
         if (mTimer != null) {
             mTimer.cancel();
         } else {
@@ -70,11 +87,8 @@ public class DynaliticService extends Service implements SensorEventListener {
         mSensorManager.registerListener(this, mSensor,
                 SensorManager.SENSOR_DELAY_NORMAL);
         _sensorMaximumRange = mSensor.getMaximumRange();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+
     }
 
     @Override
@@ -124,31 +138,75 @@ public class DynaliticService extends Service implements SensorEventListener {
     }
 
     class TimeDisplayTimerTask extends TimerTask {
-
+        TimeStampGS timeStampGS = new TimeStampGS();
         @Override
         public void run() {
             // run on another thread
+
             mHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
-                    // display toast
-                 Log.d("myatlantis","Service "+getDateTime());
-                    if(getDateTime().equals("[3:00:00]")){
-                        //Start uploading Docs
-                        
+                    ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                    List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
+                    List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
+
+                    String currentRunningActivityName = taskInfo.get(0).topActivity.getPackageName();
+                    if(currentRunningActivityName.equals("com.hanuor.sapphiredemo")){
+                       if(timeStampGS.getSetTime()!=0){
+
+                        }else{
+                           Log.d("nucleyaTimeStapm",""+timeStampGS.getSetTime());
+                            timeStampGS.setTime(fetchLongTime());
+                           Log.d("nucleyaTimeStapm",""+timeStampGS.getSetTime());
+                       }
+                        final long starttime = fetchLongTime();
+                       if(starttime == timeStampGS.getSetTime()) {
+                            //startTimeStoreDB.clearTimestampTable();
+                           Log.d("nucleyaTimeStapm","tart " + starttime + "  " +timeStampGS.getSetTime());
+                           startTimeStoreDB.addTimeStampToDB(timeStampGS.getSetTime());
+                        }
+                        //Log.d("nucleya","Current time - "+fetchLongTime() +"\r\n"+ " and start time" + timeStampGS.getSetTime());
 
                     }
+
+
+                /*    for (int i = 0; i < runningAppProcessInfo.size(); i++) {
+                        Log.d("nucleya"," HAH " + runningAppProcessInfo.get(i).processName);
+                        if(runningAppProcessInfo.get(i).processName.equals("com.twango.me") ){
+                            // Do you stuff
+                            Log.d("nucleya","Launched");
+                        }
+                    }
+                    Log.d("myatlantis","Service "+getDateTime());
+                    if(getDateTime().equals("[3:00:00]")){
+                        //Start uploading Docs
+*/
+
+                   // }
 
                 }
 
             });
         }
-
-        private String getDateTime() {
+        private String getTime(){
             // get date time in custom format
             SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm:ss]");
             return sdf.format(new Date());
         }
+
+        private String getDateandTime() {
+            // get date time in custom format
+            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+            return sdf.format(new Date());
+        }
+        private long fetchLongTime(){
+            return System.currentTimeMillis();
+        }
+    }
+    private String getDateandTime() {
+        // get date time in custom format
+        SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+        return sdf.format(new Date());
     }
 }
