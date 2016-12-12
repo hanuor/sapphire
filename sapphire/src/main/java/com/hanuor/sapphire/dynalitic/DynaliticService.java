@@ -21,17 +21,33 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class DynaliticService extends Service implements SensorEventListener{
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class DynaliticService extends Service implements SensorEventListener {
 
     private Sensor mSensor;
     private SensorManager mSensorManager;
     private float _sensorMaximumRange;
     private long durationValue;
+    // constant
+    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 seconds
+
+    // run on another Thread to avoid crash
+    private Handler mHandler = new Handler();
+    // timer handling
+    private Timer mTimer = null;
+
     private long startValue, endValue;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,14 +57,25 @@ public class DynaliticService extends Service implements SensorEventListener{
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Skrillec","Working in an inside servuce");
+        if (mTimer != null) {
+            mTimer.cancel();
+        } else {
+            // recreate new
+            mTimer = new Timer();
+        }
+        // schedule task
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+
+        Log.d("dynalitic", "" + DateFormat.getDateTimeInstance().format(new Date()));
+
+        Log.d("Skrillec", "Working in an inside servuce");
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
         mSensorManager.registerListener(this, mSensor,
                 SensorManager.SENSOR_DELAY_NORMAL);
         _sensorMaximumRange = mSensor.getMaximumRange();
-        Log.d("Skrillec",""+_sensorMaximumRange);
+        Log.d("Skrillec", "" + _sensorMaximumRange);
 
     }
 
@@ -59,33 +86,32 @@ public class DynaliticService extends Service implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-            Log.d("Skrillec","HEYEYEYEYEYEYEYEYE");
+        Log.d("Skrillec", "HEYEYEYEYEYEYEYEYE");
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 
             if (_sensorMaximumRange == sensorEvent.values[0]) {
                 //near
                 long getD = getDuration();
-                if(getD == 0){
+                if (getD == 0) {
                     startValue = System.currentTimeMillis();
-                }else{
+                } else {
                     endValue = System.currentTimeMillis();
                     durationValue = startValue - endValue;
-                    Log.d("5 minutes",""+durationValue + "  " + sensorEvent.values[0] +  " I am far");
+                    Log.d("5 minutes", "" + durationValue + "  " + sensorEvent.values[0] + " I am far");
                 }
-            }
-            else {
+            } else {
                 //far
                 long getD = getDuration();
-                if(getD == 0){
+                if (getD == 0) {
                     startValue = System.currentTimeMillis();
-                    }else{
+                } else {
                     endValue = System.currentTimeMillis();
                     durationValue = startValue - endValue;
 
-                    Log.d("5 minutes",""+durationValue + "  " + sensorEvent.values[0] +  " I am far");
+                    Log.d("5 minutes", "" + durationValue + "  " + sensorEvent.values[0] + " I am far");
 
                 }
-                Log.d("5 minutes",""+sensorEvent.accuracy + "  " + sensorEvent.values[0] +  " I am near");
+                Log.d("5 minutes", "" + sensorEvent.accuracy + "  " + sensorEvent.values[0] + " I am near");
 
             }
         }
@@ -96,11 +122,35 @@ public class DynaliticService extends Service implements SensorEventListener{
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-    private long getDuration(){
-        if(startValue!=0){
+
+    private long getDuration() {
+        if (startValue != 0) {
             return durationValue;
-        }else{
+        } else {
             return 0;
+        }
+    }
+
+    class TimeDisplayTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            // run on another thread
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    // display toast
+                 Log.d("my atlantis",""+getDateTime());
+                }
+
+            });
+        }
+
+        private String getDateTime() {
+            // get date time in custom format
+            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+            return sdf.format(new Date());
         }
     }
 }

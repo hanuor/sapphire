@@ -1,4 +1,4 @@
-package com.hanuor.sapphire.dynalitic;
+package com.hanuor.sapphire.utils;
 /*
  * Copyright (C) 2016 Hanuor Inc. by Shantanu Johri(https://hanuor.github.io/shanjohri/)
  *
@@ -15,16 +15,6 @@ package com.hanuor.sapphire.dynalitic;
  * limitations under the License.
  */
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+public class UploadDocs {
 
-public class DynaliticReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        // Create Intent
-        Intent serviceIntent = new Intent(context, DynaliticService.class);
-        // Start service
-        context.startService(serviceIntent);
-    }
 }

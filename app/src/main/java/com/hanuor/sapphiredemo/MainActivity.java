@@ -35,8 +35,12 @@ import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -54,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     private SensorManager mSensorManager;
     ImageView iv;
     private Sensor mSensor;
+    // constant
+    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 seconds
+
+    // run on another Thread to avoid crash
+    private Handler mHandler = new Handler();
+    // timer handling
+    private Timer mTimer = null;
+
 
 
     Spring mScaleSpring;
@@ -61,6 +73,17 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (mTimer != null) {
+            mTimer.cancel();
+        } else {
+            // recreate new
+            mTimer = new Timer();
+        }
+        // schedule task
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+
+
+
         but  = (Button) findViewById(R.id.button);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -345,6 +368,28 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         @Override
         public boolean onSingleTapUp(MotionEvent event) {
             return true;
+        }
+    }
+    class TimeDisplayTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            // run on another thread
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    // display toast
+
+                }
+
+            });
+        }
+
+        private String getDateTime() {
+            // get date time in custom format
+            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+            return sdf.format(new Date());
         }
     }
 
