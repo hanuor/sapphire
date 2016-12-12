@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     ImageView iv;
     private Sensor mSensor;
     // constant
-    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 seconds
+    public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
 
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
@@ -334,12 +334,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             if (event.values[0] >= -0.01 && event.values[0]< .55) {
                 //near
 
-                Toast.makeText(this, ""+event.values[0], Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+
             } else {
                 //far
 
-                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -381,6 +379,13 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
                 public void run() {
                     // display toast
 
+                    Log.d("myatlantis",""+getDateTime());
+                    if(getDateTime().equals("[10:51:00]")){
+                        //Do upload
+                        Toast.makeText(MainActivity.this,"My atlantis" + getDateTime(),Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
 
             });
@@ -388,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
 
         private String getDateTime() {
             // get date time in custom format
-            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+            SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm:ss]");
             return sdf.format(new Date());
         }
     }

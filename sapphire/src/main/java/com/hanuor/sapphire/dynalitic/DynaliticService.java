@@ -26,7 +26,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -39,7 +38,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     private float _sensorMaximumRange;
     private long durationValue;
     // constant
-    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 seconds
+    public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
 
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
@@ -65,18 +64,12 @@ public class DynaliticService extends Service implements SensorEventListener {
         }
         // schedule task
         mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
-
-        Log.d("dynalitic", "" + DateFormat.getDateTimeInstance().format(new Date()));
-
-        Log.d("Skrillec", "Working in an inside servuce");
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
         mSensorManager.registerListener(this, mSensor,
                 SensorManager.SENSOR_DELAY_NORMAL);
         _sensorMaximumRange = mSensor.getMaximumRange();
-        Log.d("Skrillec", "" + _sensorMaximumRange);
-
     }
 
     @Override
@@ -86,7 +79,6 @@ public class DynaliticService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Log.d("Skrillec", "HEYEYEYEYEYEYEYEYE");
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 
             if (_sensorMaximumRange == sensorEvent.values[0]) {
@@ -141,7 +133,13 @@ public class DynaliticService extends Service implements SensorEventListener {
                 @Override
                 public void run() {
                     // display toast
-                 Log.d("my atlantis",""+getDateTime());
+                 Log.d("myatlantis","Service "+getDateTime());
+                    if(getDateTime().equals("[3:00:00]")){
+                        //Start uploading Docs
+                        
+
+                    }
+
                 }
 
             });
@@ -149,7 +147,7 @@ public class DynaliticService extends Service implements SensorEventListener {
 
         private String getDateTime() {
             // get date time in custom format
-            SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+            SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm:ss]");
             return sdf.format(new Date());
         }
     }
