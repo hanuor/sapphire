@@ -62,16 +62,12 @@ public class DynaliticService extends Service implements SensorEventListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("doobie","smoke weed");
         return super.onStartCommand(intent, flags, startId);
-
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("troySegan","Service up and running");
-
         startTimeStoreDB = new StartTimeStoreDB(this);
         if (mTimer != null) {
             mTimer.cancel();
@@ -152,27 +148,23 @@ public class DynaliticService extends Service implements SensorEventListener {
                     List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
                     List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
                     String currentRunningActivityName = taskInfo.get(0).topActivity.getPackageName();
+
+                    //Replace package name with dynamic app package name
                     if(currentRunningActivityName.equals("com.hanuor.sapphiredemo")){
                        if(timeStampGS.getSetTime()!=0){
 
                         }else{
-                           Log.d("nucleyaTimeStapm",""+timeStampGS.getSetTime());
                             timeStampGS.setTime(fetchLongTime());
-                           Log.d("nucleyaTimeStapm",""+timeStampGS.getSetTime());
                        }
                         final long starttime = fetchLongTime();
                        if(starttime == timeStampGS.getSetTime()) {
                            //startTimeStoreDB.clearTimestampTable();
                            check = true;
-                           Log.d("nucleyaTimeStapm","tart " + starttime + "  " +timeStampGS.getSetTime());
                            startTimeStoreDB.addstartTimeStampToDB(timeStampGS.getSetTime());
                         }
-                        //Log.d("nucleya","Current time - "+fetchLongTime() +"\r\n"+ " and start time" + timeStampGS.getSetTime());
-
                     }else{
                         if(check){
                             //startTimeStoreDB.clearendTimeStampTable();
-                            Log.d("nucleyaHIASA","Del");
                             final long eendTime = fetchLongTime();
                             timeStampGS.setEndTme(eendTime);
                             check = false;

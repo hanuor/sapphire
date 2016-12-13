@@ -1,6 +1,5 @@
 package com.hanuor.sapphiredemo;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,13 +36,9 @@ import com.hanuor.sapphire.hub.SuggestionView;
 import com.hanuor.sapphire.temporarydb.HintsStoreDB;
 import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -79,21 +74,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         Intent serviceIntent = new Intent(this, DynaliticService.class);
         // Start service
         this.startService(serviceIntent);
-        if (mTimer != null) {
-            mTimer.cancel();
-        } else {
-            // recreate new
-            mTimer = new Timer();
-        }
-        // schedule task
-        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
-
-        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
-
-
-
-
         but  = (Button) findViewById(R.id.button);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -378,34 +358,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             return true;
         }
     }
-    class TimeDisplayTimerTask extends TimerTask {
-
-        @Override
-        public void run() {
-            // run on another thread
-            mHandler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    // display toast
-
-                    Log.d("myatlantis",""+getDateTime());
-                    if(getDateTime().equals("[10:51:00]")){
-                        //Do upload
-                        Toast.makeText(MainActivity.this,"My atlantis" + getDateTime(),Toast.LENGTH_SHORT).show();
-                    }
-
-
-                }
-
-            });
-        }
-
-        private String getDateTime() {
-            // get date time in custom format
-            SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm:ss]");
-            return sdf.format(new Date());
-        }
-    }
+    
 
 }
