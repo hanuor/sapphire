@@ -15,7 +15,9 @@ package com.hanuor.sapphire.utils;
  * limitations under the License.
  */
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.backendless.Backendless;
@@ -27,12 +29,16 @@ import java.nio.charset.StandardCharsets;
 
 public class UploadDocs {
     private Context context;
+    @TargetApi(Build.VERSION_CODES.FROYO)
     public UploadDocs(Context ctx){
         this.context = ctx;
         Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
     }
+
+  
     public void uploadTimeStamps(String _startTimeStamp, String _endTimeStamp){
         Log.d("Summit",""+_endTimeStamp);
+
         byte[] _startTimeStampBytes;
         byte[] _endTimeStampBytes;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
