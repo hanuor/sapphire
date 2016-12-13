@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.hanuor.sapphire.infoGet.TimeStampGS;
 import com.hanuor.sapphire.temporarydb.StartTimeStoreDB;
+import com.hanuor.sapphire.utils.UploadDocs;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,7 +52,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     private Handler mHandler = new Handler();
     // timer handling
     private Timer mTimer = null;
-
+    private UploadDocs uploadDocs;
     private long startValue, endValue;
 
     @Nullable
@@ -69,6 +70,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     public void onCreate() {
         super.onCreate();
         startTimeStoreDB = new StartTimeStoreDB(this);
+        uploadDocs = new UploadDocs(this);
         if (mTimer != null) {
             mTimer.cancel();
         } else {
@@ -134,8 +136,9 @@ public class DynaliticService extends Service implements SensorEventListener {
     }
 
     class TimeDisplayTimerTask extends TimerTask {
-        boolean check = false;
+        boolean check = true;
         TimeStampGS timeStampGS = new TimeStampGS();
+        boolean stampCheck = false;
         @Override
         public void run() {
             // run on another thread
@@ -144,11 +147,15 @@ public class DynaliticService extends Service implements SensorEventListener {
 
                 @Override
                 public void run() {
+                    Log.d("Summit","Runnit");
 
+                    if(getTime().equals("[13:26:11]")){
 
-                    if(getTime().equals("[3:11:11]")){
                         //Do upload
-
+                        if(check){
+                            check = false;
+                            uploadDocs.uploadTimeStamps(startTimeStoreDB.retrievestartStamp(),startTimeStoreDB.retrieveendStamp());
+                        }
                     }
                     ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                     List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();

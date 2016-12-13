@@ -15,6 +15,56 @@ package com.hanuor.sapphire.utils;
  * limitations under the License.
  */
 
-public class UploadDocs {
+import android.content.Context;
+import android.util.Log;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+public class UploadDocs {
+    private Context context;
+    public UploadDocs(Context ctx){
+        this.context = ctx;
+        Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
+    }
+    public void uploadTimeStamps(String _startTimeStamp, String _endTimeStamp){
+        Log.d("Summit",""+_endTimeStamp);
+        byte[] _startTimeStampBytes;
+        byte[] _endTimeStampBytes;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            _startTimeStampBytes = _startTimeStamp.getBytes(StandardCharsets.UTF_8); // Java 7+ only
+            _endTimeStampBytes = _endTimeStamp.getBytes(StandardCharsets.UTF_8); // Java 7+ only
+        }else{
+            _startTimeStampBytes = _startTimeStamp.getBytes(Charset.forName("UTF-8"));
+            _endTimeStampBytes = _endTimeStamp.getBytes(Charset.forName("UTF-8"));
+        }
+       /* Backendless.Files.saveFile("com.hanuor.sappihredemo/startTimeStamp/data", "startData.csv", _startTimeStampBytes, true, new AsyncCallback<String>() {
+            @Override
+            public void handleResponse(String s) {
+                Log.d("Insamareen",""+s);
+
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.d("Insamareen",backendlessFault.toString());
+            }
+        });*/
+        Backendless.Files.saveFile("com.hanuor.sappihredemo/endTimeStamp/data", "endData.csv", _endTimeStampBytes, true, new AsyncCallback<String>() {
+            @Override
+            public void handleResponse(String s) {
+                Log.d("Insamareen",""+s);
+
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.d("Insamareen",backendlessFault.toString());
+            }
+        });
+    }
 }
