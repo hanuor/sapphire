@@ -144,6 +144,12 @@ public class DynaliticService extends Service implements SensorEventListener {
 
                 @Override
                 public void run() {
+
+
+                    if(getTime().equals("[3:11:11]")){
+                        //Do upload
+
+                    }
                     ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                     List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
                     List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
