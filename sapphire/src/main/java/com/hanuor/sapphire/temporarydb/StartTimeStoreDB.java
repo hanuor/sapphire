@@ -20,7 +20,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 //Db to store starttimestamps of app for machine learning.
@@ -50,18 +49,14 @@ public class StartTimeStoreDB extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
     public void addTimeStampToDB(long _timeStamp){
-        Log.d("nucleyaaa","a " + _timeStamp);
         String longCon  = Long.toString(_timeStamp);
         String querytoAppend = retrieveStamp();
-        Log.d("nucleya","HI Nucleya"+querytoAppend);
         String nss = querytoAppend + "\r\n" + longCon;
         clearTimestampTable();
-        Log.d("nucleyaString",nss);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_TIMESTAMP, nss);
         long ff = db.insert(TABLE_TIMESTAMP, null, contentValues);
-        //Log.d("nucleyacncncnc",""+ff);
         db.close();
     }
 
@@ -71,7 +66,6 @@ public class StartTimeStoreDB extends SQLiteOpenHelper {
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
-                Log.d("nucleyaChutney",""+cSor.getString(cSor.getColumnIndexOrThrow(StartTimeStoreDB.COLUMN_TIMESTAMP)));
                 return cSor.getString(cSor.getColumnIndexOrThrow(COLUMN_TIMESTAMP));
             }while(cSor.moveToNext());
         }else{

@@ -39,9 +39,7 @@ public class RunningStatus extends Thread {
             // Taken 1 inside getRunningTasks method means want to take only
             // top activity from stack and forgot the olders.
             List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-
             String currentRunningActivityName = taskInfo.get(0).topActivity.getClassName();
-
             if (currentRunningActivityName.equals("PACKAGE_NAME.ACTIVITY_NAME")) {
                 // show your activity here on top of PACKAGE_NAME.ACTIVITY_NAME
             }
