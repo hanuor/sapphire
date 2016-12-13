@@ -138,6 +138,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     }
 
     class TimeDisplayTimerTask extends TimerTask {
+        boolean check = false;
         TimeStampGS timeStampGS = new TimeStampGS();
         @Override
         public void run() {
@@ -150,7 +151,6 @@ public class DynaliticService extends Service implements SensorEventListener {
                     ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                     List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
                     List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-
                     String currentRunningActivityName = taskInfo.get(0).topActivity.getPackageName();
                     if(currentRunningActivityName.equals("com.hanuor.sapphiredemo")){
                        if(timeStampGS.getSetTime()!=0){
@@ -163,28 +163,22 @@ public class DynaliticService extends Service implements SensorEventListener {
                         final long starttime = fetchLongTime();
                        if(starttime == timeStampGS.getSetTime()) {
                            //startTimeStoreDB.clearTimestampTable();
+                           check = true;
                            Log.d("nucleyaTimeStapm","tart " + starttime + "  " +timeStampGS.getSetTime());
-                           startTimeStoreDB.addTimeStampToDB(timeStampGS.getSetTime());
+                           startTimeStoreDB.addstartTimeStampToDB(timeStampGS.getSetTime());
                         }
                         //Log.d("nucleya","Current time - "+fetchLongTime() +"\r\n"+ " and start time" + timeStampGS.getSetTime());
 
-                    }
-
-
-                /*    for (int i = 0; i < runningAppProcessInfo.size(); i++) {
-                        Log.d("nucleya"," HAH " + runningAppProcessInfo.get(i).processName);
-                        if(runningAppProcessInfo.get(i).processName.equals("com.twango.me") ){
-                            // Do you stuff
-                            Log.d("nucleya","Launched");
+                    }else{
+                        if(check){
+                            //startTimeStoreDB.clearendTimeStampTable();
+                            Log.d("nucleyaHIASA","Del");
+                            final long eendTime = fetchLongTime();
+                            timeStampGS.setEndTme(eendTime);
+                            check = false;
+                            startTimeStoreDB.addEndTimeStampToDB(timeStampGS.getEndTme());
                         }
                     }
-                    Log.d("myatlantis","Service "+getDateTime());
-                    if(getDateTime().equals("[3:00:00]")){
-                        //Start uploading Docs
-*/
-
-                   // }
-
                 }
 
             });

@@ -17,11 +17,18 @@ package com.hanuor.sapphire.infoGet;
 
 public class TimeStampGS {
     long stTime;
+    long endTme;
 
     public long getSetTime() {
         return stTime;
     }
     public void setTime(long _time){
         this.stTime = _time;
+    }
+    public void setEndTme(long _time){
+        this.endTme = _time;
+    }
+    public long getEndTme(){
+        return endTme;
     }
 }
