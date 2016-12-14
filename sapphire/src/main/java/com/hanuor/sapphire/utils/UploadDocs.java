@@ -28,6 +28,7 @@ import android.util.Log;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.infoGet.BatteryStatus;
 
 import java.nio.charset.Charset;
@@ -57,7 +58,7 @@ public class UploadDocs extends Activity{
             _endTimeStampBytes = _endTimeStamp.getBytes(Charset.forName("UTF-8"));
         }
         if(batteryStatus.isBatteryStatus() && batteryStatus.getBatteryPercentage() > 20){
-            Backendless.Files.saveFile("com.hanuor.sappihredemo/startTimeStamp/data", "startData.csv", _startTimeStampBytes, true, new AsyncCallback<String>() {
+            Backendless.Files.saveFile(LibraryDatabase.STARTTIMESTAMPPATH, LibraryDatabase.STARTTIMESTAMPFORMAT, _startTimeStampBytes, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("Insamareen",""+s);
@@ -69,7 +70,7 @@ public class UploadDocs extends Activity{
                 Log.d("Insamareen",backendlessFault.toString());
             }
             });
-            Backendless.Files.saveFile("com.hanuor.sappihredemo/endTimeStamp/data", "endData.csv", _endTimeStampBytes, true, new AsyncCallback<String>() {
+            Backendless.Files.saveFile(LibraryDatabase.ENDTIMESTAMPPATH, LibraryDatabase.ENDTIMESTAMPFORMAT, _endTimeStampBytes, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("Insamareen",""+s);
