@@ -59,11 +59,11 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     }
     public void insertImage(String tag, byte[] arrayImg) throws SQLException {
 
-            SQLiteDatabase database = this.getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put(ID_IMGKEY, tag);
-            cv.put(IMG_COLUMN, arrayImg);
-            database.insert(TABLE_IMAGE, null, cv);
+                SQLiteDatabase database = this.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put(ID_IMGKEY, tag);
+                cv.put(IMG_COLUMN, arrayImg);
+                database.insert(TABLE_IMAGE, null, cv);
 
     }
     public  int getCount(){
