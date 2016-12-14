@@ -29,6 +29,7 @@ import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hanuor.sapphire.Sapphire;
+import com.hanuor.sapphire.dynalitic.DynaliticService;
 import com.hanuor.sapphire.hub.OnEventHandler;
 import com.hanuor.sapphire.hub.SapphireIntentHandler;
 import com.hanuor.sapphire.hub.SuggestionView;
@@ -37,8 +38,11 @@ import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Timer;
 
 import de.greenrobot.event.EventBus;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 
 public class MainActivity extends AppCompatActivity implements OnEventHandler, SensorEventListener {
@@ -56,11 +60,15 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     private Sensor mSensor;
 
 
+
     Spring mScaleSpring;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, DynaliticService.class);
+        // Start service
+        this.startService(serviceIntent);
         but  = (Button) findViewById(R.id.button);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -69,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         ArrayList<String> vmm = new ArrayList<String>();
         vmm.add("Hi welcome to my new app");
         vmm.add("We have sapphire already integrated within it");
-        vmm.add("Sapphire is an upcoming SDK which modifies the in-app notification concept");
+        vmm.add("Sapphire is an upcoming SDK which - modifies the in-app notification concept");
         vmm.add("Sapphire is powered by Hanuor's own hoomcooked Dynalitic Engine");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
-        hintsStoreDB.storeDetails(vmm);
+        hintsStoreDB.storeDetails(vmm,"-");
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
@@ -105,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             }
         });
         suggestionView.startAnimation(RightSwipe);
+
         Sapphire.with(MainActivity.this).setRandomMeasures(true,suggestionView);
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -127,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         img2.setImageBitmap(icon2);
         img.setTag("frost");
         img2.setTag("girl");
-
-
         arrayOfImgViews.add(img);
         arrayOfImgViews.add(img2);
         Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
@@ -311,12 +318,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             if (event.values[0] >= -0.01 && event.values[0]< .55) {
                 //near
 
-                Toast.makeText(this, ""+event.values[0], Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+
             } else {
                 //far
 
-                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -347,5 +352,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             return true;
         }
     }
+    
 
 }

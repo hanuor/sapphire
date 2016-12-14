@@ -34,11 +34,10 @@ import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SuggestionTempDBHandler;
 import com.hanuor.sapphire.utils.RandomUtility;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class SuggestionView extends RelativeLayout implements Serializable{
+public class SuggestionView extends RelativeLayout{
     private TextView textView;
     private String defaultheaderTextColor = "#eeeeee";
     private String defaultfooterTextColor = "#eeeeee";
@@ -180,6 +179,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         hintsStoreDB = new HintsStoreDB(context);
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
+
         headerText = (TextView) rootView.findViewById(R.id.headerText);
 
         RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(
@@ -188,7 +188,7 @@ public class SuggestionView extends RelativeLayout implements Serializable{
         paramsT.setMargins(21,22,22,22);
         headerText.setLayoutParams(paramsT);
 
-        headerText.setGravity(Gravity.CENTER);
+        headerText.setGravity(Gravity.LEFT);
         headerText.setTextSize(headerTextSize);
         headerText.setTextColor(Color.parseColor(defaultheaderTextColor));
         headerText.setClickable(false);

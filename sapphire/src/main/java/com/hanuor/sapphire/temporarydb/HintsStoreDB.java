@@ -55,6 +55,35 @@ public class HintsStoreDB extends SQLiteOpenHelper {
         }
         db.close();
     }
+    public void storeDetails(ArrayList<String> details, String delimiter){
+        clearDatabase();
+        StringBuffer stringBuffer = new StringBuffer();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+            for(String  element: details){
+                String[] partition = element.split(delimiter);
+                stringBuffer.setLength(0);
+                int newLength = partition.length;
+                for(int i = 0; i < newLength ; i++){
+                    Log.d("VVVV",""+ partition[i]);
+
+                    stringBuffer.append(partition[i]);
+                    if(i == (newLength-1)){
+
+                    }else{
+                        stringBuffer.append("\r\n");
+                    }
+
+                }
+                Log.d("VVVOPHELIA",""+stringBuffer.toString());
+                contentValues.put(COLUMN_NAME, stringBuffer.toString());
+                long val = db.insert(TABLE_NAME, null, contentValues);
+            }
+
+
+        db.close();
+    }
     public void clearDatabase(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME,1+"="+1 , null);
