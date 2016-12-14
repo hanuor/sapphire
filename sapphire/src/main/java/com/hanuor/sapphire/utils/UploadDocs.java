@@ -31,19 +31,24 @@ import com.backendless.exceptions.BackendlessFault;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.infoGet.BatteryStatus;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
+import com.hanuor.sapphire.temporarydb.UploadDateStoreDb;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UploadDocs extends Activity{
     private Context context;
     private BatteryStatus batteryStatus;
     private SapphireImgDbHelper sapphireImgDbHelper;
+    private UploadDateStoreDb uploadDateStoreDb;
     @TargetApi(Build.VERSION_CODES.FROYO)
     public UploadDocs(Context ctx){
         this.context = ctx;
         batteryStatus = new BatteryStatus();
+        uploadDateStoreDb = new UploadDateStoreDb(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
         Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
     }
@@ -155,6 +160,31 @@ public class UploadDocs extends Activity{
         return days;
     }
 
+public void uploadImagetoOnlineDb(String _currentDate){
+    context.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    if(uploadDateStoreDb.retrieveValue() == null){
+        //new Data
+        uploadDateStoreDb.insertNewDate(_currentDate);
 
+
+    }else{
+
+        SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
+        try {
+            Date Pdate = sdf.parse(uploadDateStoreDb.retrieveValue());
+            Date Cdate = sdf.parse(_currentDate);
+            int getDif = printDifference(Pdate, Cdate);
+            if(getDif == 3){
+                if(batteryStatus.isBatteryStatus() && batteryStatus.getBatteryPercentage() > 20) {
+                    Log.d("NakedandFam","Approved");
+
+                }
+
+                }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 }

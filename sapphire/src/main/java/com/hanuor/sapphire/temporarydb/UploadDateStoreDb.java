@@ -17,10 +17,9 @@ package com.hanuor.sapphire.temporarydb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import static android.R.attr.tag;
 
 public class UploadDateStoreDb extends SQLiteOpenHelper {
     private static final String DB_NAME = "UploadDateStoreDb.db";
@@ -48,7 +47,7 @@ public class UploadDateStoreDb extends SQLiteOpenHelper {
     public void insertNewDate(String _date){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_LATEST_DATE, tag);
+        cv.put(COLUMN_LATEST_DATE, _date);
         database.insert(TABLE_DB_DATE, null, cv);
     }
     public void clearTable(){
@@ -56,5 +55,16 @@ public class UploadDateStoreDb extends SQLiteOpenHelper {
         dbnew.delete(TABLE_DB_DATE, 1 + "=" + 1, null);
         dbnew.close();
     }
-    
+    public String retrieveValue(){
+        SQLiteDatabase db0 = this.getReadableDatabase();
+        String query_params0 = "SELECT " + "*" + " FROM " + TABLE_DB_DATE;
+        Cursor cSor0 = db0.rawQuery(query_params0, null);
+        if(cSor0.moveToFirst()){
+            do{
+                return cSor0.getString(cSor0.getColumnIndexOrThrow(UploadDateStoreDb.COLUMN_LATEST_DATE));
+            }while(cSor0.moveToNext());
+        }else{
+            return null;
+        }
+    }
 }
