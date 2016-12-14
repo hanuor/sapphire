@@ -22,6 +22,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.hanuor.sapphire.utils.Utility;
+
 import java.util.ArrayList;
 
 public class HintsStoreDB extends SQLiteOpenHelper {
@@ -60,7 +62,9 @@ public class HintsStoreDB extends SQLiteOpenHelper {
         StringBuffer stringBuffer = new StringBuffer();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
+            if(delimiter.equals("")){
+                Utility.throwException(delimiter,"Cannot be null");
+            }
             for(String  element: details){
                 String[] partition = element.split(delimiter);
                 stringBuffer.setLength(0);

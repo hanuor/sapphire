@@ -40,4 +40,7 @@ public class Utility {
             throw new SapphireException(message);
         }
     }
+    public static void throwException(Object obj, String message){
+        throw new SapphireException(obj + "" + message);
+    }
 }

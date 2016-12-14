@@ -38,11 +38,8 @@ import com.hanuor.sapphire.utils.intentation.IntentationPrime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Timer;
 
 import de.greenrobot.event.EventBus;
-
-import static android.content.Context.SENSOR_SERVICE;
 
 
 public class MainActivity extends AppCompatActivity implements OnEventHandler, SensorEventListener {
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         vmm.add("Sapphire is an upcoming SDK which - modifies the in-app notification concept");
         vmm.add("Sapphire is powered by Hanuor's own hoomcooked Dynalitic Engine");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
-        hintsStoreDB.storeDetails(vmm,"-");
+        hintsStoreDB.storeDetails(vmm,"");
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
