@@ -37,6 +37,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class UploadDocs extends Activity{
@@ -162,6 +163,21 @@ public class UploadDocs extends Activity{
 
 public void uploadImagetoOnlineDb(String _currentDate){
     context.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    ArrayList<String> _tags = sapphireImgDbHelper.getAllTags();
+    for(String eleTags : _tags){
+        byte[] b_Array = sapphireImgDbHelper.imgquery(eleTags);
+        Backendless.Files.saveFile("com.hanuor.sappihredemo/img_data", eleTags + ".png", b_Array, true, new AsyncCallback<String>() {
+            @Override
+            public void handleResponse(String s) {
+                Log.d("VamHan",""+s);
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.d("VamHan",""+backendlessFault.getMessage());
+            }
+        });
+    }
     if(uploadDateStoreDb.retrieveValue() == null){
         //new Data
         uploadDateStoreDb.insertNewDate(_currentDate);
@@ -177,6 +193,7 @@ public void uploadImagetoOnlineDb(String _currentDate){
                     Log.d("NakedandFam","Approved");
                     uploadDateStoreDb.clearTable();
                     uploadDateStoreDb.insertNewDate(_currentDate);
+
 
                 }
 
