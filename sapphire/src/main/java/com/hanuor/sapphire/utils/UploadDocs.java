@@ -165,8 +165,6 @@ public void uploadImagetoOnlineDb(String _currentDate){
     if(uploadDateStoreDb.retrieveValue() == null){
         //new Data
         uploadDateStoreDb.insertNewDate(_currentDate);
-
-
     }else{
 
         SimpleDateFormat sdf = new SimpleDateFormat("[yyyy/MM/dd - HH:mm:ss]");
@@ -177,6 +175,8 @@ public void uploadImagetoOnlineDb(String _currentDate){
             if(getDif == 3){
                 if(batteryStatus.isBatteryStatus() && batteryStatus.getBatteryPercentage() > 20) {
                     Log.d("NakedandFam","Approved");
+                    uploadDateStoreDb.clearTable();
+                    uploadDateStoreDb.insertNewDate(_currentDate);
 
                 }
 
