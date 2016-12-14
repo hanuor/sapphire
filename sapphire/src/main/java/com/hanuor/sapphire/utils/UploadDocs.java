@@ -16,29 +16,37 @@ package com.hanuor.sapphire.utils;
  */
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.util.Log;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.hanuor.sapphire.infoGet.BatteryStatus;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class UploadDocs {
+public class UploadDocs extends Activity{
     private Context context;
+    private BatteryStatus batteryStatus;
     @TargetApi(Build.VERSION_CODES.FROYO)
     public UploadDocs(Context ctx){
         this.context = ctx;
+        batteryStatus = new BatteryStatus();
         Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
     }
 
-  
+
     public void uploadTimeStamps(String _startTimeStamp, String _endTimeStamp){
         Log.d("Summit",""+_endTimeStamp);
-
+        context.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         byte[] _startTimeStampBytes;
         byte[] _endTimeStampBytes;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -48,7 +56,8 @@ public class UploadDocs {
             _startTimeStampBytes = _startTimeStamp.getBytes(Charset.forName("UTF-8"));
             _endTimeStampBytes = _endTimeStamp.getBytes(Charset.forName("UTF-8"));
         }
-       /* Backendless.Files.saveFile("com.hanuor.sappihredemo/startTimeStamp/data", "startData.csv", _startTimeStampBytes, true, new AsyncCallback<String>() {
+        if(batteryStatus.isBatteryStatus() && batteryStatus.getBatteryPercentage() > 20){
+            Backendless.Files.saveFile("com.hanuor.sappihredemo/startTimeStamp/data", "startData.csv", _startTimeStampBytes, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("Insamareen",""+s);
@@ -59,8 +68,8 @@ public class UploadDocs {
             public void handleFault(BackendlessFault backendlessFault) {
                 Log.d("Insamareen",backendlessFault.toString());
             }
-        });*/
-        Backendless.Files.saveFile("com.hanuor.sappihredemo/endTimeStamp/data", "endData.csv", _endTimeStampBytes, true, new AsyncCallback<String>() {
+            });
+            Backendless.Files.saveFile("com.hanuor.sappihredemo/endTimeStamp/data", "endData.csv", _endTimeStampBytes, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("Insamareen",""+s);
@@ -72,5 +81,45 @@ public class UploadDocs {
                 Log.d("Insamareen",backendlessFault.toString());
             }
         });
+
+        }
+       }
+    private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context ctxt, Intent intent) {
+            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            batteryStatus.setBatteryStatus(isPhonePluggedIn(context));
+            batteryStatus.setBatteryPercentage(level);
+            Log.d("Grouplove",""+batteryStatus.isBatteryStatus() + " And " + batteryStatus.getBatteryPercentage());
+           }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        context.unregisterReceiver(mBatInfoReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(mBatInfoReceiver);
+    }
+    public static boolean isPhonePluggedIn(Context context){
+        boolean charging = false;
+
+        final Intent batteryIntent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        int status = batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        boolean batteryCharge = status==BatteryManager.BATTERY_STATUS_CHARGING;
+
+        int chargePlug = batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
+        boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
+
+        if (batteryCharge) charging=true;
+        if (usbCharge) charging=true;
+        if (acCharge) charging=true;
+
+        return charging;
     }
 }
