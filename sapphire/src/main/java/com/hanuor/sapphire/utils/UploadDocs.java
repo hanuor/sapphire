@@ -30,6 +30,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.infoGet.BatteryStatus;
+import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -37,16 +38,17 @@ import java.nio.charset.StandardCharsets;
 public class UploadDocs extends Activity{
     private Context context;
     private BatteryStatus batteryStatus;
+    private SapphireImgDbHelper sapphireImgDbHelper;
     @TargetApi(Build.VERSION_CODES.FROYO)
     public UploadDocs(Context ctx){
         this.context = ctx;
         batteryStatus = new BatteryStatus();
+        sapphireImgDbHelper = new SapphireImgDbHelper(context);
         Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
     }
 
 
     public void uploadTimeStamps(String _startTimeStamp, String _endTimeStamp){
-        Log.d("Summit",""+_endTimeStamp);
         context.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         byte[] _startTimeStampBytes;
         byte[] _endTimeStampBytes;
@@ -123,4 +125,9 @@ public class UploadDocs extends Activity{
 
         return charging;
     }
+
+    public
+
+
+
 }

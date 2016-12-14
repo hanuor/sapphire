@@ -20,9 +20,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.hanuor.sapphire.hub.Internals;
+
+import java.util.ArrayList;
 
 public class SapphireImgDbHelper  extends SQLiteOpenHelper{
     private static final String DB_NAME = "SapphireInternalIMG.db";
@@ -63,7 +64,6 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
             cv.put(ID_IMGKEY, tag);
             cv.put(IMG_COLUMN, arrayImg);
             database.insert(TABLE_IMAGE, null, cv);
-            Log.d("dbsapp", "" + database.toString());
 
     }
     public  int getCount(){
@@ -72,7 +72,21 @@ public class SapphireImgDbHelper  extends SQLiteOpenHelper{
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
+    public ArrayList<String> getAllTags(){
+        ArrayList<String> getTags = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_norms = "SELECT " + ID_IMGKEY + " FROM " + TABLE_IMAGE;
+        Cursor cSor = db.rawQuery(query_norms, null);
+        if(cSor.moveToFirst()){
+            do{
+                getTags.add(cSor.getString(cSor.getColumnIndexOrThrow(SapphireImgDbHelper.ID_IMGKEY)));
+            }while(cSor.moveToNext());
 
+        }else{
+            return null;
+        }
+        return getTags;
+    }
 
     public byte[] imgquery(String _key){
         String regenKey = _key ;
