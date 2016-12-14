@@ -195,6 +195,7 @@ public void uploadImagetoOnlineDb(String _currentDate){
                     uploadDateStoreDb.insertNewDate(_currentDate);
 
 
+
                 }
 
                 }

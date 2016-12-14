@@ -159,10 +159,8 @@ public class DynaliticService extends Service implements SensorEventListener {
                         }
                     }
                     ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                    List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
                     List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
                     String currentRunningActivityName = taskInfo.get(0).topActivity.getPackageName();
-
                     //Replace package name with dynamic app package name
                     if(currentRunningActivityName.equals("com.hanuor.sapphiredemo")){
                        if(timeStampGS.getSetTime()!=0){
