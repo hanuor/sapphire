@@ -42,6 +42,8 @@ import java.util.Timer;
 
 import de.greenrobot.event.EventBus;
 
+import static android.content.Context.SENSOR_SERVICE;
+
 
 public class MainActivity extends AppCompatActivity implements OnEventHandler, SensorEventListener {
     Button but;
@@ -56,13 +58,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     private SensorManager mSensorManager;
     ImageView iv;
     private Sensor mSensor;
-    // constant
-    public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
-
-    // run on another Thread to avoid crash
-    private Handler mHandler = new Handler();
-    // timer handling
-    private Timer mTimer = null;
 
 
 
@@ -82,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         ArrayList<String> vmm = new ArrayList<String>();
         vmm.add("Hi welcome to my new app");
         vmm.add("We have sapphire already integrated within it");
-        vmm.add("Sapphire is an upcoming SDK which modifies the in-app notification concept");
+        vmm.add("Sapphire is an upcoming SDK which - modifies the in-app notification concept");
         vmm.add("Sapphire is powered by Hanuor's own hoomcooked Dynalitic Engine");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
-        hintsStoreDB.storeDetails(vmm);
+        hintsStoreDB.storeDetails(vmm,"-");
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
@@ -118,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             }
         });
         suggestionView.startAnimation(RightSwipe);
+
         Sapphire.with(MainActivity.this).setRandomMeasures(true,suggestionView);
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -140,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         img2.setImageBitmap(icon2);
         img.setTag("frost");
         img2.setTag("girl");
-
-
         arrayOfImgViews.add(img);
         arrayOfImgViews.add(img2);
         Sapphire.with(MainActivity.this).registerImageViews(arrayOfImgViews);
