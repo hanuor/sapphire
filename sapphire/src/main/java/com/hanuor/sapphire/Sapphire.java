@@ -16,8 +16,10 @@ package com.hanuor.sapphire;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hanuor.sapphire.hub.SapphireApi;
+import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.utils.InformationHandler;
 import com.hanuor.sapphire.utils.RuntimeHandler;
 import com.hanuor.sapphire.utils.Utility;
@@ -29,13 +31,17 @@ public class Sapphire {
     private static String questappkey;
     private static RuntimeHandler runtimeHandler;
     private static EventBus bus = EventBus.getDefault();
+    private static KapacRecentDB kapacRecentDB;
     public Sapphire(){
 
     }
     volatile static SapphireApi mconnect =  null;
     public static SapphireApi with(Context context){
+        kapacRecentDB = new KapacRecentDB(context);
         mconnect = new SapphireApi(context);
         mconnect.setInstance(mconnect);
+        kapacRecentDB.setTablePackageStorage(context.getPackageName());
+        Log.d("NUCELA",""+context.getPackageName());
         return mconnect;
     }
     public static boolean initialize(Context context, String appKeyID, String keySecret){

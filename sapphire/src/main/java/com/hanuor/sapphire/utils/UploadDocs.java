@@ -30,6 +30,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.hanuor.container.LibraryDatabase;
 import com.hanuor.sapphire.infoGet.BatteryStatus;
+import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.UploadDateStoreDb;
 
@@ -45,12 +46,14 @@ public class UploadDocs extends Activity{
     private BatteryStatus batteryStatus;
     private SapphireImgDbHelper sapphireImgDbHelper;
     private UploadDateStoreDb uploadDateStoreDb;
+    private KapacRecentDB kapacRecentDB;
     @TargetApi(Build.VERSION_CODES.FROYO)
     public UploadDocs(Context ctx){
         this.context = ctx;
         batteryStatus = new BatteryStatus();
         uploadDateStoreDb = new UploadDateStoreDb(context);
         sapphireImgDbHelper = new SapphireImgDbHelper(context);
+        kapacRecentDB = new KapacRecentDB(context);
         Backendless.initApp( context, "ECDF6288-9FD1-56B8-FFB7-A7E5A4228A00", "C0C1CB99-9130-88FC-FFA5-C98526E98100", "v1" );
     }
 
@@ -66,8 +69,10 @@ public class UploadDocs extends Activity{
             _startTimeStampBytes = _startTimeStamp.getBytes(Charset.forName("UTF-8"));
             _endTimeStampBytes = _endTimeStamp.getBytes(Charset.forName("UTF-8"));
         }
+
+
         if(batteryStatus.isBatteryStatus() && batteryStatus.getBatteryPercentage() > 20){
-            Backendless.Files.saveFile(LibraryDatabase.STARTTIMESTAMPPATH, LibraryDatabase.STARTTIMESTAMPFORMAT, _startTimeStampBytes, true, new AsyncCallback<String>() {
+            Backendless.Files.saveFile(kapacRecentDB.queryPackage() + LibraryDatabase.STARTTIMESTAMPPATH, LibraryDatabase.STARTTIMESTAMPFORMAT, _startTimeStampBytes, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("Insamareen",""+s);
@@ -79,19 +84,19 @@ public class UploadDocs extends Activity{
                 Log.d("Insamareen",backendlessFault.toString());
             }
             });
-            Backendless.Files.saveFile(LibraryDatabase.ENDTIMESTAMPPATH, LibraryDatabase.ENDTIMESTAMPFORMAT, _endTimeStampBytes, true, new AsyncCallback<String>() {
-            @Override
-            public void handleResponse(String s) {
-                Log.d("Insamareen",""+s);
 
-            }
+            Backendless.Files.saveFile(kapacRecentDB.queryPackage() + LibraryDatabase.ENDTIMESTAMPPATH, LibraryDatabase.ENDTIMESTAMPFORMAT, _endTimeStampBytes, true, new AsyncCallback<String>() {
+                @Override
+                public void handleResponse(String s) {
+                    Log.d("Insamareen",""+s);
 
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                Log.d("Insamareen",backendlessFault.toString());
-            }
-        });
+                }
 
+                @Override
+                public void handleFault(BackendlessFault backendlessFault) {
+                    Log.d("Insamareen",backendlessFault.toString());
+                }
+            });
         }
        }
     private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver(){
@@ -166,7 +171,7 @@ public void uploadImagetoOnlineDb(String _currentDate){
     ArrayList<String> _tags = sapphireImgDbHelper.getAllTags();
     for(String eleTags : _tags){
         byte[] b_Array = sapphireImgDbHelper.imgquery(eleTags);
-        Backendless.Files.saveFile("com.hanuor.sappihredemo/img_data", eleTags + ".png", b_Array, true, new AsyncCallback<String>() {
+        Backendless.Files.saveFile(kapacRecentDB.queryPackage()+"/img_data", eleTags + ".png", b_Array, true, new AsyncCallback<String>() {
             @Override
             public void handleResponse(String s) {
                 Log.d("VamHan",""+s);

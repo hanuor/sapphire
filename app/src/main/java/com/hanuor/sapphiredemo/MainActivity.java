@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         vmm.add("Sapphire is an upcoming SDK which - modifies the in-app notification concept");
         vmm.add("Sapphire is powered by Hanuor's own hoomcooked Dynalitic Engine");
         HintsStoreDB hintsStoreDB = new HintsStoreDB(MainActivity.this);
-        hintsStoreDB.storeDetails(vmm,"");
+        hintsStoreDB.storeDetails(vmm,"-");
         suggestionView = (SuggestionView) findViewById(R.id.suggest);
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");

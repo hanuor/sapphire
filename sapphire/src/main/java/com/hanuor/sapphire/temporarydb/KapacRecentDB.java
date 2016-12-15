@@ -30,10 +30,12 @@ public class KapacRecentDB extends SQLiteOpenHelper {
     private static final KapacRecent DBNM = KapacRecent.KAPAC_RECENT_DATABASE;
     private static final KapacRecent CLNM = KapacRecent.COLUMN_VALUE;
     private static final String _tbnm = "KAPACTBNM";
-    private static final String _dbnm = "KAPACDBNM";
+    private static final String _dbnm = "KAPACDBNM.db";
     private static final String _clnm =  "KAPACCLNM";
+    private static final String TABLE_PACKAGE_STORAGE = "TableContainsPackage";
+    private static final String COLUMN_PACKAGE = "ColumnContaingPackage";
 
-    private static final int KAPACRECENT = 1;
+    private static final int KAPACRECENT = 3;
     public KapacRecentDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -41,6 +43,8 @@ public class KapacRecentDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + _tbnm + "(" + _clnm + " STRING);");
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_PACKAGE_STORAGE + "(" + COLUMN_PACKAGE + " STRING" + ");");
+
     }
 
     @Override
@@ -91,5 +95,30 @@ public class KapacRecentDB extends SQLiteOpenHelper {
             return null;
         }
     }
+    public void clearPackageTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int status = db.delete(TABLE_PACKAGE_STORAGE,1+"="+1 , null);
+        db.close();
+    }
+    public void setTablePackageStorage(String packageS){
+        clearPackageTable();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PACKAGE, packageS);
+        db.insert(TABLE_PACKAGE_STORAGE, null, contentValues);
+        db.close();
+    }
 
+    public String queryPackage(){
+        SQLiteDatabase db0 = this.getReadableDatabase();
+        String query_params0 = "SELECT " + "*" + " FROM " + TABLE_PACKAGE_STORAGE;
+        Cursor cSor0 = db0.rawQuery(query_params0, null);
+        if(cSor0.moveToFirst()){
+            do{
+                return cSor0.getString(cSor0.getColumnIndexOrThrow(KapacRecentDB.COLUMN_PACKAGE));
+            }while(cSor0.moveToNext());
+        }else{
+            return null;
+        }
+    }
 }

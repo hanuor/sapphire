@@ -80,7 +80,6 @@ public class HintsStoreDB extends SQLiteOpenHelper {
                     }
 
                 }
-                Log.d("VVVOPHELIA",""+stringBuffer.toString());
                 contentValues.put(COLUMN_NAME, stringBuffer.toString());
                 long val = db.insert(TABLE_NAME, null, contentValues);
             }
