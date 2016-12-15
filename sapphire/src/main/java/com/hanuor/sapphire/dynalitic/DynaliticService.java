@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hanuor.sapphire.infoGet.TimeStampGS;
+import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.temporarydb.StartTimeStoreDB;
 import com.hanuor.sapphire.utils.UploadDocs;
 
@@ -45,6 +46,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     private float _sensorMaximumRange;
     private long durationValue;
     private StartTimeStoreDB startTimeStoreDB;
+    private KapacRecentDB kapacRecentDB;
     // constant
     public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
 
@@ -71,6 +73,7 @@ public class DynaliticService extends Service implements SensorEventListener {
         super.onCreate();
         startTimeStoreDB = new StartTimeStoreDB(this);
         uploadDocs = new UploadDocs(this);
+        kapacRecentDB  = new KapacRecentDB(this);
         if (mTimer != null) {
             mTimer.cancel();
         } else {
@@ -162,7 +165,7 @@ public class DynaliticService extends Service implements SensorEventListener {
                      List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
                     String currentRunningActivityName = taskInfo.get(0).topActivity.getPackageName();
                     //Replace package name with dynamic app package name
-                    if(currentRunningActivityName.equals("com.hanuor.sapphiredemo")){
+                    if(currentRunningActivityName.equals(kapacRecentDB.queryPackage())){
                        if(timeStampGS.getSetTime()!=0){
 
                         }else{
