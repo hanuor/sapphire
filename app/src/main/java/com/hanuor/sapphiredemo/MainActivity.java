@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     private SensorManager mSensorManager;
     ImageView iv;
     private Sensor mSensor;
-
-
-
     Spring mScaleSpring;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
