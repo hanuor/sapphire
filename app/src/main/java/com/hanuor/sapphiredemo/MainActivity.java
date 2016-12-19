@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             }
         });
         suggestionView.startAnimation(RightSwipe);
-
         Sapphire.with(MainActivity.this).setRandomMeasures(true,suggestionView);
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -142,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         final ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
         imageViewArrayList.add(img);
         imageViewArrayList.add(img2);
-
         Sapphire.with(MainActivity.this).registerTags(m);
         //suggestionView.dismiss();
 
@@ -259,8 +257,6 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
