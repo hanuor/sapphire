@@ -141,9 +141,7 @@ public class SapphireApi {
             }
             connect.tagslist = tags;
             connect.imageViews = Views;
-
             mclient.imageStore(context, Views);
-
             return connect;
         }else{
             Utility.throwRuntimeException();
