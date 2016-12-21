@@ -10,12 +10,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
         intentationPrime = new IntentationPrime();
-        Animation RightSwipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide);
+        //Animation RightSwipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide);
 
         final Animation lswipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.left);
-        RightSwipe.setAnimationListener(new Animation.AnimationListener() {
+        /*RightSwipe.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
             public void onAnimationRepeat(Animation animation) {
 
             }
-        });
-        suggestionView.startAnimation(RightSwipe);
+        });*/
+        //suggestionView.startAnimation(RightSwipe);
         Sapphire.with(MainActivity.this).setRandomMeasures(true,suggestionView);
         //for testing purpose
         Calendar today = Calendar.getInstance();
@@ -143,9 +143,16 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         imageViewArrayList.add(img2);
         Sapphire.with(MainActivity.this).registerTags(m);
         //suggestionView.dismiss();
-
 /*
-        Animation a = new AlphaAnimation(1.00f, 0.00f);
+        TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 1500.0f); // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
+
+        animation.setDuration(1500); // animation duration
+        animation.setRepeatCount(8); // animation repeat count
+        animation.setRepeatMode(2); // repeat animation (left to right, right to left)
+
+        animation.setFillAfter(true);
+        */
+        Animation a = new AlphaAnimation(0.00f, 1.00f);
 
         a.setDuration(1000);
         a.setAnimationListener(new Animation.AnimationListener() {
@@ -165,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
 
             }
         });
-        suggestionView.startanimation(a);*/
+        suggestionView.startanimation(a);
 
 
         demoObject = new DemoObject("Quest for android");

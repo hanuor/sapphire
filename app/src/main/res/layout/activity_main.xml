@@ -40,7 +40,7 @@
     <com.hanuor.sapphire.hub.SuggestionView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#B3E5FC"
+
         android:id="@+id/suggest"
         app:headerText="Based on your recent activity"
         app:headertextColor="#9E9E9E"

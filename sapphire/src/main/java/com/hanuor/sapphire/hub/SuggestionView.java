@@ -47,6 +47,10 @@ public class SuggestionView extends RelativeLayout{
     private float headerTextSize = 13f;
     String TEXT = "Suggestionbox";
     String Ftext = "Default";
+
+    private float FadeStrength = 5.0f;
+    private int FadeLength = 80;
+
     ImageView imageView;
     TextView valueTextView, footer, headerText;
     ImageView minusButton;
@@ -62,6 +66,9 @@ public class SuggestionView extends RelativeLayout{
         textView = new TextView(context);
         tv2 = new TextView(context);
         imageView = new ImageView(context);
+        setFadingEdgeLength(FadeLength);
+        setVerticalFadingEdgeEnabled(true);
+        setHorizontalFadingEdgeEnabled(true);
     }
 
     public SuggestionView(Context context, AttributeSet attrs) {
@@ -113,7 +120,25 @@ public class SuggestionView extends RelativeLayout{
 
 
     }
+    @Override
+    protected float getTopFadingEdgeStrength() {
+        return FadeStrength;
+    }
 
+    @Override
+    protected float getBottomFadingEdgeStrength() {
+        return FadeStrength;
+    }
+
+    @Override
+    protected float getLeftFadingEdgeStrength() {
+        return FadeStrength;
+    }
+
+    @Override
+    protected float getRightFadingEdgeStrength() {
+        return FadeStrength;
+    }
 
     public SuggestionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
