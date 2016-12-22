@@ -30,7 +30,7 @@ import android.util.Log;
 
 import com.hanuor.sapphire.infoGet.TimeStampGS;
 import com.hanuor.sapphire.temporarydb.KapacRecentDB;
-import com.hanuor.sapphire.temporarydb.StartTimeStoreDB;
+import com.hanuor.sapphire.temporarydb.TimeStoreDB;
 import com.hanuor.sapphire.utils.UploadDocs;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +45,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     private SensorManager mSensorManager;
     private float _sensorMaximumRange;
     private long durationValue;
-    private StartTimeStoreDB startTimeStoreDB;
+    private TimeStoreDB startTimeStoreDB;
     private KapacRecentDB kapacRecentDB;
     // constant
     public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
@@ -71,7 +71,7 @@ public class DynaliticService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        startTimeStoreDB = new StartTimeStoreDB(this);
+        startTimeStoreDB = new TimeStoreDB(this);
         uploadDocs = new UploadDocs(this);
         kapacRecentDB  = new KapacRecentDB(this);
         if (mTimer != null) {

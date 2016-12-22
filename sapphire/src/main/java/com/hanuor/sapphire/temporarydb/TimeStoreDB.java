@@ -25,7 +25,7 @@ import android.util.Log;
 
 //Db to store starttimestamps of app for machine learning.
 
-public class StartTimeStoreDB extends SQLiteOpenHelper {
+public class TimeStoreDB extends SQLiteOpenHelper {
     private static final String DB_NAME = "TimeStampStoreEandS.db";
     private static final int DB_VERSION = 15;
     private static final String TABLE_TIMESTAMP = "TimeStampTable";
@@ -33,7 +33,7 @@ public class StartTimeStoreDB extends SQLiteOpenHelper {
     private static final String COLUMN_ENDTIMESTAMP =  "EndTimeStampColumn";
     private static final String TABLE_ENDTIMESTAMP = "EndTimeStampTable";
 
-    public StartTimeStoreDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public TimeStoreDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -49,7 +49,7 @@ public class StartTimeStoreDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public StartTimeStoreDB(Context context){
+    public TimeStoreDB(Context context){
         super(context, DB_NAME, null, DB_VERSION);
     }
     public void addstartTimeStampToDB(long _timeStamp){
