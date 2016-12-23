@@ -51,7 +51,6 @@ public class Sapphire {
         runtimeHandler.setKey_ID(appKeyID);
         runtimeHandler.setKey_secret(keySecret);
         runtimeHandler.setaBoolean("true");
-
         bus.postSticky(new InformationHandler(runtimeHandler.getKey_ID(), runtimeHandler.getKey_secret(), runtimeHandler.getaBoolean()));
         questappkey = appKeyID;
         //check if key matches to the key stored in Database
