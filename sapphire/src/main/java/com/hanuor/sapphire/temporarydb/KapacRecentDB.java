@@ -21,14 +21,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import com.hanuor.sapphire.utils.enumeration.KapacRecent;
 /*
 Kapac displays the recent activity*/
 public class KapacRecentDB extends SQLiteOpenHelper {
-    private static final KapacRecent TBNM = KapacRecent.RECENT_KAPAC_TABLE;
-    private static final KapacRecent DBNM = KapacRecent.KAPAC_RECENT_DATABASE;
-    private static final KapacRecent CLNM = KapacRecent.COLUMN_VALUE;
     private static final String _tbnm = "KAPACTBNM";
     private static final String _dbnm = "KAPACDBNM.db";
     private static final String _clnm =  "KAPACCLNM";

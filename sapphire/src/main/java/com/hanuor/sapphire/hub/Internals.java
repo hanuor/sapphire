@@ -59,7 +59,6 @@ public class Internals {
     private KapacRecentDB kapacRecentDB;
 
     public Internals(Context ctx){
-        Log.d("25 minutes", "Internals");
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
         sapphireImgDbHelper = new SapphireImgDbHelper(ctx);
