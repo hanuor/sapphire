@@ -20,26 +20,38 @@ import android.widget.ImageView;
 
 
 public  class Sapphire {
+    public View getSuggestionView() {
+        return suggestionView;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
     private View suggestionView;
     private ImageView imageView;
-    private  Sapphire(Builder targetBuilder){
+    private  Sapphire(ViewBuilder targetBuilder){
         this.imageView = targetBuilder.imageView;
         this.suggestionView = targetBuilder.suggestionView;
     }
-    public View attachView(){
-        return suggestionView;
-    }
-    public ImageView attachImageTarget(){
-        return imageView;
-    }
-    public static class Builder{
+
+    public static class ViewBuilder{
         private View suggestionView;
+        private String headerTextId;
+        private String footerTextId;
         private ImageView imageView;
-        public Builder attachView(View view){
+        public ViewBuilder(View view){
             this.suggestionView = view;
-        return this;
         }
-        public Builder attachImageTarget(ImageView imageView){
+        public ViewBuilder getHeaderTextId(String id){
+            this.headerTextId = id;
+            return this;
+        }
+        public ViewBuilder getFooterTextId(String id){
+            this.footerTextId  = id;
+            return this;
+        }
+        public ViewBuilder getImageViewId(String id){
             this.imageView = imageView;
             return this;
         }

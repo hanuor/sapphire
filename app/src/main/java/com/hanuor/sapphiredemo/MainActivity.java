@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
        // suggestionView.setUPSuggestion(MainActivity.this, getResources().getDrawable(R.drawable.email));
         Sapphire.initialize(MainActivity.this,"asas","bbb");
         intentationPrime = new IntentationPrime();
+
+       // com.hanuor.sapphire.hub.Sapphire ss = new com.hanuor.sapphire.hub.Sapphire.ViewBuilder(suggestionView).getHeaderTextId().build();
         //Animation RightSwipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide);
 
         final Animation lswipe = AnimationUtils.loadAnimation(MainActivity.this, R.anim.left);
