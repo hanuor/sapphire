@@ -29,7 +29,6 @@ import com.hanuor.sapphire.temporarydb.KapacRecentDB;
 import com.hanuor.sapphire.temporarydb.SapphireDbManager;
 import com.hanuor.sapphire.temporarydb.SapphireImgDbHelper;
 import com.hanuor.sapphire.temporarydb.SapphirePrivateDB;
-import com.hanuor.sapphire.utils.BitmapUtility;
 import com.hanuor.sapphire.utils.ImagesUtil;
 import com.hanuor.utils.GetDayUtil;
 import com.shephertz.app42.paas.sdk.android.App42API;
@@ -56,12 +55,10 @@ public class Internals {
     private static SapphireImgDbHelper sapphireImgDbHelper;
     private static Initializer mInit = new Initializer();
     private static StorageService storageService;
-    private  BitmapUtility bitmapUtility = new BitmapUtility();
     private GetDayUtil getDayUtil = new GetDayUtil();
     private KapacRecentDB kapacRecentDB;
 
     public Internals(Context ctx){
-
         Log.d("25 minutes", "Internals");
         this.ctx = ctx;
         sapphireDbManager = new SapphireDbManager(ctx);
