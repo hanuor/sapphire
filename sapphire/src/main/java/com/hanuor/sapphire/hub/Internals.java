@@ -68,6 +68,8 @@ public class Internals {
         Backendless.initApp( ctx, mInit.ImgHelperId(), mInit.ImgHelperSecret(),"v1");
         storageService = App42API.buildStorageService();
 
+        
+
     }
 
     public  void saveDocIdInternally(String docID){

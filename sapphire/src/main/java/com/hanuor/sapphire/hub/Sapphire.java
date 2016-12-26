@@ -16,14 +16,35 @@ package com.hanuor.sapphire.hub;
  */
 
 import android.view.View;
+import android.widget.ImageView;
 
-public class Sapphire {
+
+public  class Sapphire {
+    private View suggestionView;
+    private ImageView imageView;
+    private  Sapphire(Builder targetBuilder){
+        this.imageView = targetBuilder.imageView;
+        this.suggestionView = targetBuilder.suggestionView;
+    }
+    public View attachView(){
+        return suggestionView;
+    }
+    public ImageView attachImageTarget(){
+        return imageView;
+    }
     public static class Builder{
         private View suggestionView;
+        private ImageView imageView;
         public Builder attachView(View view){
             this.suggestionView = view;
         return this;
         }
-        public Builder
+        public Builder attachImageTarget(ImageView imageView){
+            this.imageView = imageView;
+            return this;
+        }
+        public Sapphire build(){
+            return new Sapphire(this);
+        }
     }
 }
