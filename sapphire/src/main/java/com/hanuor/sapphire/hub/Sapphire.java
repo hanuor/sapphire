@@ -15,8 +15,10 @@ package com.hanuor.sapphire.hub;
  * limitations under the License.
  */
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public  class Sapphire {
@@ -33,25 +35,32 @@ public  class Sapphire {
     private  Sapphire(ViewBuilder targetBuilder){
         this.imageView = targetBuilder.imageView;
         this.suggestionView = targetBuilder.suggestionView;
+        getCalled();
+
+    }
+
+    private void getCalled() {
+        Log.d("Claudia","Getting Called");
     }
 
     public static class ViewBuilder{
         private View suggestionView;
-        private String headerTextId;
-        private String footerTextId;
+        private TextView headerTextView;
+        private TextView footerTextView;
         private ImageView imageView;
         public ViewBuilder(View view){
             this.suggestionView = view;
+            Log.d("Claudia","Vam");
         }
-        public ViewBuilder getHeaderTextId(String id){
-            this.headerTextId = id;
+        public ViewBuilder setHeaderTextView(TextView textView){
+            this.headerTextView = textView;
             return this;
         }
-        public ViewBuilder getFooterTextId(String id){
-            this.footerTextId  = id;
+        public ViewBuilder setFooterTextView(TextView textView){
+            this.footerTextView  = textView;
             return this;
         }
-        public ViewBuilder getImageViewId(String id){
+        public ViewBuilder setImageView(ImageView imageView){
             this.imageView = imageView;
             return this;
         }
