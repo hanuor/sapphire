@@ -50,7 +50,6 @@ public  class Sapphire {
         private ImageView imageView;
         public ViewBuilder(View view){
             this.suggestionView = view;
-            Log.d("Claudia","Vam");
         }
         public ViewBuilder setHeaderTextView(TextView textView){
             this.headerTextView = textView;
