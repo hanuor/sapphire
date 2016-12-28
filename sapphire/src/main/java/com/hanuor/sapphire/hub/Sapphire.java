@@ -38,7 +38,6 @@ public  class Sapphire {
         getCalled();
 
     }
-
     private void getCalled() {
         Log.d("Claudia","Getting Called");
     }
