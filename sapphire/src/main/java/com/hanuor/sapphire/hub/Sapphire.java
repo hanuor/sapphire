@@ -36,7 +36,6 @@ public  class Sapphire {
         this.imageView = targetBuilder.imageView;
         this.suggestionView = targetBuilder.suggestionView;
         getCalled();
-
     }
     private void getCalled() {
         Log.d("Claudia","Getting Called");
