@@ -25,11 +25,9 @@ public  class Sapphire {
     public View getSuggestionView() {
         return suggestionView;
     }
-
     public ImageView getImageView() {
         return imageView;
     }
-
     private View suggestionView;
     private ImageView imageView;
     private  Sapphire(ViewBuilder targetBuilder){
