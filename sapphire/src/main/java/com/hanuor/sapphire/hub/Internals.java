@@ -174,7 +174,6 @@ public class Internals {
                 JSONObject jObj = new JSONObject(jsonD);
                 String getDoc = Client.updateJsonDoc(Client.SapphireHitTag(jsonD, hitTag));
                 sapphirePrivateDB.storeTags(getDoc);
-
                 //update to cloud as well
             }
             if(nodePRdaydoc!=null){
