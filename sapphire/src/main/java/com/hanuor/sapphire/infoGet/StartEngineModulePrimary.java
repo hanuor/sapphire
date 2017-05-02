@@ -83,7 +83,7 @@ public class StartEngineModulePrimary{
                     stringDoubleHashMap.put(key, Double.valueOf(value));
                 }
                 //Notice that this returns the maximum node value. We also want a descending order name list.
-
+                Log.v("Beressta", " Diof");
                 String vaAbbreviation = (String) MaxValueEvaluator.processHash(stringDoubleHashMap);
                 byte[] slipstream = sapphireImgDbHelper.imgquery(vaAbbreviation);
                // suggestionView = new SuggestionView(context, imagesUtil.byteToBitmap(slipstream));

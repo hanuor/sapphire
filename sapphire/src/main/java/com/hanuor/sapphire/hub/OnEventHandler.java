@@ -20,5 +20,5 @@ import android.content.Context;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface OnEventHandler {
-    public void setUpEvent(Context context) throws JsonProcessingException;
+    public void setUpEvent(String key, Context context) throws JsonProcessingException;
 }

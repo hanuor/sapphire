@@ -204,7 +204,7 @@ public class SuggestionView extends RelativeLayout{
         hintsStoreDB = new HintsStoreDB(context);
         suggestionTempDBHandler = new SuggestionTempDBHandler(context);
         rootView = inflate(context, R.layout.singleheaderview, this);
-
+        Log.d("Pacho her","Ingolstadt" );
         headerText = (TextView) rootView.findViewById(R.id.headerText);
 
         RelativeLayout.LayoutParams paramsT = new RelativeLayout.LayoutParams(

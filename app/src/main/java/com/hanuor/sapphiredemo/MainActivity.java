@@ -63,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         Intent serviceIntent = new Intent(this, DynaliticService.class);
         // Start service
         this.startService(serviceIntent);
+        Log.d("Berresta","glaaa");
         but  = (Button) findViewById(R.id.button);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        Toast.makeText(this, "Hell" + mSensor.getMaximumRange(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Hell" + mSensor.getMaximumRange(), Toast.LENGTH_SHORT).show();
         iv = (ImageView) findViewById(R.id.imageView1);
         ArrayList<String> vmm = new ArrayList<String>();
         vmm.add("Hi welcome to my new app");
@@ -264,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -297,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements OnEventHandler, S
     }
 
     @Override
-    public void setUpEvent(Context context){
+    public void setUpEvent(String key,Context context){
         Intent asss = new Intent();
         asss.setFlags(Intent.FILL_IN_ACTION);
         asss.setFlags(Intent.EXTRA_DOCK_STATE_DESK);
